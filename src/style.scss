@@ -1,7 +1,9 @@
 * {
   box-sizing: border-box;
 }
+
 body {
+  background: #2d3436;
   margin: 0;
   height: 100vh;
   font: 10pt Lato, sans-serif;
@@ -16,13 +18,14 @@ body {
   display: flex;
   flex-direction: column;
   min-width: 300px;
-  background: #f7f1e3;
+  background: #b2bec3;
   #tree {
     flex: 1;
     border-bottom: 2px solid #227093;
     padding: 2px;
     li.selected > a {
       background: rgba(52, 172, 224, .5);
+      color: #fff;
     }
     ul {
       margin: 0;
@@ -54,11 +57,21 @@ body {
       tr th {
         text-align: right;
       }
+      input {
+        width: 100%;
+      }
     }
   }
 }
 
-svg {
+#drawing {
   flex: 1;
-  border: 1px solid dodgerblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+svg {
+  outline: 5px solid #e17055;
+  background: #fff;
 }

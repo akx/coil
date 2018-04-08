@@ -9,7 +9,9 @@ import Context from './Context';
 const DEFAULT_NODE_CONFIGS: NodeConfig[] = [
   configure(
     'RemoveChildren',
-    {},
+    {
+      'seed': 'foo',
+    },
     [
       configure(
         'RectArray',
@@ -95,9 +97,11 @@ export default class App extends React.Component<any, AppState> {
             /> : null}
           </div>
         </div>
-        <svg width={800} height={800}>
-          {rendered}
-        </svg>
+        <div id="drawing">
+          <svg width={800} height={800}>
+            {rendered}
+          </svg>
+        </div>
       </>
     );
   }
