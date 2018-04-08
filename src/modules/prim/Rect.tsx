@@ -3,19 +3,15 @@ import Module from '../Module';
 import Context from "../../Context";
 import NodeConfig from "../../NodeConfig";
 import {rotateDEG, scale, toSVG, transform, translate} from 'transformation-matrix';
+import TransformVariables from '../TransformVariables';
 
 export default {
-  variables: [
-    {name: 'x', default: '0'},
-    {name: 'y', default: '0'},
-    {name: 'r', default: '0'},
-    {name: 'sx', default: '1'},
-    {name: 'sy', default: '1'},
+  variables: TransformVariables.concat([
     {name: 'width', default: '20'},
     {name: 'height', default: '20'},
     {name: 'fill', default: '#333'},
     {name: 'opacity', default: '1'},
-  ],
+  ]),
 
   render(context: Context, node: NodeConfig) {
     const {width, height, x, y, r, sx, sy, fill, opacity} = context.evaluateAll(node.config);
