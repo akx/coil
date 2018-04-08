@@ -7,16 +7,19 @@ import configure from "./modules/configure";
 
 const DEFAULT_NODE_CONFIGS: NodeConfig[] = [
   configure(
-    'LinearArray',
+    'RectArray',
     {
-      number: '7',
-      variable: 'i',
+      numberX: '7',
+      numberY: '1',
+      variableX: 'i',
+      variableY: 'j',
     },
     [
       configure('Rect', {
         width: '20',
         height: '20',
-        x: '=15 + i * 150',
+        x: '=15 + i * 30',
+        y: '=30 + j * 30',
         fill: 'blue',
       }),
     ]),

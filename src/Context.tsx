@@ -36,8 +36,12 @@ export default class Context {
     return evaluated;
   }
 
-  subcontext(newVariables: VariableMap): Context {
+  subcontext(newVariables: VariableMap, idPrefix: String='.'): Context {
     const mergedVariables = Object.assign({}, this.variables, newVariables);
-    return new Context(this, mergedVariables);
+    return new Context(this, mergedVariables, this.idPrefix + idPrefix);
+  }
+
+  getId(suffix: String='') {
+    return this.idPrefix + suffix;
   }
 }

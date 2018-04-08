@@ -1,8 +1,8 @@
 import * as React from 'react';
-import Module from './Module';
-import Context from "../Context";
-import NodeConfig from "../NodeConfig";
-import render from "../render";
+import Module from '../Module';
+import Context from "../../Context";
+import NodeConfig from "../../NodeConfig";
+import {renderChildrenInto} from "../../render";
 
 export default {
   acceptsChildren: true,
@@ -15,12 +15,13 @@ export default {
     const {number, variable} = context.evaluateAll(node.config);
     const nodes: Array<Element> = [];
 
-    const nNumber = parseInt(number);
+    const nNumber = Math.round(parseFloat(number));
     for (var i = 0; i < nNumber; i++) {
-      const subcontext = context.subcontext({[variable]: i / (nNumber - 1)});
-      node.children.forEach((child: NodeConfig) => {
-        render(subcontext, child).forEach((node) => nodes.push(node));
+      const subcontext = context.subcontext({
+        [variable]: i,
+        [`${variable}F`]: i / (nNumber - 1),
       });
+      renderChildrenInto(nodes, node, subcontext);
     }
     return nodes;
   },

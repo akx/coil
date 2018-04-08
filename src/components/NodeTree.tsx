@@ -11,7 +11,13 @@ const TreeNode = ({nodeConfig, onSelectNode}: { nodeConfig: NodeConfig, onSelect
 
 const TreeLevel = ({nodeConfigs, onSelectNode}: { nodeConfigs: NodeConfig[], onSelectNode: Function }) => (
   <ul>
-    {nodeConfigs.map((nodeConfig: NodeConfig) => <TreeNode nodeConfig={nodeConfig} onSelectNode={onSelectNode} />)}
+    {nodeConfigs.map((nodeConfig: NodeConfig) => (
+      <TreeNode
+        key={nodeConfig.id}
+        nodeConfig={nodeConfig}
+        onSelectNode={onSelectNode}
+      />
+    ))}
   </ul>
 );
 

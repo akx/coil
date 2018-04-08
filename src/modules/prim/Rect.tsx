@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Module from './Module';
-import Context from "../Context";
-import NodeConfig from "../NodeConfig";
+import Module from '../Module';
+import Context from "../../Context";
+import NodeConfig from "../../NodeConfig";
 import {rotate, scale, toSVG, transform, translate} from 'transformation-matrix';
 
 export default {
@@ -29,6 +29,7 @@ export default {
         fill={fill}
         opacity={opacity}
         transform={toSVG(matrix)}
+        key={context.getId('rect')}
       />
     ];
   }

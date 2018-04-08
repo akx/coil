@@ -1,7 +1,9 @@
-import Rect from './Rect';
-import LinearArray from "./LinearArray";
+import Rect from './prim/Rect';
+import LinearArray from "./array/LinearArray";
+import RectArray from "./array/RectArray";
 
 export default {
   Rect,
   LinearArray,
+  RectArray,
 };

@@ -15,3 +15,11 @@ export default function render(context: Context, nodeConfig: NodeConfig) {
     return [];
   }
 }
+
+export function renderChildrenInto(targetArray: Array<any>, node: NodeConfig, context: Context) {
+  node.children.forEach((child: NodeConfig) => {
+    render(context, child).forEach((node) => {
+      targetArray.push(node);
+    });
+  });
+}
