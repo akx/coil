@@ -2,7 +2,7 @@ import * as React from 'react';
 import Module from '../Module';
 import Context from "../../Context";
 import NodeConfig from "../../NodeConfig";
-import {rotate, scale, toSVG, transform, translate} from 'transformation-matrix';
+import {rotateDEG, scale, toSVG, transform, translate} from 'transformation-matrix';
 
 export default {
   variables: [
@@ -19,7 +19,7 @@ export default {
 
   render(context: Context, node: NodeConfig) {
     const {width, height, x, y, r, sx, sy, fill, opacity} = context.evaluateAll(node.config);
-    const matrix = transform(translate(x, y), rotate(r), scale(sx, sy));
+    const matrix = transform(translate(x, y), rotateDEG(r), scale(sx, sy));
     return [
       <rect
         x={-width / 2}

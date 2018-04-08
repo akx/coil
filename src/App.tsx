@@ -14,7 +14,7 @@ const DEFAULT_NODE_CONFIGS: NodeConfig[] = [
         'RectArray',
         {
           numberX: '7',
-          numberY: '1',
+          numberY: '7',
           variableX: 'i',
           variableY: 'j',
         },
@@ -65,7 +65,11 @@ export default class App extends React.Component<any, AppState> {
       <>
         <div id="config">
           <div id="tree">
-            <NodeTree nodeConfigs={nodeConfigs} onSelectNode={this.onSelectNode} />
+            <NodeTree
+              nodeConfigs={nodeConfigs}
+              selectedNode={selectedNodeConfig}
+              onSelectNode={this.onSelectNode}
+            />
           </div>
           <div id="props">
             {this.state.selectedNodeConfig ? <NodeConfigView

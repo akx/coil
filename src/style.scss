@@ -1,6 +1,10 @@
+* {
+  box-sizing: border-box;
+}
 body {
   margin: 0;
   height: 100vh;
+  font: 10pt Lato, sans-serif;
 }
 
 #wrapper {
@@ -12,11 +16,45 @@ body {
   display: flex;
   flex-direction: column;
   min-width: 300px;
+  background: #f7f1e3;
   #tree {
     flex: 1;
+    border-bottom: 2px solid #227093;
+    padding: 2px;
+    li.selected > a {
+      background: rgba(52, 172, 224, .5);
+    }
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      ul {
+        margin: 1px;
+        margin-left: .5em;
+        border-left: 1px dotted #34ace0;
+        padding-left: .5em;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+    }
   }
   #props {
     flex: 3;
+    h2 {
+      margin: 0;
+      padding: 0.25em;
+      color: #fff;
+      background: #34ace0;
+
+    }
+    table {
+      width: 100%;
+      tr th {
+        text-align: right;
+      }
+    }
   }
 }
 
