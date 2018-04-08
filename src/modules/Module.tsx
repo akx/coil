@@ -1,32 +1,18 @@
 import Context from "../Context";
 import NodeConfig from "../NodeConfig";
+import VariableDefinition from "./VariableDefinition";
 
 
-export interface VariableDefinition {
-  name: string;
-  description?: string;
-  default?: string;
-  type?: 'number' | 'string' | 'color';
-}
-
-export interface IModule {
+export default interface Module {
   acceptsChildren: boolean;
   variables: Array<VariableDefinition>;
-
+  render(context: Context, node: NodeConfig): Array<any>;
 }
 
-
-export default abstract class Module {
-  public static acceptsChildren: boolean = false;
-  public static variables: Array<VariableDefinition> = [];
-
-  abstract render(context: Context, node: NodeConfig): Array<any>;
-
-  public getVariableDefaults(): object {
-    const defaults = {};
-    (this.constructor as any as { variables: Array<VariableDefinition> }).variables.forEach((v) => {
-      defaults[v.name] = v.default;
-    });
-    return defaults;
-  }
+export function getVariableDefaults(module: Module): object {
+  const defaults = {};
+  module.variables.forEach((v) => {
+    defaults[v.name] = v.default;
+  });
+  return defaults;
 }

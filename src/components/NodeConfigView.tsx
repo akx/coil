@@ -1,7 +1,8 @@
 import * as React from 'react';
 import NodeConfig from "../NodeConfig";
 import registry from "../modules/registry";
-import {IModule, VariableDefinition} from "../modules/Module";
+import Module from "../modules/Module";
+import VariableDefinition from "../modules/VariableDefinition";
 
 type NodeConfigViewProps = {
   nodeConfig: NodeConfig,
@@ -20,7 +21,7 @@ export default class NodeConfigView extends React.Component<NodeConfigViewProps,
 
   render() {
     const {nodeConfig} = this.props;
-    const moduleClass: IModule = registry[nodeConfig.module];
+    const moduleClass: Module = registry[nodeConfig.module];
 
     return (
       <div>

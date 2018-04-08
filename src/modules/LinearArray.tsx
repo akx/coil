@@ -4,12 +4,12 @@ import Context from "../Context";
 import NodeConfig from "../NodeConfig";
 import render from "../render";
 
-export default class LinearArray extends Module {
-  static acceptsChildren = true;
-  static variables = [
+export default {
+  acceptsChildren: true,
+  variables: [
     {name: 'number', default: '5'},
     {name: 'variable', default: 'i'},
-  ];
+  ],
 
   render(context: Context, node: NodeConfig) {
     const {number, variable} = context.evaluateAll(node.config);
@@ -23,5 +23,5 @@ export default class LinearArray extends Module {
       });
     }
     return nodes;
-  }
-}
+  },
+} as Module;

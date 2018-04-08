@@ -9,25 +9,16 @@ const DEFAULT_NODE_CONFIGS: NodeConfig[] = [
   configure(
     'LinearArray',
     {
-      number: '5',
-      variable: 'j',
+      number: '7',
+      variable: 'i',
     },
     [
-      configure(
-        'LinearArray',
-        {
-          number: '7',
-          variable: 'i',
-        },
-        [
-          configure('Rect', {
-            width: '10',
-            height: '= 10 + i * 80',
-            x: '=i * 150',
-            y: '=j * 400',
-            fill: 'blue',
-          }),
-        ]),
+      configure('Rect', {
+        width: '20',
+        height: '20',
+        x: '=15 + i * 150',
+        fill: 'blue',
+      }),
     ]),
 ];
 

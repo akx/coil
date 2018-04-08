@@ -20,6 +20,7 @@
     "ramda": "^0.25.0",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
-    "sass-loader": "^6.0.7"
+    "sass-loader": "^6.0.7",
+    "transformation-matrix": "^1.10.0"
   }
 }
