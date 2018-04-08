@@ -7,21 +7,26 @@ import configure from "./modules/configure";
 
 const DEFAULT_NODE_CONFIGS: NodeConfig[] = [
   configure(
-    'RectArray',
-    {
-      numberX: '7',
-      numberY: '1',
-      variableX: 'i',
-      variableY: 'j',
-    },
+    'RemoveChildren',
+    {},
     [
-      configure('Rect', {
-        width: '20',
-        height: '20',
-        x: '=15 + i * 30',
-        y: '=30 + j * 30',
-        fill: 'blue',
-      }),
+      configure(
+        'RectArray',
+        {
+          numberX: '7',
+          numberY: '1',
+          variableX: 'i',
+          variableY: 'j',
+        },
+        [
+          configure('Rect', {
+            width: '20',
+            height: '20',
+            x: '=15 + i * 30',
+            y: '=30 + j * 30',
+            fill: 'blue',
+          }),
+        ]),
     ]),
 ];
 
