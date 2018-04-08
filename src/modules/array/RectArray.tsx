@@ -2,7 +2,7 @@ import * as React from 'react';
 import Module from '../Module';
 import Context from "../../Context";
 import NodeConfig from "../../NodeConfig";
-import {renderChildrenInto} from "../../render";
+import {renderNodesInto} from "../../render";
 
 export default {
   acceptsChildren: true,
@@ -27,7 +27,7 @@ export default {
           [`${variableX}F`]: x / (numberX - 1),
           [`${variableY}F`]: y / (numberY - 1),
         }, `${node.id}.${x}x${y}`);
-        renderChildrenInto(nodes, node, subcontext);
+        renderNodesInto(nodes, node.children, subcontext);
       }
     }
     return nodes;

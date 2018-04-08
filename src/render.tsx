@@ -3,7 +3,7 @@ import registry from "./modules/registry";
 import Context from "./Context";
 import Module from "./modules/Module";
 
-export default function render(context: Context, nodeConfig: NodeConfig) {
+export function renderNode(context: Context, nodeConfig: NodeConfig) {
   const module: Module = registry[nodeConfig.module];
   if (!module) {
     throw new Error(`not registered ${nodeConfig.module}`);
@@ -16,9 +16,9 @@ export default function render(context: Context, nodeConfig: NodeConfig) {
   }
 }
 
-export function renderChildrenInto(targetArray: Array<any>, node: NodeConfig, context: Context) {
-  node.children.forEach((child: NodeConfig) => {
-    render(context, child).forEach((node) => {
+export function renderNodesInto(targetArray: Array<any>, nodes: NodeConfig[], context: Context) {
+  nodes.forEach((node: NodeConfig) => {
+    renderNode(context, node).forEach((node) => {
       targetArray.push(node);
     });
   });
