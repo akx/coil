@@ -1,0 +1,25 @@
+{
+  "name": "coil",
+  "version": "1.0.0",
+  "main": "src/index.tsx",
+  "license": "MIT",
+  "scripts": {
+    "dev": "poi"
+  },
+  "devDependencies": {
+    "@ngfk/poi-preset-react-typescript": "^0.0.3",
+    "node-sass": "^4.8.3",
+    "poi": "^9.6.13",
+    "typescript": "^2.8.1"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.106",
+    "@types/ramda": "^0.25.21",
+    "@types/react": "^16.3.5",
+    "lodash": "^4.17.5",
+    "ramda": "^0.25.0",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "sass-loader": "^6.0.7"
+  }
+}

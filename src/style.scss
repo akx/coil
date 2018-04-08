@@ -1,0 +1,26 @@
+body {
+  margin: 0;
+  height: 100vh;
+}
+
+#wrapper {
+  display: flex;
+  height: 100vh;
+}
+
+#config {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  #tree {
+    flex: 1;
+  }
+  #props {
+    flex: 3;
+  }
+}
+
+svg {
+  flex: 1;
+  border: 1px solid dodgerblue;
+}
