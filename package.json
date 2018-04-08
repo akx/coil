@@ -22,6 +22,7 @@
     "random-seed": "^0.3.0",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
+    "react-simple-dropdown": "^3.2.0",
     "sass-loader": "^6.0.7",
     "transformation-matrix": "^1.10.0"
   }

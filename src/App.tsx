@@ -5,6 +5,8 @@ import NodeConfigView from "./components/NodeConfigView";
 import configure from "./modules/configure";
 import {renderNodesInto} from './render';
 import Context from './Context';
+import Dropdown, {DropdownTrigger, DropdownContent} from 'react-simple-dropdown';
+import Toolbar from './components/Toolbar';
 
 const DEFAULT_NODE_CONFIGS: NodeConfig[] = [
   configure(
@@ -83,6 +85,7 @@ export default class App extends React.Component<any, AppState> {
       <>
         <div id="config">
           <div id="tree">
+            <Toolbar selectedNode={selectedNodeConfig} />
             <NodeTree
               nodeConfigs={nodeConfigs}
               selectedNode={selectedNodeConfig}
