@@ -1,3 +1,6 @@
+import {create, RandomSeed} from 'random-seed';
+import {isEmpty} from 'lodash';
+
 interface VariableMap {
   [key: string]: any;
 }
@@ -7,18 +10,27 @@ interface ExpressionMap {
 }
 
 export default class Context {
+  private rng?: RandomSeed;
+
   constructor(
     readonly parent: Context | null = null,
     readonly variables: VariableMap = {},
     readonly idPrefix: string = '',
+    readonly randomSeed?: string,
   ) {
-
   }
 
-  evaluate(expression: string): any {
+  random() {
+    if (!this.rng) {
+      this.rng = create(this.randomSeed);
+    }
+    return this.rng.random();
+  }
+
+  evaluate(expression: string, additionalVariables?: VariableMap): any {
     if (expression.startsWith('=')) {
       const exprFun = new Function('namespace', `with(namespace) { return ${expression.slice(1)}}`);
-      return exprFun(this.variables);
+      return exprFun({rand: this.random.bind(this), ...this.variables, ...additionalVariables});
     }
     if (/[+-][0-9.]+/.test(expression)) {
       return parseFloat(expression);
@@ -36,12 +48,17 @@ export default class Context {
     return evaluated;
   }
 
-  subcontext(newVariables: VariableMap, idPrefix: String='.'): Context {
+  subcontext(newVariables: VariableMap, idPrefix: string = '', randomSeed?: string): Context {
     const mergedVariables = Object.assign({}, this.variables, newVariables);
-    return new Context(this, mergedVariables, this.idPrefix + idPrefix);
+    return new Context(
+      this,
+      mergedVariables,
+      this.idPrefix + (idPrefix || ''),
+      !isEmpty(randomSeed) ? randomSeed : undefined,
+    );
   }
 
-  getId(suffix: String='') {
+  getId(suffix: string = '') {
     return this.idPrefix + suffix;
   }
 }
