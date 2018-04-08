@@ -1,9 +1,10 @@
 import * as React from 'react';
 import NodeConfig from "./NodeConfig";
-import Drawing from "./components/Drawing";
 import NodeTree from "./components/NodeTree";
 import NodeConfigView from "./components/NodeConfigView";
 import configure from "./modules/configure";
+import {renderNodesInto} from './render';
+import Context from './Context';
 
 const DEFAULT_NODE_CONFIGS: NodeConfig[] = [
   configure(
@@ -33,6 +34,7 @@ const DEFAULT_NODE_CONFIGS: NodeConfig[] = [
 type AppState = {
   selectedNodeConfig: NodeConfig | null,
   nodeConfigs: NodeConfig[],
+  rendered: any,
 };
 
 export default class App extends React.Component<any, AppState> {
@@ -40,7 +42,12 @@ export default class App extends React.Component<any, AppState> {
   state = {
     selectedNodeConfig: null,
     nodeConfigs: DEFAULT_NODE_CONFIGS,
+    rendered: null,
   };
+
+  componentDidMount() {
+    this.renderDrawing();
+  }
 
   onSelectNode = ({nodeConfig}): void => {
     this.setState({
@@ -50,17 +57,26 @@ export default class App extends React.Component<any, AppState> {
 
   onChange = (nodeConfig: NodeConfig, variableName: string, value) => {
     nodeConfig.config[variableName] = value;
-    this.forceUpdate();
+    this.renderDrawing();
   };
 
   onAddChild = (nodeConfig: NodeConfig, moduleType: string) => {
     const config = configure(moduleType, {}, []);
     nodeConfig.children.push(config);
-    this.setState({selectedNodeConfig: config});
+    this.setState({selectedNodeConfig: config}, () => {
+      this.renderDrawing();
+    });
   };
 
+  renderDrawing() {
+    let nodes: Array<any> = [];
+    const context = new Context();
+    renderNodesInto(nodes, this.state.nodeConfigs, context);
+    this.setState({rendered: nodes});
+  }
+
   render() {
-    const {nodeConfigs, selectedNodeConfig} = this.state;
+    const {nodeConfigs, selectedNodeConfig, rendered} = this.state;
     return (
       <>
         <div id="config">
@@ -79,7 +95,9 @@ export default class App extends React.Component<any, AppState> {
             /> : null}
           </div>
         </div>
-        <Drawing nodeConfigs={nodeConfigs} width={800} height={800} />
+        <svg width={800} height={800}>
+          {rendered}
+        </svg>
       </>
     );
   }
