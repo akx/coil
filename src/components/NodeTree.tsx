@@ -3,7 +3,7 @@ import NodeConfig from "../NodeConfig";
 
 type TreeCommonProps = {
   selectedNode: NodeConfig | null,
-  onSelectNode: Function,
+  onSelectNode: (node: NodeConfig | null) => void,
 };
 
 type TreeNodeProps = TreeCommonProps & {
@@ -11,12 +11,18 @@ type TreeNodeProps = TreeCommonProps & {
 };
 
 type TreeLevelProps = TreeCommonProps & {
-  nodeConfigs: NodeConfig[],
+  nodeConfigs: ReadonlyArray<NodeConfig>,
 };
 
 const TreeNode = ({nodeConfig, selectedNode, onSelectNode}: TreeNodeProps) => (
   <li className={selectedNode === nodeConfig ? 'selected' : ''}>
-    <a href="#" onClick={() => onSelectNode({nodeConfig})}>{nodeConfig.module} {nodeConfig.id}</a>
+    <a href="#" onClick={(e) => {
+      onSelectNode(nodeConfig);
+      e.preventDefault();
+      e.stopPropagation();
+    }}>
+      {nodeConfig.module} {nodeConfig.id}
+    </a>
     {nodeConfig.children.length ?
       <TreeLevel nodeConfigs={nodeConfig.children} selectedNode={selectedNode} onSelectNode={onSelectNode} /> : null}
   </li>
@@ -37,6 +43,16 @@ const TreeLevel = ({nodeConfigs, selectedNode, onSelectNode}: TreeLevelProps) =>
 
 export default ({nodeConfigs, selectedNode, onSelectNode}: TreeLevelProps) => {
   return (
-    <div><TreeLevel nodeConfigs={nodeConfigs} selectedNode={selectedNode} onSelectNode={onSelectNode} /></div>
+    <div
+      id="tree"
+      onClick={(e) => {
+        console.log(e);
+        if (e.currentTarget.id === 'tree') {
+          onSelectNode(null);
+        }
+      }}
+    >
+      <TreeLevel nodeConfigs={nodeConfigs} selectedNode={selectedNode} onSelectNode={onSelectNode} />
+    </div>
   );
 };

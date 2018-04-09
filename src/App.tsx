@@ -5,8 +5,8 @@ import NodeConfigView from "./components/NodeConfigView";
 import configure from "./modules/configure";
 import {renderNodesInto} from './render';
 import Context from './Context';
-import Dropdown, {DropdownTrigger, DropdownContent} from 'react-simple-dropdown';
 import Toolbar from './components/Toolbar';
+import {TreeManager} from "./managers/TreeManager";
 
 const DEFAULT_NODE_CONFIGS: NodeConfig[] = [
   configure(
@@ -36,67 +36,62 @@ const DEFAULT_NODE_CONFIGS: NodeConfig[] = [
 ];
 
 type AppState = {
-  selectedNodeConfig: NodeConfig | null,
-  nodeConfigs: NodeConfig[],
+  selectedNodeId: string | null,
   rendered: any,
 };
 
 export default class App extends React.Component<any, AppState> {
 
+  private treeManager: TreeManager = new TreeManager();
+
   state = {
-    selectedNodeConfig: null,
-    nodeConfigs: DEFAULT_NODE_CONFIGS,
+    selectedNodeId: null,
     rendered: null,
   };
 
   componentDidMount() {
-    this.renderDrawing();
+    this.treeManager.addTreeUpdateListener((tree) => {
+      this.renderDrawing(tree);
+    });
+    //this.treeManager.replaceTree(DEFAULT_NODE_CONFIGS);
   }
 
-  onSelectNode = ({nodeConfig}): void => {
+  onSelectNode = (nodeConfig: NodeConfig | null): void => {
     this.setState({
-      selectedNodeConfig: nodeConfig,
+      selectedNodeId: (nodeConfig ? nodeConfig.id : null),
     });
   };
 
-  onChange = (nodeConfig: NodeConfig, variableName: string, value) => {
-    nodeConfig.config[variableName] = value;
-    this.renderDrawing();
+  onChange = (nodeId: string, variableName: string, value) => {
+    this.treeManager.changeNodeVariable(nodeId, variableName, value);
   };
 
-  onAddChild = (nodeConfig: NodeConfig, moduleType: string) => {
-    const config = configure(moduleType, {}, []);
-    nodeConfig.children.push(config);
-    this.setState({selectedNodeConfig: config}, () => {
-      this.renderDrawing();
-    });
-  };
-
-  renderDrawing() {
+  renderDrawing(tree: NodeConfig[]) {
     let nodes: Array<any> = [];
     const context = new Context();
-    renderNodesInto(nodes, this.state.nodeConfigs, context);
+    renderNodesInto(nodes, tree, context);
     this.setState({rendered: nodes});
   }
 
   render() {
-    const {nodeConfigs, selectedNodeConfig, rendered} = this.state;
+    const {selectedNodeId, rendered} = this.state;
+    const {treeManager} = this;
+    const selectedNodeConfig = treeManager.getNodeOrNull(selectedNodeId!);
     return (
       <>
         <div id="config">
-          <div id="tree">
-            <Toolbar selectedNode={selectedNodeConfig} />
+          <div id="hierarchy">
+            <Toolbar treeManager={treeManager} selectedNode={selectedNodeConfig} />
             <NodeTree
-              nodeConfigs={nodeConfigs}
+              nodeConfigs={treeManager.getTree()}
               selectedNode={selectedNodeConfig}
               onSelectNode={this.onSelectNode}
             />
           </div>
           <div id="props">
-            {this.state.selectedNodeConfig ? <NodeConfigView
+            {selectedNodeConfig ? <NodeConfigView
               nodeConfig={selectedNodeConfig!}
               onChange={this.onChange}
-              onAddChild={this.onAddChild}
             /> : null}
           </div>
         </div>

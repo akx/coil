@@ -2,7 +2,11 @@ import registry from './registry';
 import NodeConfig from "../NodeConfig";
 import Module, {getVariableDefaults} from "./Module";
 
-export default function configure(moduleName: string, variables: any, children: Array<NodeConfig> = []): NodeConfig {
+export default function configure(
+  moduleName: string,
+  variables: {[key: string]: any},
+  children: Array<NodeConfig> = [],
+): NodeConfig {
   const module: Module = registry[moduleName];
   const defaults = getVariableDefaults(module);
   return {

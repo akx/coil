@@ -19,47 +19,31 @@ body {
   flex-direction: column;
   min-width: 300px;
   background: #b2bec3;
-  #tree {
-    flex: 1;
-    border-bottom: 2px solid #227093;
-    padding: 2px;
-    li.selected > a {
-      background: rgba(52, 172, 224, .5);
-      color: #fff;
-    }
-    ul {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      ul {
-        margin: 1px;
-        margin-left: .5em;
-        border-left: 1px dotted #34ace0;
-        padding-left: .5em;
-      }
-      a {
-        text-decoration: none;
-        color: inherit;
-      }
-    }
-  }
-  #props {
-    flex: 3;
-    h2 {
-      margin: 0;
-      padding: 0.25em;
-      color: #fff;
-      background: #34ace0;
 
+}
+
+#hierarchy {
+  flex: 1;
+  border-bottom: 2px solid #227093;
+  padding: 2px;
+}
+
+#props {
+  flex: 3;
+  h2 {
+    margin: 0;
+    padding: 0.25em;
+    color: #fff;
+    background: #34ace0;
+
+  }
+  table {
+    width: 100%;
+    tr th {
+      text-align: right;
     }
-    table {
+    input {
       width: 100%;
-      tr th {
-        text-align: right;
-      }
-      input {
-        width: 100%;
-      }
     }
   }
 }
@@ -95,14 +79,16 @@ svg {
 }
 
 #toolbar .btn {
+  display: inline-block;
   border: 1px solid #34ace0;
-  padding: 2px;
+  padding: 4px;
+  margin-right: 2px;
   background: #2d3436;
   color: #fff;
   cursor: pointer;
 }
 
-.dropdown--disabled .btn {
+.dropdown--disabled .btn, .btn.disabled {
   opacity: 0.3;
   cursor: default !important;
 }
@@ -114,5 +100,29 @@ svg {
   &:hover {
     background: #34ace0;
     color: #fff;
+  }
+}
+
+#tree {
+  padding: 2px;
+  flex: 1;
+  li.selected > a {
+    background: rgba(52, 172, 224, .5);
+    color: #fff;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    ul {
+      margin: 1px;
+      margin-left: .5em;
+      border-left: 1px dotted #34ace0;
+      padding-left: .5em;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
   }
 }

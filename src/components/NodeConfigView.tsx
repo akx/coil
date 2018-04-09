@@ -7,16 +7,11 @@ import VariableDefinition from "../modules/VariableDefinition";
 type NodeConfigViewProps = {
   nodeConfig: NodeConfig,
   onChange: Function,
-  onAddChild: Function,
 };
 
 export default class NodeConfigView extends React.Component<NodeConfigViewProps, any> {
   onChangeConfig = (variableName, value) => {
-    this.props.onChange(this.props.nodeConfig, variableName, value);
-  };
-
-  onAddChild = (moduleType) => {
-    this.props.onAddChild(this.props.nodeConfig, moduleType);
+    this.props.onChange(this.props.nodeConfig.id, variableName, value);
   };
 
   render() {
@@ -45,13 +40,6 @@ export default class NodeConfigView extends React.Component<NodeConfigViewProps,
             ))}
           </tbody>
         </table>
-        {moduleClass.acceptsChildren ? (
-            <select onChange={(event) => this.onAddChild(event.currentTarget.value)}>
-              <option>Add child</option>
-              {Object.keys(registry).map((module) => <option key={module}>{module}</option>)}
-            </select>
-          )
-          : null}
       </div>
     );
   }
