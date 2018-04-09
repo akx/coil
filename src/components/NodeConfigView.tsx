@@ -44,7 +44,7 @@ export default class NodeConfigView extends React.Component<NodeConfigViewProps,
           </tbody>
         </table>
         <ul className="errors">
-          {status.getErrorsForNode(nodeConfig.id).map((err, i) => <li>{err}</li>)}
+          {status.getErrorsForNode(nodeConfig.id).map((err, i) => <li key={i}>{err}</li>)}
         </ul>
       </div>
     );
