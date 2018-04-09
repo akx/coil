@@ -4,12 +4,12 @@ import Context from "../../Context";
 import NodeConfig from "../../NodeConfig";
 import {renderNodesInto} from "../../render";
 import TransformVariables from '../TransformVariables';
-import {rotateDEG, scale, transform, translate, toSVG} from "transformation-matrix";
+import {toSVG} from "transformation-matrix";
+import makeMatrix from "../makeMatrix";
 
 export default {
   acceptsChildren: true,
   variables: TransformVariables.concat([
-
     {name: 'opacity', default: '1'},
   ]),
 
@@ -17,7 +17,7 @@ export default {
     const nodes: Array<Element> = [];
     renderNodesInto(nodes, node.children, context);
     const {x, y, r, sx, sy, opacity} = context.evaluateNodeConfig(node);
-    const matrix = transform(translate(x, y), rotateDEG(r), scale(sx, sy));
+    const matrix = makeMatrix({x, y, r, sx, sy});
     return [<g transform={toSVG(matrix)} opacity={opacity}>{nodes}</g>];
   },
 } as Module;
