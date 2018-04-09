@@ -12,7 +12,7 @@ export default {
   ],
 
   render(context: Context, node: NodeConfig) {
-    const {number, variable} = context.evaluateAll(node.config);
+    const {number, variable} = context.evaluateNodeConfig(node);
     const nodes = [];
 
     const nNumber = Math.round(parseFloat(number));

@@ -14,7 +14,7 @@ export default {
   ]),
 
   render(context: Context, node: NodeConfig) {
-    const {width, height, x, y, r, sx, sy, fill, opacity} = context.evaluateAll(node.config);
+    const {width, height, x, y, r, sx, sy, fill, opacity} = context.evaluateNodeConfig(node);
     const matrix = transform(translate(x, y), rotateDEG(r), scale(sx, sy));
     return [
       <rect

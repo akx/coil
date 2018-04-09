@@ -14,7 +14,7 @@ export default {
   ],
 
   render(context: Context, node: NodeConfig) {
-    let {numberX, numberY, variableX, variableY} = context.evaluateAll(node.config);
+    let {numberX, numberY, variableX, variableY} = context.evaluateNodeConfig(node);
     const nodes = [];
 
     numberX = Math.round(parseFloat(numberX));

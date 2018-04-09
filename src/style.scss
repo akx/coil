@@ -106,6 +106,9 @@ svg {
 #tree {
   padding: 2px;
   flex: 1;
+  li a {
+    padding: 2px;
+  }
   li.selected > a {
     background: rgba(52, 172, 224, .5);
     color: #fff;
@@ -117,7 +120,7 @@ svg {
     ul {
       margin: 1px;
       margin-left: .5em;
-      border-left: 1px dotted #34ace0;
+      border-left: 1px dotted #2d3436;
       padding-left: .5em;
     }
     a {
@@ -125,4 +128,10 @@ svg {
       color: inherit;
     }
   }
+}
+
+ul.errors {
+  color: red;
+  max-height: 200px;
+  overflow-y: auto;
 }

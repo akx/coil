@@ -9,6 +9,7 @@ export function renderNode(context: Context, nodeConfig: NodeConfig) {
     throw new Error(`not registered ${nodeConfig.module}`);
   }
   try {
+    context.status.addVariables(nodeConfig.id, context.variables);
     return module.render(context, nodeConfig);
   } catch (e) {
     console.error(e);

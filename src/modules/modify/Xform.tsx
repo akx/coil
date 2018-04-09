@@ -16,7 +16,7 @@ export default {
   render(context: Context, node: NodeConfig) {
     const nodes: Array<Element> = [];
     renderNodesInto(nodes, node.children, context);
-    const {x, y, r, sx, sy, opacity} = context.evaluateAll(node.config);
+    const {x, y, r, sx, sy, opacity} = context.evaluateNodeConfig(node);
     const matrix = transform(translate(x, y), rotateDEG(r), scale(sx, sy));
     return [<g transform={toSVG(matrix)} opacity={opacity}>{nodes}</g>];
   },

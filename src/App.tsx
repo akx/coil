@@ -7,6 +7,7 @@ import {renderNodesInto} from './render';
 import Context from './Context';
 import Toolbar from './components/Toolbar';
 import {TreeManager} from "./managers/TreeManager";
+import Status from "./Status";
 
 const DEFAULT_NODE_CONFIGS: NodeConfig[] = [
   configure(
@@ -38,6 +39,7 @@ const DEFAULT_NODE_CONFIGS: NodeConfig[] = [
 type AppState = {
   selectedNodeId: string | null,
   rendered: any,
+  status: Status,
 };
 
 export default class App extends React.Component<any, AppState> {
@@ -47,6 +49,7 @@ export default class App extends React.Component<any, AppState> {
   state = {
     selectedNodeId: null,
     rendered: null,
+    status: new Status(),
   };
 
   componentDidMount() {
@@ -67,14 +70,15 @@ export default class App extends React.Component<any, AppState> {
   };
 
   renderDrawing(tree: NodeConfig[]) {
-    let nodes: Array<any> = [];
-    const context = new Context();
-    renderNodesInto(nodes, tree, context);
-    this.setState({rendered: nodes});
+    let rendered: Array<any> = [];
+    const status = new Status();
+    const context = new Context(status);
+    renderNodesInto(rendered, tree, context);
+    this.setState({rendered, status});
   }
 
   render() {
-    const {selectedNodeId, rendered} = this.state;
+    const {selectedNodeId, rendered, status} = this.state;
     const {treeManager} = this;
     const selectedNodeConfig = treeManager.getNodeOrNull(selectedNodeId!);
     return (
@@ -91,6 +95,7 @@ export default class App extends React.Component<any, AppState> {
           <div id="props">
             {selectedNodeConfig ? <NodeConfigView
               nodeConfig={selectedNodeConfig!}
+              status={status}
               onChange={this.onChange}
             /> : null}
           </div>
