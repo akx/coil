@@ -13,14 +13,14 @@ export default {
 
   render(context: Context, node: NodeConfig) {
     const {number, variable} = context.evaluateAll(node.config);
-    const nodes: Array<Element> = [];
+    const nodes = [];
 
     const nNumber = Math.round(parseFloat(number));
     for (var i = 0; i < nNumber; i++) {
       const subcontext = context.subcontext({
         [variable]: i,
         [`${variable}F`]: i / (nNumber - 1),
-      });
+      }, `${node.id}.${i}`);
       renderNodesInto(nodes, node.children, subcontext);
     }
     return nodes;

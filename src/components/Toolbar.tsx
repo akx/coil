@@ -54,8 +54,11 @@ export default class Toolbar extends React.Component<ToolbarProps, any> {
       childMode = 'child';
       childText = 'Child';
     }
-    if (selectedNode && nodeAcceptsChildren(this.props.treeManager.getNodeParentOrNull(selectedNode.id))) {
-      allowAddSibling = true;
+    if (selectedNode) {
+      const parent = this.props.treeManager.getNodeParentOrNull(selectedNode.id);
+      if(parent === null || nodeAcceptsChildren(parent)) {
+        allowAddSibling = true;
+      }
     }
     return (
       <div id="toolbar">

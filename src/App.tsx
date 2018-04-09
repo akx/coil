@@ -53,7 +53,7 @@ export default class App extends React.Component<any, AppState> {
     this.treeManager.addTreeUpdateListener((tree) => {
       this.renderDrawing(tree);
     });
-    //this.treeManager.replaceTree(DEFAULT_NODE_CONFIGS);
+    this.treeManager.replaceTree(DEFAULT_NODE_CONFIGS);
   }
 
   onSelectNode = (nodeConfig: NodeConfig | null): void => {

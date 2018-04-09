@@ -15,7 +15,7 @@ export default {
   render(context: Context, node: NodeConfig) {
     const indexVariable = context.evaluate(node.config.indexVariable);
     const seed = context.evaluate(node.config.seed);
-    const nodes: Array<Element> = [];
+    const nodes = [];
     renderNodesInto(nodes, node.children, context);
     const filterContext = context.subcontext({}, '', seed);
     return nodes.filter((child, index) => {
