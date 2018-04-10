@@ -3,4 +3,5 @@ export default interface VariableDefinition {
   description?: string;
   default?: string;
   type?: 'number' | 'string' | 'color';
+  group?: string;
 }

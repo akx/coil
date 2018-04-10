@@ -39,7 +39,11 @@ body {
   }
   table {
     width: 100%;
-    tr th {
+    tr.group-separator th {
+      text-align: left;
+      border-bottom: 1px solid #333;
+    }
+    tr.variable-config-row th {
       text-align: right;
     }
     input {

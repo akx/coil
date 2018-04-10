@@ -5,13 +5,12 @@ import NodeConfig from "../../NodeConfig";
 import {toSVG} from 'transformation-matrix';
 import TransformVariables from '../TransformVariables';
 import makeMatrix from "../makeMatrix";
+import PresentationVariables from "../PresentationVariables";
 
 export default {
-  variables: TransformVariables.concat([
+  variables: TransformVariables.concat(PresentationVariables).concat([
     {name: 'width', default: '20'},
     {name: 'height', default: '20'},
-    {name: 'fill', default: '#333'},
-    {name: 'opacity', default: '1'},
   ]),
 
   render(context: Context, node: NodeConfig) {

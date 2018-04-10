@@ -4,6 +4,7 @@ import registry from "../modules/registry";
 import Module from "../modules/Module";
 import VariableDefinition from "../modules/VariableDefinition";
 import Status from "../Status";
+import {capitalize, groupBy} from 'lodash';
 
 type NodeConfigViewProps = {
   nodeConfig: NodeConfig,
@@ -11,6 +12,27 @@ type NodeConfigViewProps = {
   status: Status,
 };
 
+const VariableConfigRow = function ({variable, nodeConfig, onChange, status}: {
+  variable: VariableDefinition,
+  nodeConfig: NodeConfig,
+  onChange: Function,
+  status: Status,
+}) {
+  return (
+    <tr className="variable-config-row">
+      <th>
+        {variable.name}
+      </th>
+      <td>
+        <input
+          type="text"
+          value={nodeConfig.config[variable.name]}
+          onChange={(event) => onChange(variable.name, event.currentTarget.value)}
+        />
+      </td>
+    </tr>
+  );
+};
 export default class NodeConfigView extends React.Component<NodeConfigViewProps, any> {
   onChangeConfig = (variableName, value) => {
     this.props.onChange(this.props.nodeConfig.id, variableName, value);
@@ -19,6 +41,7 @@ export default class NodeConfigView extends React.Component<NodeConfigViewProps,
   render() {
     const {nodeConfig, status} = this.props;
     const moduleClass: Module = registry[nodeConfig.module];
+    const variablesByGroup = groupBy(moduleClass.variables, (v) => (v.group || 'Other'));
 
     return (
       <div>
@@ -28,19 +51,21 @@ export default class NodeConfigView extends React.Component<NodeConfigViewProps,
         Variables last render: {status.getVariablesForNode(nodeConfig.id).join(', ')}
         <table>
           <tbody>
-            {moduleClass.variables.map((variable: VariableDefinition) => (
-              <tr key={variable.name}>
-                <th>
-                  {variable.name}</th>
-                <td>
-                  <input
-                    type="text"
-                    value={nodeConfig.config[variable.name]}
-                    onChange={(event) => this.onChangeConfig(variable.name, event.currentTarget.value)}
+            {Object.keys(variablesByGroup).sort().map((group) => <React.Fragment key={group}>
+                <tr key={`#${group}`} className="group-separator">
+                  <th colSpan={2}>{group}</th>
+                </tr>
+                {variablesByGroup[group].map((variable: VariableDefinition) => (
+                  <VariableConfigRow
+                    key={variable.name}
+                    variable={variable}
+                    nodeConfig={nodeConfig}
+                    status={status}
+                    onChange={this.onChangeConfig}
                   />
-                </td>
-              </tr>
-            ))}
+                ))}
+              </React.Fragment>
+            )}
           </tbody>
         </table>
         <ul className="errors">
