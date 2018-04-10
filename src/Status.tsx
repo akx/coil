@@ -1,5 +1,4 @@
 import {VariableMap} from "./types";
-import {clone} from 'lodash';
 
 export default class Status {
   private nodeErrors: { [key: string]: string[] } = {};
@@ -21,7 +20,7 @@ export default class Status {
     if (!(nodeId in this.nodeVariables)) {
       this.nodeVariables[nodeId] = [];
     }
-    this.nodeVariables[nodeId].push(clone(variables));
+    this.nodeVariables[nodeId].push(Object.assign({}, variables));
   }
 
   public getVariablesForNode(nodeId: string): string[] {
