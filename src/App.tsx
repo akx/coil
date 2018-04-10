@@ -67,6 +67,7 @@ export default class App extends React.Component<any, AppState> {
 
   onChange = (nodeId: string, variableName: string, value) => {
     this.treeManager.changeNodeVariable(nodeId, variableName, value);
+    this.forceUpdate();  // Avoid asynchronous input caret position problem :(
   };
 
   renderDrawing(tree: NodeConfig[]) {
@@ -93,11 +94,14 @@ export default class App extends React.Component<any, AppState> {
             />
           </div>
           <div id="props">
-            {selectedNodeConfig ? <NodeConfigView
-              nodeConfig={selectedNodeConfig!}
-              status={status}
-              onChange={this.onChange}
-            /> : null}
+            {selectedNodeConfig ?
+              <NodeConfigView
+                nodeConfig={selectedNodeConfig!}
+                status={status}
+                onChange={this.onChange}
+              />
+              : null
+            }
           </div>
         </div>
         <div id="drawing">
