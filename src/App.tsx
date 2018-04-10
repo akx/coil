@@ -64,13 +64,17 @@ export default class App extends React.Component<any, AppState> {
     });
   };
 
-  onChange = (nodeId: string, variableName: string, value) => {
-    this.treeManager.changeNodeVariable(nodeId, variableName, value);
+  onChangeNodeVariable = (nodeConfig: NodeConfig, variableName: string, newValue: string) => {
+    this.treeManager.changeNodeVariable(nodeConfig.id, variableName, newValue);
     this.forceUpdate();  // Avoid asynchronous input caret position problem :(
   };
 
-  onMoveNode = (sourceNodeId: string, targetNodeId: string) => {
-    this.treeManager.moveNode(sourceNodeId, targetNodeId);
+  onRepositionNode = (sourceNodeId: string, targetNodeId: string, copy: boolean) => {
+    if (copy) {
+      this.treeManager.copyNode(sourceNodeId, targetNodeId);
+    } else {
+      this.treeManager.moveNode(sourceNodeId, targetNodeId);
+    }
   };
 
   renderDrawing(tree: NodeConfig[]) {
@@ -94,7 +98,7 @@ export default class App extends React.Component<any, AppState> {
               nodeConfigs={treeManager.getTree()}
               selectedNode={selectedNodeConfig}
               onSelectNode={this.onSelectNode}
-              onMoveNode={this.onMoveNode}
+              onRepositionNode={this.onRepositionNode}
             />
           </div>
           <div id="props">
@@ -102,7 +106,7 @@ export default class App extends React.Component<any, AppState> {
               <NodeConfigView
                 nodeConfig={selectedNodeConfig!}
                 status={status}
-                onChange={this.onChange}
+                onChange={this.onChangeNodeVariable}
               />
               : null
             }

@@ -1,4 +1,4 @@
-import {NodeConfig, configure} from "../NodeConfig";
+import {NodeConfig, configure, duplicate} from "../NodeConfig";
 import {cloneDeep} from 'lodash';
 
 type NodeCacheEntry = {
@@ -108,8 +108,10 @@ export class TreeManager {
     if (parentNodeId) {
       const parentNode = this.getNode(parentNodeId);
       parentNode.children.push(newNode);
+      return parentNode;
     } else {
       this.tree.push(newNode);
+      return null;
     }
   }
 
@@ -141,6 +143,9 @@ export class TreeManager {
   }
 
   moveNode(sourceNodeId: string, newParentNodeId: string | null) {
+    if(sourceNodeId === newParentNodeId) {
+      return false;
+    }
     const sourceNode = this.getNode(sourceNodeId);
     const sourceNodeParent = this.getNodeParent(sourceNodeId);
     // Remove from parent...
@@ -149,5 +154,14 @@ export class TreeManager {
     this.addChildInternal(newParentNodeId, sourceNode);
     this.updateNodeCache();
     this.invokeTreeUpdateListeners();
+    return true;
+  }
+
+  copyNode(sourceNodeId: string, targetNodeId: string | null) {
+    const copiedNode = duplicate(this.getNode(sourceNodeId));
+    this.addChildInternal(targetNodeId, copiedNode);
+    this.updateNodeCache();
+    this.invokeTreeUpdateListeners();
+    return true;
   }
 }

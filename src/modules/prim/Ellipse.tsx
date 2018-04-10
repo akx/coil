@@ -26,7 +26,7 @@ export default {
         fill={fill}
         opacity={opacity}
         transform={toSVG(matrix)}
-        key={context.getId('ellip')}
+        key={context.getId(node.id)}
       />
     ];
   }

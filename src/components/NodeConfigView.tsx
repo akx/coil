@@ -4,20 +4,24 @@ import registry from "../modules/registry";
 import Module from "../modules/Module";
 import VariableDefinition from "../modules/VariableDefinition";
 import Status from "../Status";
-import {capitalize, groupBy} from 'lodash';
+import {groupBy} from 'lodash';
+import {ChangeNodeConfigHandler} from "../types";
+
 
 type NodeConfigViewProps = {
   nodeConfig: NodeConfig,
-  onChange: Function,
+  onChange: ChangeNodeConfigHandler,
   status: Status,
 };
 
-const VariableConfigRow = function ({variable, nodeConfig, onChange, status}: {
+type VariableConfigRowProps = {
   variable: VariableDefinition,
   nodeConfig: NodeConfig,
-  onChange: Function,
+  onChange: ChangeNodeConfigHandler,
   status: Status,
-}) {
+};
+
+const VariableConfigRow = function ({variable, nodeConfig, onChange, status}: VariableConfigRowProps) {
   return (
     <tr className="variable-config-row">
       <th>
@@ -26,18 +30,19 @@ const VariableConfigRow = function ({variable, nodeConfig, onChange, status}: {
       <td>
         <input
           type="text"
-          value={nodeConfig.config[variable.name]}
-          onChange={(event) => onChange(variable.name, event.currentTarget.value)}
+          value={nodeConfig.config[variable.name] || ''}
+          onChange={(event) => onChange(
+            nodeConfig,
+            variable.name,
+            event.currentTarget.value.toString(),
+          )}
         />
       </td>
     </tr>
   );
 };
-export default class NodeConfigView extends React.Component<NodeConfigViewProps, any> {
-  onChangeConfig = (variableName, value) => {
-    this.props.onChange(this.props.nodeConfig.id, variableName, value);
-  };
 
+export default class NodeConfigView extends React.Component<NodeConfigViewProps, any> {
   render() {
     const {nodeConfig, status} = this.props;
     const moduleClass: Module = registry[nodeConfig.module];
@@ -61,7 +66,7 @@ export default class NodeConfigView extends React.Component<NodeConfigViewProps,
                     variable={variable}
                     nodeConfig={nodeConfig}
                     status={status}
-                    onChange={this.onChangeConfig}
+                    onChange={this.props.onChange}
                   />
                 ))}
               </React.Fragment>

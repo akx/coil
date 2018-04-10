@@ -1,11 +1,11 @@
 import * as React from 'react';
-import NodeConfig from "../NodeConfig";
+import {NodeConfig} from "../NodeConfig";
 import registry from "../modules/registry";
 
 type TreeCommonProps = {
   selectedNode: NodeConfig | null,
   onSelectNode: (node: NodeConfig | null) => void,
-  onMoveNode: (sourceNodeId: string, targetNodeId: string) => void,
+  onRepositionNode: (sourceNodeId: string, targetNodeId: string, copy: boolean) => void,
 };
 
 type TreeNodeProps = TreeCommonProps & {
@@ -18,7 +18,7 @@ type TreeLevelProps = TreeCommonProps & {
 
 const DRAG_AND_DROP_DATA_ID = 'application/x-coil-nodeid';
 
-const TreeNode = ({nodeConfig, selectedNode, onSelectNode, onMoveNode}: TreeNodeProps) => (
+const TreeNode = ({nodeConfig, selectedNode, onSelectNode, onRepositionNode}: TreeNodeProps) => (
   <li className={selectedNode === nodeConfig ? 'selected' : ''}>
     <a
       href="#"
@@ -34,17 +34,19 @@ const TreeNode = ({nodeConfig, selectedNode, onSelectNode, onMoveNode}: TreeNode
         event.dataTransfer.effectAllowed = 'all';
       }}
       onDragOver={(event) => {
-        event.dataTransfer.dropEffect = "none";
+        event.dataTransfer.dropEffect = 'none';
         if (event.dataTransfer.types.indexOf(DRAG_AND_DROP_DATA_ID) > -1) {
-          if(registry[nodeConfig.module].acceptsChildren) {
-            event.dataTransfer.dropEffect = "copy";
+          if (registry[nodeConfig.module].acceptsChildren) {
+            event.dataTransfer.dropEffect = (event.altKey ? 'copy' : 'link');
             event.preventDefault();
           }
         }
       }}
       onDrop={(event) => {
         const sourceNodeId = event.dataTransfer.getData(DRAG_AND_DROP_DATA_ID);
-        onMoveNode(sourceNodeId, nodeConfig.id);
+        event.dataTransfer.dropEffect = (event.altKey ? 'copy' : 'link');
+        const copy = (event.dataTransfer.dropEffect === 'copy');
+        onRepositionNode(sourceNodeId, nodeConfig.id, copy);
       }}
     >
       {nodeConfig.module} {nodeConfig.id}
@@ -54,14 +56,14 @@ const TreeNode = ({nodeConfig, selectedNode, onSelectNode, onMoveNode}: TreeNode
         nodeConfigs={nodeConfig.children}
         selectedNode={selectedNode}
         onSelectNode={onSelectNode}
-        onMoveNode={onMoveNode}
+        onRepositionNode={onRepositionNode}
       />
       : null
     }
   </li>
 );
 
-const TreeLevel = ({nodeConfigs, selectedNode, onSelectNode, onMoveNode}: TreeLevelProps) => (
+const TreeLevel = ({nodeConfigs, selectedNode, onSelectNode, onRepositionNode}: TreeLevelProps) => (
   <ul>
     {nodeConfigs.map((nodeConfig: NodeConfig) => (
       <TreeNode
@@ -69,13 +71,13 @@ const TreeLevel = ({nodeConfigs, selectedNode, onSelectNode, onMoveNode}: TreeLe
         nodeConfig={nodeConfig}
         selectedNode={selectedNode}
         onSelectNode={onSelectNode}
-        onMoveNode={onMoveNode}
+        onRepositionNode={onRepositionNode}
       />
     ))}
   </ul>
 );
 
-export default ({nodeConfigs, selectedNode, onSelectNode, onMoveNode}: TreeLevelProps) => {
+export default ({nodeConfigs, selectedNode, onSelectNode, onRepositionNode}: TreeLevelProps) => {
   return (
     <div
       id="tree"
@@ -90,7 +92,7 @@ export default ({nodeConfigs, selectedNode, onSelectNode, onMoveNode}: TreeLevel
         nodeConfigs={nodeConfigs}
         selectedNode={selectedNode}
         onSelectNode={onSelectNode}
-        onMoveNode={onMoveNode}
+        onRepositionNode={onRepositionNode}
       />
     </div>
   );
