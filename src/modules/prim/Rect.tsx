@@ -4,7 +4,7 @@ import Context from "../../Context";
 import {NodeConfig} from "../../NodeConfig";
 import {toSVG} from 'transformation-matrix';
 import TransformVariables from '../TransformVariables';
-import makeMatrix from "../makeMatrix";
+import {splitMatrixAndProps} from "../MatrixUtils";
 import PresentationVariables from "../PresentationVariables";
 
 export default {
@@ -14,18 +14,14 @@ export default {
   ]),
 
   render(context: Context, node: NodeConfig) {
-    const {width, height, x, y, r, sx, sy, fill, opacity} = context.evaluateNodeConfig(node);
-    const matrix = makeMatrix({x, y, r, sx, sy});
+    const {props, matrix} = splitMatrixAndProps(context.evaluateNodeConfig(node));
     return [
       <rect
-        x={-width / 2}
-        y={-height / 2}
-        width={width}
-        height={height}
-        fill={fill}
-        opacity={opacity}
+        x={-props.width / 2}
+        y={-props.height / 2}
         transform={toSVG(matrix)}
         key={context.getId(node.id)}
+        {...props}
       />
     ];
   }

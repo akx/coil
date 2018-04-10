@@ -4,7 +4,7 @@ import Context from "../../Context";
 import {NodeConfig} from "../../NodeConfig";
 import {toSVG} from 'transformation-matrix';
 import TransformVariables from '../TransformVariables';
-import makeMatrix from "../makeMatrix";
+import {splitMatrixAndProps} from "../MatrixUtils";
 
 export default {
   variables: TransformVariables.concat([
@@ -15,8 +15,8 @@ export default {
   ]),
 
   render(context: Context, node: NodeConfig) {
-    const {radiusX, radiusY, x, y, r, sx, sy, fill, opacity} = context.evaluateNodeConfig(node);
-    const matrix = makeMatrix({x, y, r, sx, sy});
+    const {props, matrix} = splitMatrixAndProps(context.evaluateNodeConfig(node));
+    const {radiusX, radiusY, fill, opacity} = props;
     return [
       <ellipse
         cx={0}

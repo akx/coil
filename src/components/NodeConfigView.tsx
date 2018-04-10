@@ -22,6 +22,18 @@ type VariableConfigRowProps = {
 };
 
 const VariableConfigRow = function ({variable, nodeConfig, onChange, status}: VariableConfigRowProps) {
+  let extraControls: React.ReactElement<any> | null = null;
+
+  const handleChange = ((event) => onChange(
+    nodeConfig,
+    variable.name,
+    event.target.value.toString(),
+  ));
+  if (variable.type === 'color') {
+    extraControls = (
+      <input type="color" value={nodeConfig.config[variable.name] || ''} onChange={handleChange} />
+    );
+  }
   return (
     <tr className="variable-config-row">
       <th>
@@ -31,12 +43,11 @@ const VariableConfigRow = function ({variable, nodeConfig, onChange, status}: Va
         <input
           type="text"
           value={nodeConfig.config[variable.name] || ''}
-          onChange={(event) => onChange(
-            nodeConfig,
-            variable.name,
-            event.currentTarget.value.toString(),
-          )}
+          onChange={handleChange}
         />
+      </td>
+      <td>
+        {extraControls}
       </td>
     </tr>
   );
@@ -58,7 +69,7 @@ export default class NodeConfigView extends React.Component<NodeConfigViewProps,
           <tbody>
             {Object.keys(variablesByGroup).sort().map((group) => <React.Fragment key={group}>
                 <tr key={`#${group}`} className="group-separator">
-                  <th colSpan={2}>{group}</th>
+                  <th colSpan={3}>{group}</th>
                 </tr>
                 {variablesByGroup[group].map((variable: VariableDefinition) => (
                   <VariableConfigRow

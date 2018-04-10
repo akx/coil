@@ -5,7 +5,7 @@ import {NodeConfig} from "../../NodeConfig";
 import {renderNodesInto} from "../../render";
 import TransformVariables from '../TransformVariables';
 import {toSVG} from "transformation-matrix";
-import makeMatrix from "../makeMatrix";
+import {splitMatrixAndProps} from "../MatrixUtils";
 
 export default {
   acceptsChildren: true,
@@ -16,8 +16,8 @@ export default {
   render(context: Context, node: NodeConfig) {
     const nodes: Array<Element> = [];
     renderNodesInto(nodes, node.children, context);
-    const {x, y, r, sx, sy, opacity} = context.evaluateNodeConfig(node);
-    const matrix = makeMatrix({x, y, r, sx, sy});
+    const {props, matrix} = splitMatrixAndProps(context.evaluateNodeConfig(node));
+    const {opacity} = props;
     return [<g transform={toSVG(matrix)} opacity={opacity}>{nodes}</g>];
   },
 } as Module;

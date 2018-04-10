@@ -1,4 +1,5 @@
 import {rotateDEG, scale, translate} from "transformation-matrix";
+import {VariableMap} from "../types";
 
 const multiply = (m1: Matrix, m2: Matrix): Matrix => {
   return {
@@ -11,9 +12,15 @@ const multiply = (m1: Matrix, m2: Matrix): Matrix => {
   };
 };
 
-type TransformBag = { x: number, y: number, r: number, sx: number, sy: number };
+export type TransformBag = {
+  x: number,
+  y: number,
+  r: number,
+  sx: number,
+  sy: number,
+};
 
-export default function makeMatrix({x, y, r, sx, sy}: TransformBag): Matrix {
+export function makeMatrix({x, y, r, sx, sy}: TransformBag): Matrix {
   let matrix = translate(isFinite(x) ? x : 0, isFinite(y) ? y : 0);
   if (isFinite(r)) {
     matrix = multiply(matrix, rotateDEG(r));
@@ -22,4 +29,18 @@ export default function makeMatrix({x, y, r, sx, sy}: TransformBag): Matrix {
     matrix = multiply(matrix, scale(sx, sy));
   }
   return matrix;
-};
+}
+
+export function splitMatrixAndProps(props: VariableMap): {
+  matrix: Matrix,
+  props: VariableMap,
+} {
+  const matrix = makeMatrix(props as TransformBag);
+  const newProps = Object.assign({}, props);
+  delete newProps.x;
+  delete newProps.y;
+  delete newProps.r;
+  delete newProps.sx;
+  delete newProps.sy;
+  return {matrix, props: newProps};
+}
