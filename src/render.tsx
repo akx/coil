@@ -1,4 +1,4 @@
-import NodeConfig from "./NodeConfig";
+import {NodeConfig} from "./NodeConfig";
 import registry from "./modules/registry";
 import Context from "./Context";
 import Module from "./modules/Module";

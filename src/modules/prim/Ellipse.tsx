@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Module from '../Module';
 import Context from "../../Context";
-import NodeConfig from "../../NodeConfig";
+import {NodeConfig} from "../../NodeConfig";
 import {toSVG} from 'transformation-matrix';
 import TransformVariables from '../TransformVariables';
 import makeMatrix from "../makeMatrix";

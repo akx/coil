@@ -1,7 +1,7 @@
 import {create, RandomSeed} from 'random-seed';
 import {isEmpty} from 'lodash';
 import Status from "./Status";
-import NodeConfig from "./NodeConfig";
+import {NodeConfig} from "./NodeConfig";
 import {ExpressionMap, VariableMap} from "./types";
 
 function evaluateExpression(expression: string, namespace: () => VariableMap): any {

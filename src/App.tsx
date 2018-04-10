@@ -1,8 +1,7 @@
 import * as React from 'react';
-import NodeConfig from "./NodeConfig";
+import {configure, NodeConfig} from "./NodeConfig";
 import NodeTree from "./components/NodeTree";
 import NodeConfigView from "./components/NodeConfigView";
-import configure from "./modules/configure";
 import {renderNodesInto} from './render';
 import Context from './Context';
 import Toolbar from './components/Toolbar';

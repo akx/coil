@@ -1,6 +1,5 @@
-import NodeConfig from "../NodeConfig";
+import {NodeConfig, configure} from "../NodeConfig";
 import {cloneDeep} from 'lodash';
-import configure from "../modules/configure";
 
 type NodeCacheEntry = {
   node: NodeConfig,

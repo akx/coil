@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Dropdown, {DropdownContent, DropdownTrigger} from 'react-simple-dropdown';
-import NodeConfig from '../NodeConfig';
+import {NodeConfig} from '../NodeConfig';
 import registry from '../modules/registry';
 import {TreeManager} from "../managers/TreeManager";
 

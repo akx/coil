@@ -1,5 +1,5 @@
 import Context from "../Context";
-import NodeConfig from "../NodeConfig";
+import {NodeConfig} from "../NodeConfig";
 import VariableDefinition from "./VariableDefinition";
 import {ReactElement} from "react";
 

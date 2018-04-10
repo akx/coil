@@ -1,5 +1,5 @@
 import * as React from 'react';
-import NodeConfig from "../NodeConfig";
+import {NodeConfig} from "../NodeConfig";
 import registry from "../modules/registry";
 import Module from "../modules/Module";
 import VariableDefinition from "../modules/VariableDefinition";
