@@ -99,15 +99,19 @@ export class TreeManager {
 
   public addChildNode(parentNodeId: string | null, module: string) {
     const newNode = configure(module, {});
+    this.addChildInternal(parentNodeId, newNode);
+    this.updateNodeCache();
+    this.invokeTreeUpdateListeners();
+    return newNode;
+  }
+
+  private addChildInternal(parentNodeId: string | null, newNode) {
     if (parentNodeId) {
       const parentNode = this.getNode(parentNodeId);
       parentNode.children.push(newNode);
     } else {
       this.tree.push(newNode);
     }
-    this.updateNodeCache();
-    this.invokeTreeUpdateListeners();
-    return newNode;
   }
 
   public wrapNode(parentNodeId: string, module: string) {
@@ -133,6 +137,17 @@ export class TreeManager {
     const node = this.getNode(nodeId);
     const nodeParent = this.getNodeParent(nodeId);
     this.replaceOrEmsiblingNode(nodeParent, node, [newNode], false);
+    this.updateNodeCache();
+    this.invokeTreeUpdateListeners();
+  }
+
+  moveNode(sourceNodeId: string, newParentNodeId: string | null) {
+    const sourceNode = this.getNode(sourceNodeId);
+    const sourceNodeParent = this.getNodeParent(sourceNodeId);
+    // Remove from parent...
+    this.replaceOrEmsiblingNode(sourceNodeParent, sourceNode, [], true);
+    // Add to new parent.
+    this.addChildInternal(newParentNodeId, sourceNode);
     this.updateNodeCache();
     this.invokeTreeUpdateListeners();
   }

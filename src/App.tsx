@@ -70,6 +70,10 @@ export default class App extends React.Component<any, AppState> {
     this.forceUpdate();  // Avoid asynchronous input caret position problem :(
   };
 
+  onMoveNode = (sourceNodeId: string, targetNodeId: string) => {
+    this.treeManager.moveNode(sourceNodeId, targetNodeId);
+  };
+
   renderDrawing(tree: NodeConfig[]) {
     let rendered: Array<any> = [];
     const status = new Status();
@@ -91,6 +95,7 @@ export default class App extends React.Component<any, AppState> {
               nodeConfigs={treeManager.getTree()}
               selectedNode={selectedNodeConfig}
               onSelectNode={this.onSelectNode}
+              onMoveNode={this.onMoveNode}
             />
           </div>
           <div id="props">
