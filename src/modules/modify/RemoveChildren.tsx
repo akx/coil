@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Module from '../Module';
 import Context from "../../Context";
-import {NodeConfig} from "../../NodeConfig";
 import {renderNodesInto} from "../../render";
 
 export default {
@@ -11,16 +10,15 @@ export default {
     {name: 'indexVariable', default: 'i'},
   ],
 
-  render(context: Context, node: NodeConfig) {
-    const indexVariable = context.evaluate(node, 'indexVariable', node.config.indexVariable!);
-    const seed = context.evaluate(node, 'seed', node.config.seed!);
+  render(context: Context) {
+    const node = context.node;
+    const indexVariable = context.evaluateFromNodeConfig('indexVariable');
     const nodes = [];
     renderNodesInto(nodes, node.children, context);
-    const filterContext = context.subcontext({}, '', seed);
-    return nodes.filter((child, index) => filterContext.evaluate(
-      node, `keep ${index}`,
-      node.config.keep!,
-      {[indexVariable]: index},
+    const filterContext = context.subcontext(node);
+    const keepExpression = node.config.keep!;
+    return nodes.filter((child, index) => (
+      filterContext.evaluate(`keep ${index}`, keepExpression, {[indexVariable]: index})
     ));
   },
 } as Module;

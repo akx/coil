@@ -10,7 +10,7 @@ export function renderNode(context: Context, nodeConfig: NodeConfig) {
   }
   try {
     context.status.addVariables(nodeConfig.id, context.variables);
-    return module.render(context, nodeConfig);
+    return module.render(context.subcontext(nodeConfig, {}, nodeConfig.id));
   } catch (e) {
     console.error(e);
     return [];

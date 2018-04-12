@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Module from '../Module';
 import Context from "../../Context";
-import {NodeConfig} from "../../NodeConfig";
 import {renderNodesInto} from "../../render";
 
 export default {
@@ -11,16 +10,16 @@ export default {
     {name: 'variable', default: 'i'},
   ],
 
-  render(context: Context, node: NodeConfig) {
-    const {number, variable} = context.evaluateNodeConfig(node);
+  render(context: Context) {
+    const {number, variable} = context.evaluateNodeConfig();
     const nodes = [];
-
     const nNumber = Math.round(parseFloat(number));
+    const node = context.node;
     for (var i = 0; i < nNumber; i++) {
-      const subcontext = context.subcontext({
+      const subcontext = context.subcontext(node, {
         [variable]: i,
         [`${variable}F`]: i / (nNumber - 1),
-      }, `${node.id}.${i}`);
+      }, `${i}`);
       renderNodesInto(nodes, node.children, subcontext);
     }
     return nodes;

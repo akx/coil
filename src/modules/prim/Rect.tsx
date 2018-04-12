@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Module from '../Module';
 import Context from "../../Context";
-import {NodeConfig} from "../../NodeConfig";
 import {toSVG} from 'transformation-matrix';
 import TransformVariables from '../TransformVariables';
 import {splitMatrixAndProps} from "../MatrixUtils";
@@ -13,14 +12,15 @@ export default {
     {name: 'height', default: '20'},
   ]),
 
-  render(context: Context, node: NodeConfig) {
+  render(context: Context) {
+    const {node} = context;
     const {props, matrix} = splitMatrixAndProps(context.evaluateNodeConfig(node));
     return [
       <rect
         x={-props.width / 2}
         y={-props.height / 2}
         transform={toSVG(matrix)}
-        key={context.getId(node.id)}
+        key={context.getId()}
         {...props}
       />
     ];

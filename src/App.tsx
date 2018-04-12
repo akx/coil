@@ -79,10 +79,10 @@ export default class App extends React.Component<any, AppState> {
   };
 
   renderDrawing(tree: NodeConfig[]) {
-    let rendered: Array<any> = [];
     const status = new Status();
-    const context = new Context(status);
-    renderNodesInto(rendered, tree, context);
+    const rootPseudoNode = {id: 'root', module: 'root', config: {}, children: tree};
+    const context = new Context(status, rootPseudoNode);
+    const rendered = context.renderChildren();
     this.setState({rendered, status});
   }
 

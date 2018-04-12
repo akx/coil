@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Context from "../../Context";
-import {NodeConfig} from "../../NodeConfig";
 import TransformVariables from '../TransformVariables';
 import {splitMatrixAndProps} from "../MatrixUtils";
 import PresentationVariables from "../PresentationVariables";
@@ -16,7 +15,8 @@ export default {
     {name: 'radius2', default: '5'},
   ]),
 
-  render(context: Context, node: NodeConfig) {
+  render(context: Context) {
+    const {node} = context;
     const {props, matrix} = splitMatrixAndProps(context.evaluateNodeConfig(node));
     const path: string[] = [];
     for (var i = 0; i < props.vertices; i++) {
