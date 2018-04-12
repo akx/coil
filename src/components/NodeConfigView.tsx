@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {NodeConfig} from "../NodeConfig";
 import registry from "../modules/registry";
-import Module from "../modules/Module";
+import Module, {UniversalVariables} from "../modules/Module";
 import VariableDefinition from "../modules/VariableDefinition";
 import Status from "../Status";
 import {groupBy} from 'lodash';
@@ -57,7 +57,8 @@ export default class NodeConfigView extends React.Component<NodeConfigViewProps,
   render() {
     const {nodeConfig, status} = this.props;
     const moduleClass: Module = registry[nodeConfig.module];
-    const variablesByGroup = groupBy(moduleClass.variables, (v) => (v.group || 'Other'));
+    const variableDefinitions = moduleClass.variables.concat(UniversalVariables);
+    const variablesByGroup = groupBy(variableDefinitions, (v) => (v.group || 'Other'));
 
     return (
       <div>

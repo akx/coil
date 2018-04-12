@@ -17,3 +17,7 @@ export function getVariableDefaults(module: Module): object {
   });
   return defaults;
 }
+
+export const UniversalVariables = [
+  {name: 'seed', default: '', group: 'Randomness'},
+] as VariableDefinition[];

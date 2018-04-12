@@ -9,7 +9,6 @@ export default {
   variables: [
     {name: 'keep', default: '=rand() < .5'},
     {name: 'indexVariable', default: 'i'},
-    {name: 'seed', default: ''},
   ],
 
   render(context: Context, node: NodeConfig) {
