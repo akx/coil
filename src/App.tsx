@@ -24,9 +24,10 @@ const DEFAULT_NODE_CONFIGS: NodeConfig[] = [
           variableY: 'j',
         },
         [
-          configure('Rect', {
-            width: '20',
-            height: '20',
+          configure('Ngon', {
+            radius1: '15',
+            radius2: '5',
+            vertices: '10',
             x: '=15 + i * 30',
             y: '=30 + j * 30',
             fill: 'blue',
