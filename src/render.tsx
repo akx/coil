@@ -18,9 +18,10 @@ export function renderNode(context: Context, nodeConfig: NodeConfig) {
 }
 
 export function renderNodesInto(targetArray: Array<any>, nodes: NodeConfig[], context: Context) {
-  nodes.forEach((node: NodeConfig) => {
-    renderNode(context, node).forEach((node) => {
-      targetArray.push(node);
-    });
-  });
+  for(var i = 0; i < nodes.length; i++) {
+    const renderedElts = renderNode(context, nodes[i]);
+    for(var j = 0; j < renderedElts.length; j++) {
+      targetArray.push(renderedElts[j]);
+    }
+  }
 }

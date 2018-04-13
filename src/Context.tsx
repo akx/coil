@@ -36,6 +36,7 @@ function memoizeOnFirstInvocation<T>(creator: () => T): () => T {
 
 export default class Context {
   private rng?: RandomGenerator;
+  private defaultNamespace: NamespaceFn;
 
   constructor(
     readonly status: Status,
@@ -44,6 +45,7 @@ export default class Context {
     readonly variables: VariableMap = {},
     readonly idPrefix: string = '',
   ) {
+    this.defaultNamespace = this.prepareNamespace();
   }
 
   subcontext(
@@ -78,17 +80,17 @@ export default class Context {
   }
 
   prepareNamespace(additionalVariables?: VariableMap): NamespaceFn {
-    const variables = {...this.variables, ...additionalVariables};
-    let namespace;
     return memoizeOnFirstInvocation(() => ({
       rand: this.random.bind(this),
-      ...variables,
+      ...this.variables,
+      ...additionalVariables,
     }));
   }
 
   evaluateFromNodeConfig(key: string): any {
-    const namespace = this.prepareNamespace();
-    return _evaluate(this.status, this.node, key, this.node.config[key]!, namespace);
+    const expression = this.node.config[key]!;
+    if (expression === undefined) return null;
+    return _evaluate(this.status, this.node, key, expression, this.defaultNamespace);
   }
 
   evaluate(tag: string, expression: string, additionalVariables?: VariableMap): any {
@@ -103,11 +105,12 @@ export default class Context {
   ): VariableMap {
     const evaluated = {};
     const namespace = this.prepareNamespace(additionalVariables);
-    Object.entries(expressionMap).forEach(([tag, expression]) => {
+    for (let tag in expressionMap) {
+      const expression = expressionMap[tag];
       if (expression !== null) {
         evaluated[tag] = _evaluate(this.status, this.node, tag, expression, namespace);
       }
-    });
+    }
     return evaluated;
   }
 

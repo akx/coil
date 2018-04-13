@@ -7,7 +7,7 @@ import Ellipse from "./prim/Ellipse";
 import Module from "./Module";
 import Ngon from "./prim/Ngon";
 
-export default {
+const registry = {
   Ellipse,
   LinearArray,
   Ngon,
@@ -16,3 +16,8 @@ export default {
   RemoveChildren,
   Xform,
 } as {[name: string]: Module};
+export default registry;
+
+Object.keys(registry).forEach((name) => {
+  (registry[name].render as any).displayName = `render_${name}`;
+});
