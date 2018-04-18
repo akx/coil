@@ -1,9 +1,17 @@
+$dark: #262626;
+$semidark: #323232;
+$darkerish: lighten($semidark, 10%);
+$darkish: lighten($semidark, 20%);
+$light: #A9A9A9;
+$blue: #4d81b9;
+
 * {
   box-sizing: border-box;
 }
 
 body {
-  background: #2d3436;
+  background: #000;
+  color: $light;
   margin: 0;
   height: 100vh;
   font: 10pt Lato, sans-serif;
@@ -17,26 +25,21 @@ body {
 #config {
   display: flex;
   flex-direction: column;
-  min-width: 300px;
-  background: #b2bec3;
-
+  width: 300px;
+  background: $dark;
+  border-right: 3px ridge $semidark;
 }
 
 #hierarchy {
   flex: 1;
-  border-bottom: 2px solid #227093;
   padding: 2px;
 }
 
 #props {
   flex: 3;
-  h2 {
-    margin: 0;
-    padding: 0.25em;
-    color: #fff;
-    background: #34ace0;
-
-  }
+  background: $semidark;
+  border: 1px outset $darkish;
+  border-left: 0;
   table {
     width: 100%;
     tr.group-separator th {
@@ -48,6 +51,18 @@ body {
     }
     input {
       width: 100%;
+      background: transparent;
+      border: 1px inset $semidark;
+      padding: 4px;
+      color: $light;
+      &:focus {
+        outline-color: $blue;
+      }
+      &[type=color] {
+        padding: 0;
+        border: 0;
+        min-width: 2em;
+      }
     }
   }
 }
@@ -71,23 +86,31 @@ svg {
 .dropdown__content {
   display: none;
   position: absolute;
-  border: 1px solid #34ace0;
-  padding: 2px;
+  border: 1px outset $darkish;
+  padding: 4px;
   background: #2d3436;
   color: #fff;
-
 }
 
-.dropdown--active .dropdown__content {
-  display: block;
+.dropdown--active {
+  .dropdown__content {
+    display: block;
+  }
+  .dropdown__trigger {
+    background: $blue !important;
+  }
+}
+
+#toolbar {
+  background: $semidark;
 }
 
 #toolbar .btn {
   display: inline-block;
-  border: 1px solid #34ace0;
+  border-right: 1px solid $darkerish;
   padding: 4px;
+  user-select: none;
   margin-right: 2px;
-  background: #2d3436;
   color: #fff;
   cursor: pointer;
 }
@@ -101,20 +124,30 @@ svg {
   display: block;
   color: #fff;
   text-decoration: none;
+  padding: 2px;
+  border-radius: 2px;
   &:hover {
-    background: #34ace0;
+    background: $blue;
     color: #fff;
   }
 }
 
 #tree {
-  padding: 2px;
   flex: 1;
+  padding: 2px;
+  li {
+    padding: 0;
+    margin: 0;
+  }
   li a {
     padding: 2px;
+    text-wrap: none;
+    white-space: nowrap;
+    display: block;
+    margin: 0;
   }
   li.selected > a {
-    background: rgba(52, 172, 224, .5);
+    background: $blue;
     color: #fff;
   }
   ul {

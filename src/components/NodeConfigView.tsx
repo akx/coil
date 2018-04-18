@@ -62,10 +62,6 @@ export default class NodeConfigView extends React.Component<NodeConfigViewProps,
 
     return (
       <div>
-        <h2>
-          {nodeConfig.module}
-        </h2>
-        Variables last render: {status.getVariablesForNode(nodeConfig.id).join(', ')}
         <table>
           <tbody>
             {Object.keys(variablesByGroup).sort().map((group) => <React.Fragment key={group}>
@@ -85,6 +81,9 @@ export default class NodeConfigView extends React.Component<NodeConfigViewProps,
             )}
           </tbody>
         </table>
+        <div className="debug">
+          Variables last render: {status.getVariablesForNode(nodeConfig.id).join(', ')}
+        </div>
         <ul className="errors">
           {status.getErrorsForNode(nodeConfig.id).map((err, i) => <li key={i}>{err}</li>)}
         </ul>
