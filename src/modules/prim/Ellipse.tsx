@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Module from '../Module';
-import Context from "../../Context";
+import Context from '../../Context';
 import {toSVG} from 'transformation-matrix';
 import TransformVariables from '../TransformVariables';
-import {splitMatrixAndProps} from "../MatrixUtils";
+import {splitMatrixAndProps} from '../MatrixUtils';
 
 export default {
   variables: TransformVariables.concat([
@@ -26,7 +26,7 @@ export default {
         opacity={opacity}
         transform={toSVG(matrix)}
         key={context.getId()}
-      />
+      />,
     ];
-  }
+  },
 } as Module;

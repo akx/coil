@@ -2,7 +2,7 @@ import * as React from 'react';
 import Dropdown, {DropdownContent, DropdownTrigger} from 'react-simple-dropdown';
 import {NodeConfig} from '../NodeConfig';
 import registry from '../modules/registry';
-import {TreeManager} from "../managers/TreeManager";
+import {TreeManager} from '../managers/TreeManager';
 
 type ToolbarProps = {
   treeManager: TreeManager,
@@ -44,7 +44,8 @@ export default class TreeToolbar extends React.Component<ToolbarProps, any> {
 
   render() {
     const {selectedNode} = this.props;
-    let childMode: string | null = null, childText: string = 'Node';
+    let childMode: string | null = null;
+    let childText: string = 'Node';
     let allowAddSibling = false;
     if (selectedNode === null) {
       childMode = 'child';
@@ -56,7 +57,7 @@ export default class TreeToolbar extends React.Component<ToolbarProps, any> {
     }
     if (selectedNode) {
       const parent = this.props.treeManager.getNodeParentOrNull(selectedNode.id);
-      if(parent === null || nodeAcceptsChildren(parent)) {
+      if (parent === null || nodeAcceptsChildren(parent)) {
         allowAddSibling = true;
       }
     }

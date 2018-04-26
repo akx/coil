@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Module from '../Module';
-import Context from "../../Context";
-import {renderNodesInto} from "../../render";
+import Context from '../../Context';
+import {renderNodesInto} from '../../render';
 
 export default {
   acceptsChildren: true,

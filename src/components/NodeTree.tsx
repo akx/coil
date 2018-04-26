@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {NodeConfig} from "../NodeConfig";
-import registry from "../modules/registry";
+import {NodeConfig} from '../NodeConfig';
+import registry from '../modules/registry';
 
 type TreeCommonProps = {
   selectedNode: NodeConfig | null,

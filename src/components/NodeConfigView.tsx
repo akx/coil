@@ -1,12 +1,11 @@
 import * as React from 'react';
-import {NodeConfig} from "../NodeConfig";
-import registry from "../modules/registry";
-import Module, {UniversalVariables} from "../modules/Module";
-import VariableDefinition from "../modules/VariableDefinition";
-import Status from "../Status";
+import {NodeConfig} from '../NodeConfig';
+import registry from '../modules/registry';
+import Module, {UniversalVariables} from '../modules/Module';
+import VariableDefinition from '../modules/VariableDefinition';
+import Status from '../Status';
 import {groupBy} from 'lodash';
-import {ChangeNodeConfigHandler} from "../types";
-
+import {ChangeNodeConfigHandler} from '../types';
 
 type NodeConfigViewProps = {
   nodeConfig: NodeConfig,
@@ -21,7 +20,7 @@ type VariableConfigRowProps = {
   status: Status,
 };
 
-const VariableConfigRow = function ({variable, nodeConfig, onChange, status}: VariableConfigRowProps) {
+const VariableConfigRow = ({variable, nodeConfig, onChange, status}: VariableConfigRowProps) => {
   let extraControls: React.ReactElement<any> | null = null;
 
   const handleChange = ((event) => onChange(
@@ -77,7 +76,7 @@ export default class NodeConfigView extends React.Component<NodeConfigViewProps,
                     onChange={this.props.onChange}
                   />
                 ))}
-              </React.Fragment>
+              </React.Fragment>,
             )}
           </tbody>
         </table>
@@ -90,4 +89,4 @@ export default class NodeConfigView extends React.Component<NodeConfigViewProps,
       </div>
     );
   }
-};
+}

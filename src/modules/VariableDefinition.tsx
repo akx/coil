@@ -1,3 +1,4 @@
+// tslint:disable-next-line:interface-name
 export default interface VariableDefinition {
   name: string;
   description?: string;

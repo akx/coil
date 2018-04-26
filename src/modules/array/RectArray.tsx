@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Module from '../Module';
-import Context from "../../Context";
-import {renderNodesInto} from "../../render";
+import Context from '../../Context';
+import {renderNodesInto} from '../../render';
 
 export default {
   acceptsChildren: true,
@@ -14,13 +14,14 @@ export default {
 
   render(context: Context) {
     const {node} = context;
+    // tslint:disable-next-line:prefer-const
     let {numberX, numberY, variableX, variableY} = context.evaluateNodeConfig(node);
     const nodes = [];
 
     numberX = Math.round(parseFloat(numberX));
     numberY = Math.round(parseFloat(numberY));
-    for (var y = 0; y < numberY; y++) {
-      for (var x = 0; x < numberX; x++) {
+    for (let y = 0; y < numberY; y++) {
+      for (let x = 0; x < numberX; x++) {
         const subcontext = context.subcontext(node, {
           [variableX]: x,
           [variableY]: y,

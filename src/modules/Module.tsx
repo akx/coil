@@ -1,11 +1,11 @@
-import Context from "../Context";
-import VariableDefinition from "./VariableDefinition";
-import {ReactElement} from "react";
+import Context from '../Context';
+import VariableDefinition from './VariableDefinition';
+import {ReactElement} from 'react';
 
-
+// tslint:disable-next-line:interface-name
 export default interface Module {
   acceptsChildren: boolean;
-  variables: Array<VariableDefinition>;
+  variables: VariableDefinition[];
   render(context: Context): Array<ReactElement<any>>;
 }
 

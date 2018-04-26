@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Module from '../Module';
-import Context from "../../Context";
-import {renderNodesInto} from "../../render";
+import Context from '../../Context';
+import {renderNodesInto} from '../../render';
 
 export default {
   acceptsChildren: true,
@@ -11,11 +11,12 @@ export default {
   ],
 
   render(context: Context) {
+    // tslint:disable-next-line:variable-name
     const {number, variable} = context.evaluateNodeConfig();
     const nodes = [];
     const nNumber = Math.round(parseFloat(number));
     const node = context.node;
-    for (var i = 0; i < nNumber; i++) {
+    for (let i = 0; i < nNumber; i++) {
       const subcontext = context.subcontext(node, {
         [variable]: i,
         [`${variable}F`]: i / (nNumber - 1),

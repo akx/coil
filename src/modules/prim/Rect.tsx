@@ -1,10 +1,10 @@
 import * as React from 'react';
 import Module from '../Module';
-import Context from "../../Context";
+import Context from '../../Context';
 import {toSVG} from 'transformation-matrix';
 import TransformVariables from '../TransformVariables';
-import {splitMatrixAndProps} from "../MatrixUtils";
-import PresentationVariables from "../PresentationVariables";
+import {splitMatrixAndProps} from '../MatrixUtils';
+import PresentationVariables from '../PresentationVariables';
 
 export default {
   variables: TransformVariables.concat(PresentationVariables).concat([
@@ -22,7 +22,7 @@ export default {
         transform={toSVG(matrix)}
         key={context.getId()}
         {...props}
-      />
+      />,
     ];
-  }
+  },
 } as Module;

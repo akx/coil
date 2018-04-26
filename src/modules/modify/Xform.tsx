@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Module from '../Module';
-import Context from "../../Context";
+import Context from '../../Context';
 import TransformVariables from '../TransformVariables';
-import {toSVG} from "transformation-matrix";
-import {splitMatrixAndProps} from "../MatrixUtils";
+import {toSVG} from 'transformation-matrix';
+import {splitMatrixAndProps} from '../MatrixUtils';
 
 export default {
   acceptsChildren: true,

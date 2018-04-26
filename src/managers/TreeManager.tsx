@@ -1,4 +1,4 @@
-import {NodeConfig, configure, duplicate} from "../NodeConfig";
+import {NodeConfig, configure, duplicate} from '../NodeConfig';
 import {cloneDeep} from 'lodash';
 
 type NodeCacheEntry = {
@@ -20,7 +20,6 @@ export class TreeManager {
     this.updateNodeCache();
     this.invokeTreeUpdateListeners();
   }
-
 
   private updateNodeCache() {
     const newNodeCache: NodeCacheType = {};
@@ -143,7 +142,7 @@ export class TreeManager {
   }
 
   moveNode(sourceNodeId: string, newParentNodeId: string | null) {
-    if(sourceNodeId === newParentNodeId) {
+    if (sourceNodeId === newParentNodeId) {
       return false;
     }
     const sourceNode = this.getNode(sourceNodeId);

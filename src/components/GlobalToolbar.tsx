@@ -26,7 +26,7 @@ export default class GlobalToolbar extends React.Component<{
             onClick={() => this.props.onChangeTab(t.id)}
           >
             <Icon path={t.icon} />
-          </div>
+          </div>,
         )}
       </div>
     );

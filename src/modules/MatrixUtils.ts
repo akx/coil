@@ -1,5 +1,5 @@
-import {rotateDEG, scale, translate} from "transformation-matrix";
-import {VariableMap} from "../types";
+import {rotateDEG, scale, translate} from 'transformation-matrix';
+import {VariableMap} from '../types';
 
 const multiply = (m1: Matrix, m2: Matrix): Matrix => {
   return {
