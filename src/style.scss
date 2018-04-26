@@ -1,9 +1,11 @@
+// https://flatuicolors.com/palette/ca
 $dark: #262626;
 $semidark: #323232;
 $darkerish: lighten($semidark, 10%);
 $darkish: lighten($semidark, 20%);
 $light: #A9A9A9;
-$blue: #4d81b9;
+$blue: #54a0ff;
+$orange: #ff9f43;
 
 * {
   box-sizing: border-box;
@@ -72,11 +74,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-}
 
-svg {
-  outline: 5px solid #e17055;
-  background: #fff;
+  svg {
+    outline: 5px solid #e17055;
+    background: #fff;
+  }
 }
 
 .dropdown {
@@ -113,6 +115,20 @@ svg {
   margin-right: 2px;
   color: #fff;
   cursor: pointer;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  svg path {
+    fill: white;
+  }
+
+  &.active svg path {
+    fill: $orange;
+  }
+
 }
 
 .dropdown--disabled .btn, .btn.disabled {

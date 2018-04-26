@@ -6,6 +6,7 @@ import Context from './Context';
 import TreeToolbar from './components/TreeToolbar';
 import {TreeManager} from "./managers/TreeManager";
 import Status from "./Status";
+import GlobalToolbar from "./components/GlobalToolbar";
 
 const DEFAULT_NODE_CONFIGS: NodeConfig[] = [
   configure(
@@ -39,6 +40,7 @@ type AppState = {
   selectedNodeId: string | null,
   rendered: any,
   status: Status,
+  activeTab: string,
 };
 
 export default class App extends React.Component<any, AppState> {
@@ -49,6 +51,7 @@ export default class App extends React.Component<any, AppState> {
     selectedNodeId: null,
     rendered: null,
     status: new Status(),
+    activeTab: 'tree',
   };
 
   componentDidMount() {
@@ -85,32 +88,46 @@ export default class App extends React.Component<any, AppState> {
     this.setState({rendered, status});
   }
 
+  onChangeTab = (tabId) => {
+    this.setState({activeTab: tabId});
+  };
+
   render() {
-    const {selectedNodeId, rendered, status} = this.state;
+    const {selectedNodeId, rendered, status, activeTab} = this.state;
     const {treeManager} = this;
     const selectedNodeConfig = treeManager.getNodeOrNull(selectedNodeId!);
+    let configContent: React.ReactElement<any> | null = null;
+    switch (activeTab) {
+      case 'tree':
+        configContent = (
+          <>
+            <div id="hierarchy">
+              <TreeToolbar treeManager={treeManager} selectedNode={selectedNodeConfig} />
+              <NodeTree
+                nodeConfigs={treeManager.getTree()}
+                selectedNode={selectedNodeConfig}
+                onSelectNode={this.onSelectNode}
+                onRepositionNode={this.onRepositionNode}
+              />
+            </div>
+            <div id="props">
+              {selectedNodeConfig ?
+                <NodeConfigView
+                  nodeConfig={selectedNodeConfig!}
+                  status={status}
+                  onChange={this.onChangeNodeVariable}
+                />
+                : null
+              }
+            </div>
+          </>
+        );
+    }
     return (
       <>
         <div id="config">
-          <div id="hierarchy">
-            <TreeToolbar treeManager={treeManager} selectedNode={selectedNodeConfig} />
-            <NodeTree
-              nodeConfigs={treeManager.getTree()}
-              selectedNode={selectedNodeConfig}
-              onSelectNode={this.onSelectNode}
-              onRepositionNode={this.onRepositionNode}
-            />
-          </div>
-          <div id="props">
-            {selectedNodeConfig ?
-              <NodeConfigView
-                nodeConfig={selectedNodeConfig!}
-                status={status}
-                onChange={this.onChangeNodeVariable}
-              />
-              : null
-            }
-          </div>
+          <GlobalToolbar activeTab={activeTab} onChangeTab={this.onChangeTab} />
+          {configContent}
         </div>
         <div id="drawing">
           <svg width={800} height={800}>
