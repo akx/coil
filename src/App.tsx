@@ -2,9 +2,8 @@ import * as React from 'react';
 import {configure, NodeConfig} from "./NodeConfig";
 import NodeTree from "./components/NodeTree";
 import NodeConfigView from "./components/NodeConfigView";
-import {renderNodesInto} from './render';
 import Context from './Context';
-import Toolbar from './components/Toolbar';
+import TreeToolbar from './components/TreeToolbar';
 import {TreeManager} from "./managers/TreeManager";
 import Status from "./Status";
 
@@ -94,7 +93,7 @@ export default class App extends React.Component<any, AppState> {
       <>
         <div id="config">
           <div id="hierarchy">
-            <Toolbar treeManager={treeManager} selectedNode={selectedNodeConfig} />
+            <TreeToolbar treeManager={treeManager} selectedNode={selectedNodeConfig} />
             <NodeTree
               nodeConfigs={treeManager.getTree()}
               selectedNode={selectedNodeConfig}

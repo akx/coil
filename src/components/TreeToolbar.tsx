@@ -13,7 +13,7 @@ function nodeAcceptsChildren(node: NodeConfig | null) {
   return (node && registry[node.module] && registry[node.module].acceptsChildren);
 }
 
-export default class Toolbar extends React.Component<ToolbarProps, any> {
+export default class TreeToolbar extends React.Component<ToolbarProps, any> {
   private dropdowns: { [key: string]: Dropdown } = {};
 
   private handleAddNode(method: 'wrap' | 'child' | 'sibling', module: string) {
@@ -61,7 +61,7 @@ export default class Toolbar extends React.Component<ToolbarProps, any> {
       }
     }
     return (
-      <div id="toolbar">
+      <div id="tree-toolbar" className="toolbar">
         <Dropdown
           disabled={!selectedNode}
           ref={(instance) => {

@@ -101,11 +101,11 @@ svg {
   }
 }
 
-#toolbar {
+.toolbar {
   background: $semidark;
 }
 
-#toolbar .btn {
+.toolbar .btn {
   display: inline-block;
   border-right: 1px solid $darkerish;
   padding: 4px;
