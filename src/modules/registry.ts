@@ -1,13 +1,15 @@
-import Rect from './prim/Rect';
+import Choose from './modify/Choose';
+import Ellipse from "./prim/Ellipse";
 import LinearArray from "./array/LinearArray";
+import Module from "./Module";
+import Ngon from "./prim/Ngon";
+import Rect from './prim/Rect';
 import RectArray from "./array/RectArray";
 import RemoveChildren from "./modify/RemoveChildren";
 import Xform from './modify/Xform';
-import Ellipse from "./prim/Ellipse";
-import Module from "./Module";
-import Ngon from "./prim/Ngon";
 
 const registry = {
+  Choose,
   Ellipse,
   LinearArray,
   Ngon,
