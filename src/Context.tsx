@@ -66,7 +66,6 @@ export default class Context {
   random(min?: number, max?: number) {
     if (!this.rng) {
       const seed = this.evaluateFromNodeConfig('seed');
-      console.log('Creating RNG with seed:', seed);
       this.rng = createRandomGenerator(seed);
     }
     const val = this.rng();

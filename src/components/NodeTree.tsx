@@ -49,7 +49,7 @@ const TreeNode = ({nodeConfig, selectedNode, onSelectNode, onRepositionNode}: Tr
         onRepositionNode(sourceNodeId, nodeConfig.id, copy);
       }}
     >
-      {nodeConfig.module} {nodeConfig.id}
+      {nodeConfig.module}
     </a>
     {nodeConfig.children.length ?
       <TreeLevel
@@ -82,7 +82,6 @@ export default ({nodeConfigs, selectedNode, onSelectNode, onRepositionNode}: Tre
     <div
       id="tree"
       onClick={(e) => {
-        console.log(e);
         if (e.currentTarget.id === 'tree') {
           onSelectNode(null);
         }
