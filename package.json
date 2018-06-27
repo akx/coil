@@ -4,10 +4,12 @@
   "main": "src/index.tsx",
   "license": "MIT",
   "scripts": {
-    "dev": "poi"
+    "dev": "poi",
+    "dist": "poi build && ghpg -d dist"
   },
   "devDependencies": {
     "@ngfk/poi-preset-react-typescript": "^0.0.3",
+    "ghpg": "^1.0.1",
     "node-sass": "^4.8.3",
     "poi": "^9.6.13",
     "tslint": "^5.9.1",
