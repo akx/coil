@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {NodeConfig} from '../NodeConfig';
+import {NodeConfig} from '../types';
 import registry from '../modules/registry';
 import Module, {UniversalVariables} from '../modules/Module';
 import VariableDefinition from '../modules/VariableDefinition';
-import Status from '../Status';
+import Status from '../universe/Status';
 import {groupBy} from 'lodash';
 import {ChangeNodeConfigHandler} from '../types';
 

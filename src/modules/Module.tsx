@@ -1,4 +1,4 @@
-import Context from '../Context';
+import Context from '../universe/Context';
 import VariableDefinition from './VariableDefinition';
 import {ReactElement} from 'react';
 

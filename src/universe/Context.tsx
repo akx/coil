@@ -1,10 +1,9 @@
-import Status from "./Status";
-import {NodeConfig} from "./NodeConfig";
-import {ExpressionMap, VariableMap} from "./types";
-import {default as createRandomGenerator, RandomGenerator} from "./RandomGenerator";
-import {evaluateExpression, NamespaceFn} from "./evaluator";
-import {renderNodesInto} from "./render";
-
+import Status from './Status';
+import {NodeConfig} from '../types';
+import {ExpressionMap, VariableMap} from '../types';
+import {default as createRandomGenerator, RandomGenerator} from '../utils/RandomGenerator';
+import {evaluateExpression, NamespaceFn} from '../utils/evaluator';
+import {renderNodesInto} from './render';
 
 function _evaluate(
   status: Status,
@@ -32,7 +31,6 @@ function memoizeOnFirstInvocation<T>(creator: () => T): () => T {
     return t;
   };
 }
-
 
 export default class Context {
   private rng?: RandomGenerator;
@@ -88,7 +86,7 @@ export default class Context {
 
   evaluateFromNodeConfig(key: string): any {
     const expression = this.node.config[key]!;
-    if (expression === undefined) return null;
+    if (expression === undefined) { return null; }
     return _evaluate(this.status, this.node, key, expression, this.defaultNamespace);
   }
 
@@ -104,7 +102,7 @@ export default class Context {
   ): VariableMap {
     const evaluated = {};
     const namespace = this.prepareNamespace(additionalVariables);
-    for (let tag in expressionMap) {
+    for (const tag in expressionMap) {
       const expression = expressionMap[tag];
       if (expression !== null) {
         evaluated[tag] = _evaluate(this.status, this.node, tag, expression, namespace);
@@ -122,7 +120,7 @@ export default class Context {
   }
 
   renderChildren(context: Context = this) {
-    const nodes: Array<Element> = [];
+    const nodes: Element[] = [];
     renderNodesInto(nodes, this.node.children, context);
     return nodes;
   }

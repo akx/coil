@@ -9,7 +9,9 @@
         "member-access": false,
         "member-ordering": false,
         "ordered-imports": false,
-        "quotemark": [true, "single", "jsx-double"]
+        "quotemark": [true, "single", "jsx-double"],
+        "interface-name": false,
+        "object-literal-sort-keys": false
     },
     "rulesDirectory": []
 }

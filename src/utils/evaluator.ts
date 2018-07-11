@@ -1,4 +1,4 @@
-import {VariableMap} from "./types";
+import {VariableMap} from '../types';
 
 export type NamespaceFn = () => VariableMap;
 

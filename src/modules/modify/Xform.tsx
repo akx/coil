@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Module from '../Module';
-import Context from '../../Context';
+import Context from '../../universe/Context';
 import TransformVariables from '../TransformVariables';
 import {toSVG} from 'transformation-matrix';
 import {splitMatrixAndProps} from '../MatrixUtils';

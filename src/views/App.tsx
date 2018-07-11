@@ -1,18 +1,19 @@
 import * as React from 'react';
-import {configure, NodeConfig} from "./NodeConfig";
-import NodeTree from "./components/NodeTree";
-import NodeConfigView from "./components/NodeConfigView";
-import Context from './Context';
-import TreeToolbar from './components/TreeToolbar';
-import {TreeManager} from "./managers/TreeManager";
-import Status from "./Status";
-import GlobalToolbar from "./components/GlobalToolbar";
+import {configure} from '../universe/configure';
+import NodeTree from '../components/NodeTree';
+import NodeConfigView from '../components/NodeConfigView';
+import Context from '../universe/Context';
+import TreeToolbar from '../components/TreeToolbar';
+import {TreeManager} from '../managers/TreeManager';
+import Status from '../universe/Status';
+import GlobalToolbar from '../components/GlobalToolbar';
+import {NodeConfig} from '../types';
 
 const DEFAULT_NODE_CONFIGS: NodeConfig[] = [
   configure(
     'RemoveChildren',
     {
-      'seed': 'foo',
+      seed: 'foo',
     },
     [
       configure(
@@ -65,12 +66,12 @@ export default class App extends React.Component<any, AppState> {
     this.setState({
       selectedNodeId: (nodeConfig ? nodeConfig.id : null),
     });
-  };
+  }
 
   onChangeNodeVariable = (nodeConfig: NodeConfig, variableName: string, newValue: string) => {
     this.treeManager.changeNodeVariable(nodeConfig.id, variableName, newValue);
     this.forceUpdate();  // Avoid asynchronous input caret position problem :(
-  };
+  }
 
   onRepositionNode = (sourceNodeId: string, targetNodeId: string, copy: boolean) => {
     if (copy) {
@@ -78,7 +79,7 @@ export default class App extends React.Component<any, AppState> {
     } else {
       this.treeManager.moveNode(sourceNodeId, targetNodeId);
     }
-  };
+  }
 
   renderDrawing(tree: NodeConfig[]) {
     const status = new Status();
@@ -90,7 +91,7 @@ export default class App extends React.Component<any, AppState> {
 
   onChangeTab = (tabId) => {
     this.setState({activeTab: tabId});
-  };
+  }
 
   render() {
     const {selectedNodeId, rendered, status, activeTab} = this.state;

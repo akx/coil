@@ -1,11 +1,11 @@
 import * as React from 'react';
-import Context from '../../Context';
+import Context from '../../universe/Context';
 import TransformVariables from '../TransformVariables';
 import {splitMatrixAndProps} from '../MatrixUtils';
 import PresentationVariables from '../PresentationVariables';
 import Module from '../Module';
 import {toSVG} from 'transformation-matrix';
-import dumbMemoize from '../../dumbMemoize';
+import dumbMemoize from '../../utils/dumbMemoize';
 
 const TWO_PI = Math.PI * 2;
 

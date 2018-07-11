@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {NodeConfig} from '../NodeConfig';
+import {NodeConfig} from '../types';
 import registry from '../modules/registry';
 
 type TreeCommonProps = {

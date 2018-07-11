@@ -1,4 +1,4 @@
-import {VariableMap} from "./types";
+import {VariableMap} from '../types';
 
 export default class Status {
   private nodeErrors: { [key: string]: string[] } = {};
@@ -15,7 +15,6 @@ export default class Status {
     return (nodeId in this.nodeErrors ? this.nodeErrors[nodeId] : []);
   }
 
-
   public addVariables(nodeId: string, variables: VariableMap) {
     if (!(nodeId in this.nodeVariables)) {
       this.nodeVariables[nodeId] = [];
@@ -24,7 +23,7 @@ export default class Status {
   }
 
   public getVariablesForNode(nodeId: string): string[] {
-    if(!(nodeId in this.nodeVariables)) {
+    if (!(nodeId in this.nodeVariables)) {
       return [];
     }
     const variables = new Set();
@@ -35,6 +34,5 @@ export default class Status {
     });
     return Array.from(variables).sort();
   }
-
 
 }

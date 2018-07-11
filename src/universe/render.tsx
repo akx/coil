@@ -1,7 +1,7 @@
-import {NodeConfig} from "./NodeConfig";
-import registry from "./modules/registry";
-import Context from "./Context";
-import Module from "./modules/Module";
+import {NodeConfig} from '../types';
+import registry from '../modules/registry';
+import Context from './Context';
+import Module from '../modules/Module';
 
 export function renderNode(context: Context, nodeConfig: NodeConfig) {
   const module: Module = registry[nodeConfig.module];
@@ -17,10 +17,10 @@ export function renderNode(context: Context, nodeConfig: NodeConfig) {
   }
 }
 
-export function renderNodesInto(targetArray: Array<any>, nodes: NodeConfig[], context: Context) {
-  for(var i = 0; i < nodes.length; i++) {
+export function renderNodesInto(targetArray: any[], nodes: NodeConfig[], context: Context) {
+  for (let i = 0; i < nodes.length; i++) {
     const renderedElts = renderNode(context, nodes[i]);
-    for(var j = 0; j < renderedElts.length; j++) {
+    for (let j = 0; j < renderedElts.length; j++) {
       targetArray.push(renderedElts[j]);
     }
   }

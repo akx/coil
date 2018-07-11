@@ -1,6 +1,6 @@
 function hashString(string: String) {
   let seed = 0;
-  for (var i = 0; i < string.length; i++) {
+  for (let i = 0; i < string.length; i++) {
     seed ^= (i % 16) << string.charCodeAt(i);
   }
   return seed;
@@ -8,7 +8,6 @@ function hashString(string: String) {
 
 // Based on https://gist.github.com/blixt/f17b47c62508be59987b
 // which is based on http://www.firstpr.com.au/dsp/rand31/
-
 
 export type RandomGenerator = () => number;
 
