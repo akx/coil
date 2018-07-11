@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {configure} from '../universe/configure';
 import Context from '../universe/Context';
 import {TreeManager} from '../managers/TreeManager';
 import Status from '../universe/Status';
@@ -7,34 +6,8 @@ import GlobalToolbar from '../components/GlobalToolbar';
 import {NodeConfig} from '../types';
 import TreePanel from '../sidebar-panels/TreePanel';
 import FilePanel from '../sidebar-panels/FilePanel';
-
-const DEFAULT_NODE_CONFIGS: NodeConfig[] = [
-  configure(
-    'RemoveChildren',
-    {
-      seed: 'foo',
-    },
-    [
-      configure(
-        'RectArray',
-        {
-          numberX: '7',
-          numberY: '7',
-          variableX: 'i',
-          variableY: 'j',
-        },
-        [
-          configure('Ngon', {
-            radius1: '15',
-            radius2: '5',
-            vertices: '10',
-            x: '=15 + i * 30',
-            y: '=30 + j * 30',
-            fill: 'blue',
-          }),
-        ]),
-    ]),
-];
+import * as storage from '../utils/storage';
+import makeDefaultConfig from '../utils/defaultConfig';
 
 type AppState = {
   selectedNodeId: string | null,
@@ -42,6 +15,8 @@ type AppState = {
   status: Status,
   activeTab: 'tree' | 'file',
 };
+
+const STORAGE_KEY = 'coilSave';
 
 export default class App extends React.Component<{}, AppState> {
 
@@ -58,7 +33,12 @@ export default class App extends React.Component<{}, AppState> {
     this.treeManager.addTreeUpdateListener((tree) => {
       this.renderDrawing(tree);
     });
-    this.treeManager.replaceTree(DEFAULT_NODE_CONFIGS);
+    this.treeManager.addTreeUpdateListener((tree) => {
+      storage.save(STORAGE_KEY, tree);
+    });
+
+    const lTree = storage.load(STORAGE_KEY) || makeDefaultConfig();
+    this.treeManager.replaceTree(lTree);
   }
 
   private onSelectNode = (nodeConfig: NodeConfig | null): void => {
