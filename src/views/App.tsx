@@ -6,6 +6,7 @@ import Status from '../universe/Status';
 import GlobalToolbar from '../components/GlobalToolbar';
 import {NodeConfig} from '../types';
 import TreePanel from '../sidebar-panels/TreePanel';
+import FilePanel from '../sidebar-panels/FilePanel';
 
 const DEFAULT_NODE_CONFIGS: NodeConfig[] = [
   configure(
@@ -70,7 +71,13 @@ export default class App extends React.Component<{}, AppState> {
     const status = new Status();
     const rootPseudoNode = {id: 'root', module: 'root', config: {}, children: tree};
     const context = new Context(status, rootPseudoNode);
-    const rendered = context.renderChildren();
+    const width = 800;
+    const height = 800;
+    const rendered = (
+      <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+        {context.renderChildren()}
+      </svg>
+    );
     this.setState({rendered, status});
   }
 
@@ -94,6 +101,14 @@ export default class App extends React.Component<{}, AppState> {
           />
         );
         break;
+      case 'file':
+        configContent = (
+          <FilePanel
+            treeManager={this.treeManager}
+            rendered={this.state.rendered}
+          />
+        );
+        break;
     }
     return (
       <>
@@ -102,9 +117,7 @@ export default class App extends React.Component<{}, AppState> {
           {configContent}
         </div>
         <div id="drawing">
-          <svg width={800} height={800}>
-            {rendered}
-          </svg>
+          {rendered}
         </div>
       </>
     );

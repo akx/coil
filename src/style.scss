@@ -11,12 +11,15 @@ $orange: #ff9f43;
   box-sizing: border-box;
 }
 
+body, input, button, textarea {
+  font: 10pt Lato, sans-serif;
+}
+
 body {
   background: #000;
   color: $light;
   margin: 0;
   height: 100vh;
-  font: 10pt Lato, sans-serif;
 }
 
 #wrapper {
@@ -103,11 +106,7 @@ body {
   }
 }
 
-.toolbar {
-  background: $semidark;
-}
-
-.toolbar .btn {
+.btn {
   display: inline-block;
   border-right: 1px solid $darkerish;
   padding: 4px;
@@ -115,6 +114,7 @@ body {
   margin-right: 2px;
   color: #fff;
   cursor: pointer;
+  background: transparent;
 
   svg {
     width: 20px;
@@ -129,6 +129,14 @@ body {
     fill: $orange;
   }
 
+  &.standalone {
+    border: 1px outset $darkerish;
+  }
+
+}
+
+.toolbar {
+  background: $semidark;
 }
 
 .dropdown--disabled .btn, .btn.disabled {
@@ -187,4 +195,15 @@ ul.errors {
   color: red;
   max-height: 200px;
   overflow-y: auto;
+}
+
+#file-panel {
+  padding: 4px;
+  textarea {
+    width: 100%;
+    background: transparent;
+    border: 1px inset $darkerish;
+    height: 200px;
+    color: $light;
+  }
 }
