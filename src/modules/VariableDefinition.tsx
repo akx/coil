@@ -5,4 +5,5 @@ export default interface VariableDefinition {
   default?: string;
   type?: 'number' | 'string' | 'color';
   group?: string;
+  choices?: string[];
 }

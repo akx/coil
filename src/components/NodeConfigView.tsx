@@ -22,28 +22,44 @@ type VariableConfigRowProps = {
 
 const VariableConfigRow = ({variable, nodeConfig, onChange, status}: VariableConfigRowProps) => {
   let extraControls: React.ReactElement<any> | null = null;
+  let input: React.ReactElement<any> | null = null;
 
   const handleChange = ((event) => onChange(
     nodeConfig,
     variable.name,
     event.target.value.toString(),
   ));
+  if (variable.choices) {
+    input = (
+      <select
+        value={nodeConfig.config[variable.name] || ''}
+        onChange={handleChange}
+      >
+        {variable.choices.map((c) => <option key={c} value={c}>{c}</option>)}
+      </select>
+    );
+  } else {
+    input = (
+      <input
+        type="text"
+        value={nodeConfig.config[variable.name] || ''}
+        onChange={handleChange}
+      />
+    );
+  }
   if (variable.type === 'color') {
     extraControls = (
       <input type="color" value={nodeConfig.config[variable.name] || ''} onChange={handleChange} />
     );
   }
+
   return (
     <tr className="variable-config-row">
       <th>
         {variable.name}
       </th>
       <td>
-        <input
-          type="text"
-          value={nodeConfig.config[variable.name] || ''}
-          onChange={handleChange}
-        />
+        {input}
       </td>
       <td>
         {extraControls}
