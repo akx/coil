@@ -73,9 +73,16 @@ export default class App extends React.Component<{}, AppState> {
     const context = new Context(status, rootPseudoNode);
     const width = 800;
     const height = 800;
+    let renderedChildren;
+    try {
+      renderedChildren = context.renderChildren();
+    } catch (e) {
+      renderedChildren = <text y={50} x={50}>{e.toString()}</text>;
+      console.error(renderedChildren);
+    }
     const rendered = (
       <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
-        {context.renderChildren()}
+        {renderedChildren}
       </svg>
     );
     this.setState({rendered, status});
