@@ -199,11 +199,12 @@ ul.errors {
 
 #file-panel {
   padding: 4px;
-  textarea {
-    width: 100%;
-    background: transparent;
-    border: 1px inset $darkerish;
-    height: 200px;
-    color: $light;
-  }
+}
+
+textarea {
+  width: 100%;
+  background: transparent;
+  border: 1px inset $darkerish;
+  height: 200px;
+  color: $light;
 }

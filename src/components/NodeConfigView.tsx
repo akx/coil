@@ -72,6 +72,16 @@ export default class NodeConfigView extends React.Component<NodeConfigViewProps,
   render() {
     const {nodeConfig, status} = this.props;
     const moduleClass: Module = registry[nodeConfig.module];
+
+    if (!moduleClass) {
+      return (
+        <div>
+          The module {nodeConfig.module} is not available.
+          <textarea>{JSON.stringify(nodeConfig, null, 2)}</textarea>
+        </div>
+      );
+    }
+
     const variableDefinitions = moduleClass.variables.concat(UniversalVariables);
     const variablesByGroup = groupBy(variableDefinitions, (v) => (v.group || 'Other'));
 
