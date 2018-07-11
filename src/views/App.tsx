@@ -1,13 +1,11 @@
 import * as React from 'react';
 import {configure} from '../universe/configure';
-import NodeTree from '../components/NodeTree';
-import NodeConfigView from '../components/NodeConfigView';
 import Context from '../universe/Context';
-import TreeToolbar from '../components/TreeToolbar';
 import {TreeManager} from '../managers/TreeManager';
 import Status from '../universe/Status';
 import GlobalToolbar from '../components/GlobalToolbar';
 import {NodeConfig} from '../types';
+import TreePanel from '../sidebar-panels/TreePanel';
 
 const DEFAULT_NODE_CONFIGS: NodeConfig[] = [
   configure(
@@ -41,14 +39,14 @@ type AppState = {
   selectedNodeId: string | null,
   rendered: any,
   status: Status,
-  activeTab: string,
+  activeTab: 'tree' | 'file',
 };
 
-export default class App extends React.Component<any, AppState> {
+export default class App extends React.Component<{}, AppState> {
 
   private treeManager: TreeManager = new TreeManager();
 
-  state = {
+  public state: AppState = {
     selectedNodeId: null,
     rendered: null,
     status: new Status(),
@@ -62,23 +60,10 @@ export default class App extends React.Component<any, AppState> {
     this.treeManager.replaceTree(DEFAULT_NODE_CONFIGS);
   }
 
-  onSelectNode = (nodeConfig: NodeConfig | null): void => {
+  private onSelectNode = (nodeConfig: NodeConfig | null): void => {
     this.setState({
       selectedNodeId: (nodeConfig ? nodeConfig.id : null),
     });
-  }
-
-  onChangeNodeVariable = (nodeConfig: NodeConfig, variableName: string, newValue: string) => {
-    this.treeManager.changeNodeVariable(nodeConfig.id, variableName, newValue);
-    this.forceUpdate();  // Avoid asynchronous input caret position problem :(
-  }
-
-  onRepositionNode = (sourceNodeId: string, targetNodeId: string, copy: boolean) => {
-    if (copy) {
-      this.treeManager.copyNode(sourceNodeId, targetNodeId);
-    } else {
-      this.treeManager.moveNode(sourceNodeId, targetNodeId);
-    }
   }
 
   renderDrawing(tree: NodeConfig[]) {
@@ -101,28 +86,14 @@ export default class App extends React.Component<any, AppState> {
     switch (activeTab) {
       case 'tree':
         configContent = (
-          <>
-            <div id="hierarchy">
-              <TreeToolbar treeManager={treeManager} selectedNode={selectedNodeConfig} />
-              <NodeTree
-                nodeConfigs={treeManager.getTree()}
-                selectedNode={selectedNodeConfig}
-                onSelectNode={this.onSelectNode}
-                onRepositionNode={this.onRepositionNode}
-              />
-            </div>
-            <div id="props">
-              {selectedNodeConfig ?
-                <NodeConfigView
-                  nodeConfig={selectedNodeConfig!}
-                  status={status}
-                  onChange={this.onChangeNodeVariable}
-                />
-                : null
-              }
-            </div>
-          </>
+          <TreePanel
+            treeManager={this.treeManager}
+            status={this.state.status}
+            selectedNodeId={this.state.selectedNodeId}
+            onSelectNode={this.onSelectNode}
+          />
         );
+        break;
     }
     return (
       <>
