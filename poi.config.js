@@ -1,5 +1,5 @@
 module.exports = (options, req) => ({
-  homepage: './',
+  publicPath: './',
   plugins: [
     require('@poi/plugin-typescript')(),
   ],
