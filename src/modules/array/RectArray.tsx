@@ -7,6 +7,27 @@ const THREE_OVER_TWO = (3 / 2);
 const SQRT_THREE = Math.sqrt(3);
 const SQRT_THREE_OVER_TWO = SQRT_THREE / 2;
 
+function makeHex(hex: string, x: number, y: number): [number, number] {
+  if (hex === 'flat' || hex === 'flatRect') {
+    if (hex === 'flatRect') {
+      y -= (x >> 1);
+    }
+    return [
+      THREE_OVER_TWO * x,
+      SQRT_THREE_OVER_TWO * x + SQRT_THREE * y,
+    ];
+  } else if (hex === 'pointy' || hex === 'pointyRect') {
+    if (hex === 'pointyRect') {
+      x -= (y >> 1);
+    }
+    return [
+      SQRT_THREE * x + SQRT_THREE_OVER_TWO * y,
+      THREE_OVER_TWO * y,
+    ];
+  }
+  return [0, 0];
+}
+
 export default {
   acceptsChildren: true,
   variables: [
@@ -20,9 +41,11 @@ export default {
       choices: [
         'none',
         'flat',
+        'flatRect',
         'pointy',
+        'pointyRect',
       ],
-    }
+    },
   ],
 
   render(context: Context) {
@@ -41,12 +64,10 @@ export default {
           [`${variableX}F`]: x / (numberX - 1),
           [`${variableY}F`]: y / (numberY - 1),
         };
-        if (hex === 'flat') {
-          newVariables[`${variableX}Hex`] = THREE_OVER_TWO * x;
-          newVariables[`${variableY}Hex`] = SQRT_THREE_OVER_TWO * x + SQRT_THREE * y;
-        } else if (hex === 'pointy') {
-          newVariables[`${variableX}Hex`] = SQRT_THREE * x + SQRT_THREE_OVER_TWO * y;
-          newVariables[`${variableY}Hex`] = THREE_OVER_TWO * y;
+        if (hex !== 'none') {
+          const [hexX, hexY] = makeHex(hex, x, y);
+          newVariables[`${variableX}Hex`] = hexX;
+          newVariables[`${variableY}Hex`] = hexY;
         }
         const subcontext = context.subcontext(node, newVariables, `${x}x${y}`);
         renderNodesInto(nodes, node.children, subcontext);
