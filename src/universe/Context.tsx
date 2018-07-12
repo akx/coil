@@ -1,9 +1,9 @@
-import Status from './Status';
 import {NodeConfig} from '../types';
 import {ExpressionMap, VariableMap} from '../types';
-import {default as createRandomGenerator, RandomGenerator} from '../utils/RandomGenerator';
 import {evaluateExpression, NamespaceFn} from '../utils/evaluator';
+import {default as createRandomGenerator, RandomGenerator} from '../utils/RandomGenerator';
 import {renderNodesInto} from './render';
+import Status from './Status';
 
 function _evaluate(
   status: Status,
@@ -46,7 +46,7 @@ export default class Context {
     this.defaultNamespace = this.prepareNamespace();
   }
 
-  subcontext(
+  public subcontext(
     forNode: NodeConfig,
     newVariables: VariableMap = {},
     idPrefix: String = '',
@@ -61,7 +61,7 @@ export default class Context {
     );
   }
 
-  random(min?: number, max?: number) {
+  public random(min?: number, max?: number) {
     if (!this.rng) {
       const seed = this.evaluateFromNodeConfig('seed');
       this.rng = createRandomGenerator(seed);
@@ -76,7 +76,7 @@ export default class Context {
     return val;
   }
 
-  prepareNamespace(additionalVariables?: VariableMap): NamespaceFn {
+  public prepareNamespace(additionalVariables?: VariableMap): NamespaceFn {
     return memoizeOnFirstInvocation(() => ({
       rand: this.random.bind(this),
       ...this.variables,
@@ -84,18 +84,18 @@ export default class Context {
     }));
   }
 
-  evaluateFromNodeConfig(key: string): any {
+  public evaluateFromNodeConfig(key: string): any {
     const expression = this.node.config[key]!;
     if (expression === undefined) { return null; }
     return _evaluate(this.status, this.node, key, expression, this.defaultNamespace);
   }
 
-  evaluate(tag: string, expression: string, additionalVariables?: VariableMap): any {
+  public evaluate(tag: string, expression: string, additionalVariables?: VariableMap): any {
     const namespace = this.prepareNamespace(additionalVariables);
     return _evaluate(this.status, this.node, tag, expression, namespace);
   }
 
-  evaluateAll(
+  public evaluateAll(
     node: NodeConfig,
     expressionMap: ExpressionMap,
     additionalVariables?: VariableMap,
@@ -111,15 +111,15 @@ export default class Context {
     return evaluated;
   }
 
-  evaluateNodeConfig(node: NodeConfig = this.node): VariableMap {
+  public evaluateNodeConfig(node: NodeConfig = this.node): VariableMap {
     return this.evaluateAll(node, node.config);
   }
 
-  getId(suffix: string = this.node.id) {
+  public getId(suffix: string = this.node.id) {
     return this.idPrefix + suffix;
   }
 
-  renderChildren(context: Context = this) {
+  public renderChildren(context: Context = this) {
     const nodes: Element[] = [];
     renderNodesInto(nodes, this.node.children, context);
     return nodes;

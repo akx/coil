@@ -1,7 +1,7 @@
 import * as React from 'react';
+import * as ReactDOMServer from 'react-dom/server';
 import {TreeManager} from '../managers/TreeManager';
 import {NodeConfig} from '../types';
-import * as ReactDOMServer from 'react-dom/server';
 
 interface FilePanelProps {
   treeManager: TreeManager;

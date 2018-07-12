@@ -12,13 +12,13 @@ const multiply = (m1: Matrix, m2: Matrix): Matrix => {
   };
 };
 
-export type TransformBag = {
-  x: number,
-  y: number,
-  r: number,
-  sx: number,
-  sy: number,
-};
+export interface TransformBag {
+  x: number;
+  y: number;
+  r: number;
+  sx: number;
+  sy: number;
+}
 
 export function makeMatrix({x, y, r, sx, sy}: TransformBag): Matrix {
   let matrix = translate(isFinite(x) ? x : 0, isFinite(y) ? y : 0);

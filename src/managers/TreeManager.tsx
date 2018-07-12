@@ -1,14 +1,14 @@
-import {configure, duplicate} from '../universe/configure';
 import {cloneDeep} from 'lodash';
 import {NodeConfig} from '../types';
+import {configure, duplicate} from '../universe/configure';
 
-type NodeCacheEntry = {
-  node: NodeConfig,
-  parent: NodeConfig | null,
-};
-export type NodeCacheType = {
-  [key: string]: NodeCacheEntry,
-};
+interface NodeCacheEntry {
+  node: NodeConfig;
+  parent: NodeConfig | null;
+}
+export interface NodeCacheType {
+  [key: string]: NodeCacheEntry;
+}
 export type UpdateListener = (root: NodeConfig[]) => void;
 
 export class TreeManager {
@@ -142,7 +142,7 @@ export class TreeManager {
     this.invokeTreeUpdateListeners();
   }
 
-  moveNode(sourceNodeId: string, newParentNodeId: string | null) {
+  public moveNode(sourceNodeId: string, newParentNodeId: string | null) {
     if (sourceNodeId === newParentNodeId) {
       return false;
     }
@@ -157,7 +157,7 @@ export class TreeManager {
     return true;
   }
 
-  copyNode(sourceNodeId: string, targetNodeId: string | null) {
+  public copyNode(sourceNodeId: string, targetNodeId: string | null) {
     const copiedNode = duplicate(this.getNode(sourceNodeId));
     this.addChildInternal(targetNodeId, copiedNode);
     this.updateNodeCache();

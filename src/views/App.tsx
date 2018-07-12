@@ -1,20 +1,20 @@
 import * as React from 'react';
-import Context from '../universe/Context';
-import {TreeManager} from '../managers/TreeManager';
-import Status from '../universe/Status';
 import GlobalToolbar from '../components/GlobalToolbar';
-import {NodeConfig} from '../types';
-import TreePanel from '../sidebar-panels/TreePanel';
+import {TreeManager} from '../managers/TreeManager';
 import FilePanel from '../sidebar-panels/FilePanel';
-import * as storage from '../utils/storage';
+import TreePanel from '../sidebar-panels/TreePanel';
+import {NodeConfig} from '../types';
+import Context from '../universe/Context';
+import Status from '../universe/Status';
 import makeDefaultConfig from '../utils/defaultConfig';
+import * as storage from '../utils/storage';
 
-type AppState = {
-  selectedNodeId: string | null,
-  rendered: any,
-  status: Status,
-  activeTab: 'tree' | 'file',
-};
+interface AppState {
+  selectedNodeId: string | null;
+  rendered: any;
+  status: Status;
+  activeTab: 'tree' | 'file';
+}
 
 const STORAGE_KEY = 'coilSave';
 
@@ -29,7 +29,7 @@ export default class App extends React.Component<{}, AppState> {
     activeTab: 'tree',
   };
 
-  componentDidMount() {
+  public componentDidMount() {
     this.treeManager.addTreeUpdateListener((tree) => {
       this.renderDrawing(tree);
     });
@@ -47,7 +47,7 @@ export default class App extends React.Component<{}, AppState> {
     });
   }
 
-  renderDrawing(tree: NodeConfig[]) {
+  public renderDrawing(tree: NodeConfig[]) {
     const status = new Status();
     const rootPseudoNode = {id: 'root', module: 'root', config: {}, children: tree};
     const context = new Context(status, rootPseudoNode);
@@ -68,11 +68,11 @@ export default class App extends React.Component<{}, AppState> {
     this.setState({rendered, status});
   }
 
-  onChangeTab = (tabId) => {
+  public onChangeTab = (tabId) => {
     this.setState({activeTab: tabId});
   }
 
-  render() {
+  public render() {
     const {selectedNodeId, rendered, status, activeTab} = this.state;
     const {treeManager} = this;
     const selectedNodeConfig = treeManager.getNodeOrNull(selectedNodeId!);

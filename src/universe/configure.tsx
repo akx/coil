@@ -1,7 +1,7 @@
+import {cloneDeep} from 'lodash';
 import Module, {getVariableDefaults} from '../modules/Module';
 import registry from '../modules/registry';
 import {NodeConfig} from '../types';
-import {cloneDeep} from 'lodash';
 
 function generateId() {
   return `${Math.floor(Math.random() * 0xFFFFFFFF).toString(36)}`;

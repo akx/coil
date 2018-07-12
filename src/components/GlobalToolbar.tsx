@@ -1,6 +1,6 @@
+import * as cx from 'classnames';
 import * as React from 'react';
 import Icon from './Icon';
-import * as cx from 'classnames';
 
 const GlobalToolbarIcons = {
   fileTree: require('material-design-icons-svg/paths/file-tree'),
@@ -11,7 +11,7 @@ export default class GlobalToolbar extends React.Component<{
   activeTab: string,
   onChangeTab: (id: string) => void,
 }, any> {
-  render() {
+  public render() {
     const tabs = [
       {id: 'tree', icon: GlobalToolbarIcons.fileTree},
       {id: 'file', icon: GlobalToolbarIcons.save},

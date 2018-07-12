@@ -1,10 +1,10 @@
 import * as React from 'react';
-import NodeTree from '../components/NodeTree';
 import NodeConfigView from '../components/NodeConfigView';
+import NodeTree from '../components/NodeTree';
 import TreeToolbar from '../components/TreeToolbar';
 import {TreeManager} from '../managers/TreeManager';
-import Status from '../universe/Status';
 import {NodeConfig} from '../types';
+import Status from '../universe/Status';
 
 interface TreePanelProps {
   treeManager: TreeManager;
@@ -28,7 +28,7 @@ export default class TreePanel extends React.Component<TreePanelProps, {}> {
     }
   }
 
-  render() {
+  public render() {
     const {treeManager, selectedNodeId, status} = this.props;
     const selectedNodeConfig = treeManager.getNodeOrNull(selectedNodeId!);
     return (
@@ -55,4 +55,4 @@ export default class TreePanel extends React.Component<TreePanelProps, {}> {
       </>
     );
   }
-};
+}

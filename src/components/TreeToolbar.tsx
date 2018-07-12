@@ -1,13 +1,13 @@
 import * as React from 'react';
 import Dropdown, {DropdownContent, DropdownTrigger} from 'react-simple-dropdown';
-import {NodeConfig} from '../types';
-import registry from '../modules/registry';
 import {TreeManager} from '../managers/TreeManager';
+import registry from '../modules/registry';
+import {NodeConfig} from '../types';
 
-type ToolbarProps = {
-  treeManager: TreeManager,
-  selectedNode: NodeConfig | null,
-};
+interface ToolbarProps {
+  treeManager: TreeManager;
+  selectedNode: NodeConfig | null;
+}
 
 function nodeAcceptsChildren(node: NodeConfig | null) {
   return (node && registry[node.module] && registry[node.module].acceptsChildren);
@@ -36,13 +36,13 @@ export default class TreeToolbar extends React.Component<ToolbarProps, any> {
     treeManager.deleteNode(selectedNode!.id, withHierarchy);
   }
 
-  hideDropdowns() {
+  public hideDropdowns() {
     Object.values(this.dropdowns).forEach((dropdown) => {
       return dropdown.hide();
     });
   }
 
-  render() {
+  public render() {
     const {selectedNode} = this.props;
     let childMode: string | null = null;
     let childText: string = 'Node';

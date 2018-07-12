@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {NodeConfig} from '../types';
 import registry from '../modules/registry';
+import {NodeConfig} from '../types';
 
-type TreeCommonProps = {
-  selectedNode: NodeConfig | null,
-  onSelectNode: (node: NodeConfig | null) => void,
-  onRepositionNode: (sourceNodeId: string, targetNodeId: string, copy: boolean) => void,
-};
+interface TreeCommonProps {
+  selectedNode: NodeConfig | null;
+  onSelectNode: (node: NodeConfig | null) => void;
+  onRepositionNode: (sourceNodeId: string, targetNodeId: string, copy: boolean) => void;
+}
 
 type TreeNodeProps = TreeCommonProps & {
   nodeConfig: NodeConfig,

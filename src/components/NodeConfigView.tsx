@@ -1,24 +1,24 @@
-import * as React from 'react';
-import {NodeConfig} from '../types';
-import registry from '../modules/registry';
-import Module, {UniversalVariables} from '../modules/Module';
-import VariableDefinition from '../modules/VariableDefinition';
-import Status from '../universe/Status';
 import {groupBy} from 'lodash';
+import * as React from 'react';
+import Module, {UniversalVariables} from '../modules/Module';
+import registry from '../modules/registry';
+import VariableDefinition from '../modules/VariableDefinition';
+import {NodeConfig} from '../types';
 import {ChangeNodeConfigHandler} from '../types';
+import Status from '../universe/Status';
 
-type NodeConfigViewProps = {
-  nodeConfig: NodeConfig,
-  onChange: ChangeNodeConfigHandler,
-  status: Status,
-};
+interface NodeConfigViewProps {
+  nodeConfig: NodeConfig;
+  onChange: ChangeNodeConfigHandler;
+  status: Status;
+}
 
-type VariableConfigRowProps = {
-  variable: VariableDefinition,
-  nodeConfig: NodeConfig,
-  onChange: ChangeNodeConfigHandler,
-  status: Status,
-};
+interface VariableConfigRowProps {
+  variable: VariableDefinition;
+  nodeConfig: NodeConfig;
+  onChange: ChangeNodeConfigHandler;
+  status: Status;
+}
 
 const VariableConfigRow = ({variable, nodeConfig, onChange, status}: VariableConfigRowProps) => {
   let extraControls: React.ReactElement<any> | null = null;
@@ -69,7 +69,7 @@ const VariableConfigRow = ({variable, nodeConfig, onChange, status}: VariableCon
 };
 
 export default class NodeConfigView extends React.Component<NodeConfigViewProps, any> {
-  render() {
+  public render() {
     const {nodeConfig, status} = this.props;
     const moduleClass: Module = registry[nodeConfig.module];
 

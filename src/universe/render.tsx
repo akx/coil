@@ -1,7 +1,7 @@
-import {NodeConfig} from '../types';
-import registry from '../modules/registry';
-import Context from './Context';
 import Module from '../modules/Module';
+import registry from '../modules/registry';
+import {NodeConfig} from '../types';
+import Context from './Context';
 
 export function renderNode(context: Context, nodeConfig: NodeConfig) {
   const module: Module = registry[nodeConfig.module];

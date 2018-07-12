@@ -5,14 +5,13 @@
     ],
     "jsRules": {},
     "rules": {
-        "interface-over-type-literal": false,
-        "member-access": false,
-        "member-ordering": false,
-        "ordered-imports": false,
-        "quotemark": [true, "single", "jsx-double"],
         "interface-name": false,
+        "member-ordering": false,
+        "no-bitwise": false,
+        "no-console": false,
         "object-literal-sort-keys": false,
-        "no-bitwise": false
+        "ordered-imports": false,
+        "quotemark": [true, "single", "jsx-double"]
     },
     "rulesDirectory": []
 }

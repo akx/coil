@@ -15,3 +15,9 @@ export interface NodeConfig {
   config: ExpressionMap;
   children: NodeConfig[];
 }
+
+export interface Document {
+  nodes: NodeConfig[];
+  width: number;
+  height: number;
+}
