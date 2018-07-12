@@ -15,7 +15,8 @@ export default {
 
   render(context: Context) {
     const {props, matrix} = splitMatrixAndProps(context.evaluateNodeConfig());
-    const {radiusX, radiusY, fill, opacity} = props;
+    const {radiusX, fill, opacity} = props;
+    const radiusY = (props.radiusY !== '' ? props.radiusY : radiusX);
     return [
       <ellipse
         cx={0}
