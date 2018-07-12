@@ -1,11 +1,15 @@
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import {TreeManager} from '../managers/TreeManager';
-import {NodeConfig} from '../types';
+import {Document} from '../types';
+import {deserialize, serialize} from '../utils/serde';
+import {LoadDocumentHandler} from '../handlers';
 
 interface FilePanelProps {
   treeManager: TreeManager;
   rendered: any;  // TODO: yigh
+  document: Document;
+  onLoadDocument: LoadDocumentHandler;
 }
 
 interface FilePanelState {
@@ -18,9 +22,10 @@ export default class FilePanel extends React.Component<FilePanelProps, FilePanel
     serializedState: '',
   };
 
-  private dumpState = () => {
+  private dumpState = (event) => {
+    const doc = serialize(this.props.document, this.props.treeManager.getTree());
     this.setState({
-      serializedState: JSON.stringify(this.props.treeManager.getTree(), null, 2),
+      serializedState: JSON.stringify(doc, null, (event.shiftKey ? undefined : 2)),
     });
   }
 
@@ -32,11 +37,13 @@ export default class FilePanel extends React.Component<FilePanelProps, FilePanel
       alert('Could not parse JSON: ' + e);
       return;
     }
-    if (!Array.isArray(stateJson)) {
-      alert('Input is not an array.');
+    try {
+      const doc = deserialize(stateJson);
+      this.props.onLoadDocument(doc);
+    } catch (e) {
+      alert('Could not read document:' + e);
       return;
     }
-    this.props.treeManager.replaceTree(stateJson as NodeConfig[]);
   }
 
   private saveSVG = () => {

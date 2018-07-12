@@ -8,6 +8,7 @@ import Context from '../universe/Context';
 import Status from '../universe/Status';
 import makeDefaultConfig from '../utils/defaultConfig';
 import * as storage from '../utils/storage';
+import {deserialize, serialize} from '../utils/serde';
 
 interface AppState {
   selectedNodeId: string | null;
@@ -32,7 +33,7 @@ export default class App extends React.Component<{}, AppState> {
       nodes: [],
       width: 800,
       height: 800,
-      background: '#ff7d00',
+      background: '',
     },
   };
 
@@ -41,11 +42,35 @@ export default class App extends React.Component<{}, AppState> {
       this.renderDrawing(tree);
     });
     this.treeManager.addTreeUpdateListener((tree) => {
-      storage.save(STORAGE_KEY, tree);
+      this.saveToStorage(tree);
     });
 
-    const lTree = storage.load(STORAGE_KEY) || makeDefaultConfig();
-    this.treeManager.replaceTree(lTree);
+    this.loadFromStorage();
+  }
+
+  private saveToStorage(tree?: NodeConfig[]) {
+    storage.save(STORAGE_KEY, serialize(this.state.document, tree || this.treeManager.getTree()));
+  }
+
+  private loadFromStorage() {
+    const storageObj = storage.load(STORAGE_KEY);
+    if (!storageObj) {
+      this.treeManager.replaceTree(makeDefaultConfig());
+      return;
+    }
+    try {
+      const document = deserialize(storageObj);
+      this.loadDocument(document);
+    } catch (e) {
+      alert('Loading document from storage failed: ' + e);
+    }
+  }
+
+  private loadDocument = (document: Document): void => {
+    const nodes = document.nodes;
+    document.nodes = [];  // Just to make sure people know this is irrelevant
+    this.setState({document});
+    this.treeManager.replaceTree(nodes);
   }
 
   private onSelectNode = (nodeConfig: NodeConfig | null): void => {
@@ -92,7 +117,7 @@ export default class App extends React.Component<{}, AppState> {
     this.setState({document}, () => {
       this.renderDrawing(this.treeManager.getTree() as NodeConfig[]);
     });
-  };
+  }
 
   public render() {
     const {selectedNodeId, rendered, status, activeTab, document} = this.state;
@@ -116,7 +141,9 @@ export default class App extends React.Component<{}, AppState> {
         configContent = (
           <FilePanel
             treeManager={this.treeManager}
-            rendered={this.state.rendered}
+            rendered={rendered}
+            document={document}
+            onLoadDocument={this.loadDocument}
           />
         );
         break;

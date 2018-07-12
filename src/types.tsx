@@ -19,3 +19,8 @@ export interface Document {
   height: number;
   background?: string;
 }
+
+
+export interface SerializedDocument extends Document {
+  version: string;
+}
