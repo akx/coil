@@ -17,7 +17,7 @@ const registry = {
   RectArray,
   RemoveChildren,
   Xform,
-} as {[name: string]: Module};
+} as { [name: string]: Module };
 export default registry;
 
 Object.keys(registry).forEach((name) => {

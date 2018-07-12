@@ -1,5 +1,4 @@
-import {NodeConfig} from '../types';
-import {ExpressionMap, VariableMap} from '../types';
+import {ExpressionMap, NodeConfig, VariableMap} from '../types';
 import {evaluateExpression, NamespaceFn} from '../utils/evaluator';
 import {default as createRandomGenerator, RandomGenerator} from '../utils/RandomGenerator';
 import {renderNodesInto} from './render';
@@ -49,7 +48,7 @@ export default class Context {
   public subcontext(
     forNode: NodeConfig,
     newVariables: VariableMap = {},
-    idPrefix: String = '',
+    idPrefix: string = '',
   ): Context {
     const mergedVariables = Object.assign({}, this.variables, newVariables);
     return new Context(
@@ -86,7 +85,9 @@ export default class Context {
 
   public evaluateFromNodeConfig(key: string): any {
     const expression = this.node.config[key]!;
-    if (expression === undefined) { return null; }
+    if (expression === undefined) {
+      return null;
+    }
     return _evaluate(this.status, this.node, key, expression, this.defaultNamespace);
   }
 
@@ -103,9 +104,11 @@ export default class Context {
     const evaluated = {};
     const namespace = this.prepareNamespace(additionalVariables);
     for (const tag in expressionMap) {
-      const expression = expressionMap[tag];
-      if (expression !== null) {
-        evaluated[tag] = _evaluate(this.status, this.node, tag, expression, namespace);
+      if (expressionMap.hasOwnProperty(tag)) {
+        const expression = expressionMap[tag];
+        if (expression !== null) {
+          evaluated[tag] = _evaluate(this.status, this.node, tag, expression, namespace);
+        }
       }
     }
     return evaluated;

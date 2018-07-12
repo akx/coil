@@ -1,7 +1,7 @@
-function hashString(string: String) {
+function hashString(s: string) {
   let seed = 0;
-  for (let i = 0; i < string.length; i++) {
-    seed ^= (i % 16) << string.charCodeAt(i);
+  for (let i = 0; i < s.length; i++) {
+    seed ^= (i % 16) << s.charCodeAt(i);
   }
   return seed;
 }

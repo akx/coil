@@ -1,3 +1,4 @@
+// tslint:disable prefer-for-of
 import Module from '../modules/Module';
 import registry from '../modules/registry';
 import {NodeConfig} from '../types';

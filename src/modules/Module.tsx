@@ -6,6 +6,7 @@ import VariableDefinition from './VariableDefinition';
 export default interface Module {
   acceptsChildren: boolean;
   variables: VariableDefinition[];
+
   render(context: Context): Array<ReactElement<any>>;
 }
 

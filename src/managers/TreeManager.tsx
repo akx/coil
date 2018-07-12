@@ -6,9 +6,11 @@ interface NodeCacheEntry {
   node: NodeConfig;
   parent: NodeConfig | null;
 }
+
 export interface NodeCacheType {
   [key: string]: NodeCacheEntry;
 }
+
 export type UpdateListener = (root: NodeConfig[]) => void;
 
 export class TreeManager {

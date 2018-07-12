@@ -8,12 +8,12 @@ function generateId() {
 }
 
 export function duplicate(nodeConfig: NodeConfig): NodeConfig {
-  function walk(nodeConfig: NodeConfig): NodeConfig {
+  function walk(wConfig: NodeConfig): NodeConfig {
     return {
       id: generateId(),
-      module: nodeConfig.module,
-      config: cloneDeep(nodeConfig.config),
-      children: nodeConfig.children.map(walk),
+      module: wConfig.module,
+      config: cloneDeep(wConfig.config),
+      children: wConfig.children.map(walk),
     };
   }
 

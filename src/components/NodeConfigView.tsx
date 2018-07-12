@@ -3,8 +3,7 @@ import * as React from 'react';
 import Module, {UniversalVariables} from '../modules/Module';
 import registry from '../modules/registry';
 import VariableDefinition from '../modules/VariableDefinition';
-import {NodeConfig} from '../types';
-import {ChangeNodeConfigHandler} from '../types';
+import {ChangeNodeConfigHandler, NodeConfig} from '../types';
 import Status from '../universe/Status';
 
 interface NodeConfigViewProps {
