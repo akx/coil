@@ -6,8 +6,6 @@ export interface ExpressionMap {
   [key: string]: string | null;
 }
 
-export type ChangeNodeConfigHandler = (nodeConfig: NodeConfig, variableName: string, newValue: string) => void;
-
 export interface NodeConfig {
   id: string;
   module: string;

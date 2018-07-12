@@ -3,13 +3,15 @@ import * as React from 'react';
 import Module, {UniversalVariables} from '../modules/Module';
 import registry from '../modules/registry';
 import VariableDefinition from '../modules/VariableDefinition';
-import {ChangeNodeConfigHandler, NodeConfig} from '../types';
+import {NodeConfig} from '../types';
 import Status from '../universe/Status';
+import {ChangeNodeConfigHandler} from "../handlers";
 
 interface NodeConfigViewProps {
   nodeConfig: NodeConfig;
   onChange: ChangeNodeConfigHandler;
   status: Status;
+  forceModule?: Module;
 }
 
 interface VariableConfigRowProps {
@@ -69,8 +71,8 @@ const VariableConfigRow = ({variable, nodeConfig, onChange, status}: VariableCon
 
 export default class NodeConfigView extends React.Component<NodeConfigViewProps, any> {
   public render() {
-    const {nodeConfig, status} = this.props;
-    const moduleClass: Module = registry[nodeConfig.module];
+    const {nodeConfig, status, forceModule} = this.props;
+    const moduleClass: Module = forceModule || registry[nodeConfig.module];
 
     if (!moduleClass) {
       return (
@@ -81,9 +83,12 @@ export default class NodeConfigView extends React.Component<NodeConfigViewProps,
       );
     }
 
-    const variableDefinitions = moduleClass.variables.concat(UniversalVariables);
+    const variableDefinitions = moduleClass.variables.concat(
+      (moduleClass.noUniversalVariables ? [] : UniversalVariables)
+    );
     const variablesByGroup = groupBy(variableDefinitions, (v) => (v.group || 'Other'));
 
+    const variablesForNode = status.getVariablesForNode(nodeConfig.id);
     return (
       <div>
         <table>
@@ -105,9 +110,10 @@ export default class NodeConfigView extends React.Component<NodeConfigViewProps,
             )}
           </tbody>
         </table>
-        <div className="debug">
-          Variables last render: {status.getVariablesForNode(nodeConfig.id).join(', ')}
-        </div>
+        {variablesForNode.length ?
+          <div className="debug">Variables last render: {variablesForNode.join(', ')}</div>
+          : null
+        }
         <ul className="errors">
           {status.getErrorsForNode(nodeConfig.id).map((err, i) => <li key={i}>{err}</li>)}
         </ul>

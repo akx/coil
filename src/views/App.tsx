@@ -32,7 +32,7 @@ export default class App extends React.Component<{}, AppState> {
       nodes: [],
       width: 800,
       height: 800,
-      background: 'orange',
+      background: '#ff7d00',
     },
   };
 
@@ -79,8 +79,23 @@ export default class App extends React.Component<{}, AppState> {
     this.setState({activeTab: tabId});
   }
 
+  private onChangeDocumentVariable = (variableName: keyof Document, value: string) => {
+    const document = this.state.document;
+    switch (variableName) {
+      case 'width':
+      case 'height':
+        document[variableName] = parseInt(value, 10);
+        break;
+      default:
+        document[variableName] = value;
+    }
+    this.setState({document}, () => {
+      this.renderDrawing(this.treeManager.getTree() as NodeConfig[]);
+    });
+  };
+
   public render() {
-    const {selectedNodeId, rendered, status, activeTab} = this.state;
+    const {selectedNodeId, rendered, status, activeTab, document} = this.state;
     const {treeManager} = this;
     const selectedNodeConfig = treeManager.getNodeOrNull(selectedNodeId!);
     let configContent: React.ReactElement<any> | null = null;
@@ -88,10 +103,12 @@ export default class App extends React.Component<{}, AppState> {
       case 'tree':
         configContent = (
           <TreePanel
+            document={document}
             treeManager={this.treeManager}
             status={this.state.status}
             selectedNodeId={this.state.selectedNodeId}
             onSelectNode={this.onSelectNode}
+            onChangeDocumentVariable={this.onChangeDocumentVariable}
           />
         );
         break;

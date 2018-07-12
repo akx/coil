@@ -3,20 +3,29 @@ import NodeConfigView from '../components/NodeConfigView';
 import NodeTree from '../components/NodeTree';
 import TreeToolbar from '../components/TreeToolbar';
 import {TreeManager} from '../managers/TreeManager';
-import {NodeConfig} from '../types';
+import {Document, NodeConfig} from '../types';
 import Status from '../universe/Status';
+import {default as DocumentModule} from '../modules/pseudo/Document';
+import {ChangeDocumentConfigHandler, SelectNodeHandler} from '../handlers';
 
 interface TreePanelProps {
   treeManager: TreeManager;
   status: Status;
   selectedNodeId: string | null;
-  onSelectNode: (nodeConfig: NodeConfig | null) => void;
+  onSelectNode: SelectNodeHandler;
+  document: Document;
+  onChangeDocumentVariable: ChangeDocumentConfigHandler;
 }
 
 export default class TreePanel extends React.Component<TreePanelProps, {}> {
 
   private onChangeNodeVariable = (nodeConfig: NodeConfig, variableName: string, newValue: string) => {
     this.props.treeManager.changeNodeVariable(nodeConfig.id, variableName, newValue);
+    this.forceUpdate();  // Avoid asynchronous input caret position problem :(
+  }
+
+  private onChangeDocumentVariable = (nodeConfig: NodeConfig, variableName: string, newValue: string) => {
+    this.props.onChangeDocumentVariable(variableName as any, newValue.replace(/^=/, ''));
     this.forceUpdate();  // Avoid asynchronous input caret position problem :(
   }
 
@@ -29,7 +38,7 @@ export default class TreePanel extends React.Component<TreePanelProps, {}> {
   }
 
   public render() {
-    const {treeManager, selectedNodeId, status} = this.props;
+    const {treeManager, selectedNodeId, status, document} = this.props;
     const selectedNodeConfig = treeManager.getNodeOrNull(selectedNodeId!);
     return (
       <>
@@ -49,7 +58,22 @@ export default class TreePanel extends React.Component<TreePanelProps, {}> {
               status={status}
               onChange={this.onChangeNodeVariable}
             />
-            : null
+            :
+            <NodeConfigView
+              nodeConfig={{
+                module: '~Document~',
+                id: '~Document~',
+                config: {
+                  width: '' + document.width,
+                  height: '' + document.height,
+                  background: '' + document.background,
+                },
+                children: [],
+              }}
+              status={status}
+              forceModule={DocumentModule}
+              onChange={this.onChangeDocumentVariable}
+            />
           }
         </div>
       </>

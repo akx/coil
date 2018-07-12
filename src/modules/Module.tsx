@@ -5,6 +5,7 @@ import VariableDefinition from './VariableDefinition';
 // tslint:disable-next-line:interface-name
 export default interface Module {
   acceptsChildren: boolean;
+  noUniversalVariables?: boolean;
   variables: VariableDefinition[];
 
   render(context: Context): Array<ReactElement<any>>;

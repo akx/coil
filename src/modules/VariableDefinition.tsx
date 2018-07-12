@@ -6,4 +6,5 @@ export default interface VariableDefinition {
   type?: 'number' | 'string' | 'color';
   group?: string;
   choices?: string[];
+  static?: boolean;
 }
