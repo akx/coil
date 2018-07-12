@@ -3,7 +3,7 @@ import GlobalToolbar from '../components/GlobalToolbar';
 import {TreeManager} from '../managers/TreeManager';
 import FilePanel from '../sidebar-panels/FilePanel';
 import TreePanel from '../sidebar-panels/TreePanel';
-import {NodeConfig} from '../types';
+import {Document, NodeConfig} from '../types';
 import Context from '../universe/Context';
 import Status from '../universe/Status';
 import makeDefaultConfig from '../utils/defaultConfig';
@@ -14,6 +14,7 @@ interface AppState {
   rendered: any;
   status: Status;
   activeTab: 'tree' | 'file';
+  document: Document;
 }
 
 const STORAGE_KEY = 'coilSave';
@@ -27,6 +28,12 @@ export default class App extends React.Component<{}, AppState> {
     rendered: null,
     status: new Status(),
     activeTab: 'tree',
+    document: {
+      nodes: [],
+      width: 800,
+      height: 800,
+      background: 'orange',
+    },
   };
 
   public componentDidMount() {
@@ -51,8 +58,7 @@ export default class App extends React.Component<{}, AppState> {
     const status = new Status();
     const rootPseudoNode = {id: 'root', module: 'root', config: {}, children: tree};
     const context = new Context(status, rootPseudoNode);
-    const width = 800;
-    const height = 800;
+    const {width, height, background} = this.state.document;
     let renderedChildren;
     try {
       renderedChildren = context.renderChildren();
@@ -62,6 +68,7 @@ export default class App extends React.Component<{}, AppState> {
     }
     const rendered = (
       <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+        {background ? <rect x={0} y={0} width={width} height={height} fill={background} id="background" /> : null}
         {renderedChildren}
       </svg>
     );

@@ -19,4 +19,5 @@ export interface Document {
   nodes: NodeConfig[];
   width: number;
   height: number;
+  background?: string;
 }
