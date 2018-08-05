@@ -5,6 +5,7 @@ import Icon from './Icon';
 const GlobalToolbarIcons = {
   fileTree: require('material-design-icons-svg/paths/file-tree'),
   save: require('material-design-icons-svg/paths/content-save'),
+  tune: require('material-design-icons-svg/paths/tune'),
 };
 
 export default class GlobalToolbar extends React.Component<{
@@ -15,6 +16,7 @@ export default class GlobalToolbar extends React.Component<{
     const tabs = [
       {id: 'tree', icon: GlobalToolbarIcons.fileTree},
       {id: 'file', icon: GlobalToolbarIcons.save},
+      {id: 'gvars', icon: GlobalToolbarIcons.tune},
     ];
     return (
       <div id="global-toolbar" className="toolbar">

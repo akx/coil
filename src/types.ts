@@ -13,18 +13,27 @@ export interface NodeConfig {
   children: NodeConfig[];
 }
 
+export interface GVar {
+  name: string;
+  type: VariableType;
+  min: number;
+  max: number;
+  value: number | string;
+}
+
 export interface Document {
   nodes: NodeConfig[];
   width: number;
   height: number;
   background?: string;
+  gvars: GVar[];
 }
 
 export interface SerializedDocument extends Document {
   version: string;
 }
 
-type VariableType = 'number' | 'string' | 'color';
+export type VariableType = 'number' | 'string' | 'color';
 
 export interface VariableDefinition {
   name: string;

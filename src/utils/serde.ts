@@ -2,6 +2,13 @@ import {Document, NodeConfig, SerializedDocument} from '../types';
 
 const version = '0.1';
 
+const documentDefaults: Partial<Document> = {
+  width: 800,
+  height: 800,
+  background: '',
+  gvars: [],
+};
+
 export function serialize(document: Document, nodes: ReadonlyArray<NodeConfig>): SerializedDocument {
   const docWithNodes: Document = {...document, nodes: nodes as NodeConfig[]};
   return {version, ...docWithNodes};
@@ -10,11 +17,9 @@ export function serialize(document: Document, nodes: ReadonlyArray<NodeConfig>):
 export function deserialize(obj: any): Document {
   if (Array.isArray(obj)) {
     return {
-      width: 800,
-      height: 800,
-      background: '',
+      ...documentDefaults,
       nodes: Array.from(obj),
-    };
+    } as Document;
   }
   if (typeof obj !== 'object') {
     throw new Error('Not an object');
@@ -22,7 +27,7 @@ export function deserialize(obj: any): Document {
   if (obj.version === version) {
     const doc: SerializedDocument = {...obj};
     delete doc.version;
-    return (doc as Document);
+    return {...documentDefaults, ...doc} as Document;
   }
   throw new Error(`Object version ${obj.version} not understood`);
 }

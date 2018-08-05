@@ -7,6 +7,8 @@ import {Document, NodeConfig} from '../types';
 import Status from '../universe/Status';
 import {default as DocumentModule} from '../modules/pseudo/Document';
 import {ChangeDocumentConfigHandler, SelectNodeHandler} from '../handlers';
+import QuickGVarBar from '../components/QuickGVarBar';
+import {GVarValueChangeHandler} from "../ui-types";
 
 interface TreePanelProps {
   treeManager: TreeManager;
@@ -15,6 +17,7 @@ interface TreePanelProps {
   onSelectNode: SelectNodeHandler;
   document: Document;
   onChangeDocumentVariable: ChangeDocumentConfigHandler;
+  onChangeGvarValue: GVarValueChangeHandler;
 }
 
 export default class TreePanel extends React.Component<TreePanelProps, {}> {
@@ -38,7 +41,7 @@ export default class TreePanel extends React.Component<TreePanelProps, {}> {
   }
 
   public render() {
-    const {treeManager, selectedNodeId, status, document} = this.props;
+    const {treeManager, selectedNodeId, status, document, onChangeGvarValue} = this.props;
     const selectedNodeConfig = treeManager.getNodeOrNull(selectedNodeId!);
     return (
       <>
@@ -76,6 +79,7 @@ export default class TreePanel extends React.Component<TreePanelProps, {}> {
             />
           }
         </div>
+        <QuickGVarBar gvars={document.gvars} onChange={onChangeGvarValue}/>
       </>
     );
   }

@@ -3,18 +3,20 @@ import GlobalToolbar from '../components/GlobalToolbar';
 import {TreeManager} from '../managers/TreeManager';
 import FilePanel from '../sidebar-panels/FilePanel';
 import TreePanel from '../sidebar-panels/TreePanel';
-import {Document, NodeConfig} from '../types';
+import {Document, GVar, NodeConfig} from '../types';
 import Context from '../universe/Context';
 import Status from '../universe/Status';
 import makeDefaultConfig from '../utils/defaultConfig';
 import * as storage from '../utils/storage';
 import {deserialize, serialize} from '../utils/serde';
+import GVarsPanel from '../sidebar-panels/GVarsPanel';
+import {removeInPlace} from "../utils/arrays";
 
 interface AppState {
   selectedNodeId: string | null;
   rendered: any;
   status: Status;
-  activeTab: 'tree' | 'file';
+  activeTab: 'tree' | 'gvars' | 'file';
   document: Document;
 }
 
@@ -34,6 +36,7 @@ export default class App extends React.Component<{}, AppState> {
       width: 800,
       height: 800,
       background: '',
+      gvars: [],
     },
   };
 
@@ -83,7 +86,10 @@ export default class App extends React.Component<{}, AppState> {
     const status = new Status();
     const rootPseudoNode = {id: 'root', module: 'root', config: {}, children: tree};
     const context = new Context(status, rootPseudoNode);
-    const {width, height, background} = this.state.document;
+    const {width, height, background, gvars} = this.state.document;
+    gvars.forEach((gvar) => {
+      context.variables[gvar.name] = gvar.value;
+    });
     let renderedChildren;
     try {
       renderedChildren = context.renderChildren();
@@ -115,8 +121,73 @@ export default class App extends React.Component<{}, AppState> {
         document[variableName] = value;
     }
     this.setState({document}, () => {
-      this.renderDrawing(this.treeManager.getTree() as NodeConfig[]);
+      this.redrawCurrent();
     });
+  }
+
+  private redrawCurrent(save: boolean = true) {
+    const tree = this.treeManager.getTree() as NodeConfig[];
+    this.renderDrawing(tree);
+    if (save) {
+      this.saveToStorage(tree);
+    }
+  }
+
+  private onAddGvar = () => {
+    const document = this.state.document;
+    const getNextGvarName = () => {
+      for (let i = 0; ; i++) {
+        const name = `${String.fromCharCode(97 + document.gvars.length)}`;
+        if (document.gvars.some((g) => g.name === name)) {
+          continue;
+        }
+        return name;
+      }
+    };
+    document.gvars.push({
+      name: getNextGvarName(),
+      type: 'number',
+      min: 0,
+      max: 1,
+      value: 0,
+    });
+    this.setState({document});
+  }
+
+  private onModifyGvar = (gvar: GVar, key: keyof GVar, value: any) => {
+    const document = this.state.document;
+    if (document.gvars.includes(gvar)) {
+      gvar[key] = value;
+      this.setState({document}, () => {
+        if (key === 'value') {
+          this.redrawCurrent();
+        }
+      });
+    }
+  }
+  private onChangeGvarValue = (gvar: GVar, value: any) => {
+    const document = this.state.document;
+    if (document.gvars.includes(gvar)) {
+      if (gvar.type === 'number') {
+        const numVal = parseFloat(value);
+        if (isNaN(numVal)) {
+          return;
+        }
+        gvar.value = numVal;
+      }
+      this.setState({document}, () => {
+        this.redrawCurrent();
+      });
+    }
+  }
+
+  private onDeleteGvar = (gvar: GVar) => {
+    const document = this.state.document;
+    if (removeInPlace(document.gvars, gvar)) {
+      this.setState({document}, () => {
+        this.redrawCurrent();
+      });
+    }
   }
 
   public render() {
@@ -134,6 +205,7 @@ export default class App extends React.Component<{}, AppState> {
             selectedNodeId={this.state.selectedNodeId}
             onSelectNode={this.onSelectNode}
             onChangeDocumentVariable={this.onChangeDocumentVariable}
+            onChangeGvarValue={this.onChangeGvarValue}
           />
         );
         break;
@@ -144,6 +216,16 @@ export default class App extends React.Component<{}, AppState> {
             rendered={rendered}
             document={document}
             onLoadDocument={this.loadDocument}
+          />
+        );
+        break;
+      case 'gvars':
+        configContent = (
+          <GVarsPanel
+            document={document}
+            onAddGvar={this.onAddGvar}
+            onModifyGvar={this.onModifyGvar}
+            onDeleteGvar={this.onDeleteGvar}
           />
         );
         break;

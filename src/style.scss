@@ -47,29 +47,30 @@ body {
   background: $semidark;
   border: 1px outset $darkish;
   border-left: 0;
-  table {
+}
+
+#props table, .var-table {
+  width: 100%;
+  tr.group-separator th {
+    text-align: left;
+    border-bottom: 1px solid #333;
+  }
+  tr.variable-config-row th {
+    text-align: right;
+  }
+  input {
     width: 100%;
-    tr.group-separator th {
-      text-align: left;
-      border-bottom: 1px solid #333;
+    background: transparent;
+    border: 1px inset $semidark;
+    padding: 4px;
+    color: $light;
+    &:focus {
+      outline-color: $blue;
     }
-    tr.variable-config-row th {
-      text-align: right;
-    }
-    input {
-      width: 100%;
-      background: transparent;
-      border: 1px inset $semidark;
-      padding: 4px;
-      color: $light;
-      &:focus {
-        outline-color: $blue;
-      }
-      &[type=color] {
-        padding: 0;
-        border: 0;
-        min-width: 2em;
-      }
+    &[type=color] {
+      padding: 0;
+      border: 0;
+      min-width: 2em;
     }
   }
 }
@@ -209,4 +210,15 @@ textarea {
   border: 1px inset $darkerish;
   height: 200px;
   color: $light;
+}
+
+.quick-gvar {
+  display: flex;
+  padding: 6px;
+  span {
+    flex: 1;
+  }
+  input {
+    flex: 3;
+  }
 }
