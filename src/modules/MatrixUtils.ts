@@ -12,7 +12,7 @@ const multiply = (m1: Matrix, m2: Matrix): Matrix => {
   };
 };
 
-export interface TransformBag {
+interface TransformBag {
   x: number;
   y: number;
   r: number;

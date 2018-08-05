@@ -7,7 +7,7 @@ interface NodeCacheEntry {
   parent: NodeConfig | null;
 }
 
-export interface NodeCacheType {
+interface NodeCacheType {
   [key: string]: NodeCacheEntry;
 }
 

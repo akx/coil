@@ -20,7 +20,18 @@ export interface Document {
   background?: string;
 }
 
-
 export interface SerializedDocument extends Document {
   version: string;
+}
+
+type VariableType = 'number' | 'string' | 'color';
+
+export interface VariableDefinition {
+  name: string;
+  description?: string;
+  default?: string;
+  type?: VariableType;
+  group?: string;
+  choices?: string[];
+  static?: boolean;
 }

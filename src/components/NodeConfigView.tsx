@@ -2,10 +2,10 @@ import {groupBy} from 'lodash';
 import * as React from 'react';
 import Module, {UniversalVariables} from '../modules/Module';
 import registry from '../modules/registry';
-import VariableDefinition from '../modules/VariableDefinition';
+import {VariableDefinition} from '../types';
 import {NodeConfig} from '../types';
 import Status from '../universe/Status';
-import {ChangeNodeConfigHandler} from "../handlers";
+import {ChangeNodeConfigHandler} from '../handlers';
 
 interface NodeConfigViewProps {
   nodeConfig: NodeConfig;
@@ -84,7 +84,7 @@ export default class NodeConfigView extends React.Component<NodeConfigViewProps,
     }
 
     const variableDefinitions = moduleClass.variables.concat(
-      (moduleClass.noUniversalVariables ? [] : UniversalVariables)
+      (moduleClass.noUniversalVariables ? [] : UniversalVariables),
     );
     const variablesByGroup = groupBy(variableDefinitions, (v) => (v.group || 'Other'));
 

@@ -1,6 +1,6 @@
 import {ReactElement} from 'react';
 import Context from '../universe/Context';
-import VariableDefinition from './VariableDefinition';
+import {VariableDefinition} from '../types';
 
 // tslint:disable-next-line:interface-name
 export default interface Module {

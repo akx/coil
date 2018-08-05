@@ -1,4 +1,4 @@
-import VariableDefinition from './VariableDefinition';
+import {VariableDefinition} from '../types';
 
 const group = 'Presentation';
 export default [
