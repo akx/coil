@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {GVar} from '../types';
-import {GVarValueChangeHandler} from "../ui-types";
+import {GVarValueChangeHandler} from '../ui-types';
 
 interface QuickGVarProps {
   gvar: GVar;
@@ -11,7 +11,6 @@ interface QuickGVarBarProps {
   gvars: GVar[];
   onChange: GVarValueChangeHandler;
 }
-
 
 const QuickGVar: React.SFC<QuickGVarProps> = ({gvar, onChange}) => (
 
@@ -24,13 +23,13 @@ const QuickGVar: React.SFC<QuickGVarProps> = ({gvar, onChange}) => (
         type="range"
         min={gvar.min}
         max={gvar.max}
+        step="any"
         value={gvar.value}
         onChange={(e) => onChange(gvar, e.target.valueAsNumber)}
       />
     ) : null}
   </div>
 );
-
 
 const QuickGVarBar: React.SFC<QuickGVarBarProps> = ({gvars, onChange}) => (
   <div className="quick-gvar-bar">
