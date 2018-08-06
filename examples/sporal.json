@@ -1,0 +1,119 @@
+{
+  "version": "0.1",
+  "width": 800,
+  "height": 800,
+  "background": "#011993",
+  "gvars": [
+    {
+      "name": "a",
+      "type": "number",
+      "min": 0,
+      "max": 150,
+      "value": 21.7911877394636
+    },
+    {
+      "name": "b",
+      "type": "number",
+      "min": 0,
+      "max": 150,
+      "value": 122.01867816092
+    },
+    {
+      "name": "c",
+      "type": "number",
+      "min": 0,
+      "max": 10,
+      "value": 6.64272030651341
+    },
+    {
+      "name": "d",
+      "type": "number",
+      "min": 0,
+      "max": 1000,
+      "value": 715.277777777778
+    },
+    {
+      "name": "n",
+      "type": "number",
+      "min": 1,
+      "max": 50,
+      "value": 34.5584291187739
+    },
+    {
+      "name": "e",
+      "type": "number",
+      "min": 0,
+      "max": 100,
+      "value": 50.4150702426565
+    }
+  ],
+  "nodes": [
+    {
+      "id": "1qn0nc6",
+      "module": "Xform",
+      "config": {
+        "x": "400",
+        "y": "400",
+        "r": "0",
+        "sx": "1",
+        "sy": "1",
+        "opacity": "1"
+      },
+      "children": [
+        {
+          "id": "zezcga",
+          "module": "LinearArray",
+          "config": {
+            "number": "=b",
+            "variable": "x"
+          },
+          "children": [
+            {
+              "id": "1vofdr7",
+              "module": "LinearArray",
+              "config": {
+                "number": "=n",
+                "variable": "i"
+              },
+              "children": [
+                {
+                  "id": "17idekk",
+                  "module": "Xform",
+                  "config": {
+                    "x": "",
+                    "y": "",
+                    "r": "=iF*360+x*c",
+                    "sx": "1",
+                    "sy": "1",
+                    "opacity": "1"
+                  },
+                  "children": [
+                    {
+                      "id": "exuxye",
+                      "module": "Ellipse",
+                      "config": {
+                        "x": "=e*iF",
+                        "y": "=xF*d",
+                        "r": "0",
+                        "sx": "1",
+                        "sy": "1",
+                        "radiusX": "=a*xF*iF",
+                        "radiusY": "",
+                        "fill": "#9ca4ff",
+                        "opacity": "1",
+                        "filter": "",
+                        "stroke": "",
+                        "strokeWidth": ""
+                      },
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
