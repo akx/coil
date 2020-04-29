@@ -5,7 +5,7 @@ export default function dumbMemoize<T>(fn: (...args) => T): (...args) => T {
     if (argsStr in memo) {
       return memo[argsStr];
     }
-    return memo[argsStr] = fn(...args);
+    return (memo[argsStr] = fn(...args));
   };
   (memoizedFn as any).memo = memo;
   return memoizedFn;

@@ -1,7 +1,7 @@
 // tslint:disable prefer-for-of
 import Module from '../modules/Module';
 import registry from '../modules/registry';
-import {NodeConfig} from '../types';
+import { NodeConfig } from '../types';
 import Context from './Context';
 
 export function renderNode(context: Context, nodeConfig: NodeConfig) {

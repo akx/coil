@@ -1,18 +1,18 @@
 import * as React from 'react';
 import Module from '../Module';
 import Context from '../../universe/Context';
-import {renderNodesInto} from '../../universe/render';
+import { renderNodesInto } from '../../universe/render';
 
 export default {
   acceptsChildren: true,
   variables: [
-    {name: 'childIndex', default: '0'},
-    {name: 'indexVariable', default: 'u'},
+    { name: 'childIndex', default: '0' },
+    { name: 'indexVariable', default: 'u' },
   ],
 
   render(context: Context) {
-    const {node} = context;
-    const {childIndex, indexVariable} = context.evaluateNodeConfig(node);
+    const { node } = context;
+    const { childIndex, indexVariable } = context.evaluateNodeConfig(node);
     const index = parseInt(childIndex, 10);
     const child = node.children[index % node.children.length];
     const nodes = [];

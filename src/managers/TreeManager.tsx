@@ -1,6 +1,6 @@
-import {cloneDeep} from 'lodash';
-import {NodeConfig} from '../types';
-import {configure, duplicate} from '../universe/configure';
+import { cloneDeep } from 'lodash';
+import { NodeConfig } from '../types';
+import { configure, duplicate } from '../universe/configure';
 
 interface NodeCacheEntry {
   node: NodeConfig;
@@ -28,7 +28,7 @@ export class TreeManager {
     const newNodeCache: NodeCacheType = {};
 
     function walk(node: NodeConfig, parent: NodeConfig | null) {
-      newNodeCache[node.id] = {node, parent};
+      newNodeCache[node.id] = { node, parent };
       node.children.forEach((child) => walk(child, node));
     }
 
@@ -46,12 +46,12 @@ export class TreeManager {
 
   public getNodeOrNull(nodeId: string): NodeConfig | null {
     const cacheEntry = this.getNodeCacheEntry(nodeId, false);
-    return (cacheEntry ? cacheEntry.node : null);
+    return cacheEntry ? cacheEntry.node : null;
   }
 
   public getNodeParentOrNull(nodeId: string): NodeConfig | null {
     const cacheEntry = this.getNodeCacheEntry(nodeId, false);
-    return (cacheEntry ? cacheEntry.parent : null);
+    return cacheEntry ? cacheEntry.parent : null;
   }
 
   private getNode(nodeId: string): NodeConfig {
@@ -67,7 +67,7 @@ export class TreeManager {
     if (check && !cacheEntry) {
       throw new Error(`invalid node ${nodeId}`);
     }
-    return (cacheEntry ? cacheEntry : null);
+    return cacheEntry ? cacheEntry : null;
   }
 
   private replaceOrEmsiblingNode(
@@ -76,7 +76,7 @@ export class TreeManager {
     newNodes: ReadonlyArray<NodeConfig>,
     replace: boolean,
   ) {
-    const childList = (parent === null ? this.tree : parent.children);
+    const childList = parent === null ? this.tree : parent.children;
     const childIndex = childList.indexOf(nodeToReplace);
     if (childIndex > -1) {
       if (replace) {
@@ -133,7 +133,7 @@ export class TreeManager {
   public deleteNode(nodeId: string, withHierarchy: boolean) {
     const doomedNode = this.getNode(nodeId);
     const doomedNodeParent = this.getNodeParent(nodeId);
-    this.replaceOrEmsiblingNode(doomedNodeParent, doomedNode, (withHierarchy ? [] : doomedNode.children), true);
+    this.replaceOrEmsiblingNode(doomedNodeParent, doomedNode, withHierarchy ? [] : doomedNode.children, true);
     this.updateNodeCache();
     this.invokeTreeUpdateListeners();
   }

@@ -1,7 +1,7 @@
 function hashString(s: string) {
   let seed = 0;
   for (let i = 0; i < s.length; i++) {
-    seed ^= (i % 16) << s.charCodeAt(i);
+    seed ^= i % 16 << s.charCodeAt(i);
   }
   return seed;
 }
@@ -12,10 +12,10 @@ function hashString(s: string) {
 export type RandomGenerator = () => number;
 
 export default function createRandomGenerator(seedString?: string): RandomGenerator {
-  let seed = (seedString ? hashString(seedString) : (Math.random() * 2147483647));
+  let seed = seedString ? hashString(seedString) : Math.random() * 2147483647;
 
   const next = () => {
-    return seed = seed * 16807 % 2147483647;
+    return (seed = (seed * 16807) % 2147483647);
   };
 
   return function nextFloat() {

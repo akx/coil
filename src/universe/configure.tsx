@@ -1,10 +1,10 @@
-import {cloneDeep} from 'lodash';
-import Module, {getVariableDefaults} from '../modules/Module';
+import { cloneDeep } from 'lodash';
+import Module, { getVariableDefaults } from '../modules/Module';
 import registry from '../modules/registry';
-import {NodeConfig} from '../types';
+import { NodeConfig } from '../types';
 
 function generateId() {
-  return `${Math.floor(Math.random() * 0xFFFFFFFF).toString(36)}`;
+  return `${Math.floor(Math.random() * 0xffffffff).toString(36)}`;
 }
 
 export function duplicate(nodeConfig: NodeConfig): NodeConfig {

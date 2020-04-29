@@ -2,13 +2,13 @@ import * as React from 'react';
 import NodeConfigView from '../components/NodeConfigView';
 import NodeTree from '../components/NodeTree';
 import TreeToolbar from '../components/TreeToolbar';
-import {TreeManager} from '../managers/TreeManager';
-import {Document, NodeConfig} from '../types';
+import { TreeManager } from '../managers/TreeManager';
+import { Document, NodeConfig } from '../types';
 import Status from '../universe/Status';
-import {default as DocumentModule} from '../modules/pseudo/Document';
-import {ChangeDocumentConfigHandler, SelectNodeHandler} from '../handlers';
+import { default as DocumentModule } from '../modules/pseudo/Document';
+import { ChangeDocumentConfigHandler, SelectNodeHandler } from '../handlers';
 import QuickGVarBar from '../components/QuickGVarBar';
-import {GVarValueChangeHandler} from "../ui-types";
+import { GVarValueChangeHandler } from '../ui-types';
 
 interface TreePanelProps {
   treeManager: TreeManager;
@@ -21,16 +21,15 @@ interface TreePanelProps {
 }
 
 export default class TreePanel extends React.Component<TreePanelProps, {}> {
-
   private onChangeNodeVariable = (nodeConfig: NodeConfig, variableName: string, newValue: string) => {
     this.props.treeManager.changeNodeVariable(nodeConfig.id, variableName, newValue);
-    this.forceUpdate();  // Avoid asynchronous input caret position problem :(
-  }
+    this.forceUpdate(); // Avoid asynchronous input caret position problem :(
+  };
 
   private onChangeDocumentVariable = (nodeConfig: NodeConfig, variableName: string, newValue: string) => {
     this.props.onChangeDocumentVariable(variableName as any, newValue.replace(/^=/, ''));
-    this.forceUpdate();  // Avoid asynchronous input caret position problem :(
-  }
+    this.forceUpdate(); // Avoid asynchronous input caret position problem :(
+  };
 
   private onRepositionNode = (sourceNodeId: string, targetNodeId: string, copy: boolean) => {
     if (copy) {
@@ -38,10 +37,10 @@ export default class TreePanel extends React.Component<TreePanelProps, {}> {
     } else {
       this.props.treeManager.moveNode(sourceNodeId, targetNodeId);
     }
-  }
+  };
 
   public render() {
-    const {treeManager, selectedNodeId, status, document, onChangeGvarValue} = this.props;
+    const { treeManager, selectedNodeId, status, document, onChangeGvarValue } = this.props;
     const selectedNodeConfig = treeManager.getNodeOrNull(selectedNodeId!);
     return (
       <>
@@ -55,13 +54,9 @@ export default class TreePanel extends React.Component<TreePanelProps, {}> {
           />
         </div>
         <div id="props">
-          {selectedNodeConfig ?
-            <NodeConfigView
-              nodeConfig={selectedNodeConfig!}
-              status={status}
-              onChange={this.onChangeNodeVariable}
-            />
-            :
+          {selectedNodeConfig ? (
+            <NodeConfigView nodeConfig={selectedNodeConfig!} status={status} onChange={this.onChangeNodeVariable} />
+          ) : (
             <NodeConfigView
               nodeConfig={{
                 module: '~Document~',
@@ -77,9 +72,9 @@ export default class TreePanel extends React.Component<TreePanelProps, {}> {
               forceModule={DocumentModule}
               onChange={this.onChangeDocumentVariable}
             />
-          }
+          )}
         </div>
-        <QuickGVarBar gvars={document.gvars} onChange={onChangeGvarValue}/>
+        <QuickGVarBar gvars={document.gvars} onChange={onChangeGvarValue} />
       </>
     );
   }

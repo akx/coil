@@ -1,5 +1,5 @@
-import {NodeConfig} from '../types';
-import {configure} from '../universe/configure';
+import { NodeConfig } from '../types';
+import { configure } from '../universe/configure';
 
 export default function makeDefaultConfig(): NodeConfig[] {
   return [
@@ -26,7 +26,9 @@ export default function makeDefaultConfig(): NodeConfig[] {
               y: '=30 + j * 30',
               fill: 'blue',
             }),
-          ]),
-      ]),
+          ],
+        ),
+      ],
+    ),
   ];
 }

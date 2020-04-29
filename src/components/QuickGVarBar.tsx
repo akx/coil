@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {GVar} from '../types';
-import {GVarValueChangeHandler} from '../ui-types';
+import { GVar } from '../types';
+import { GVarValueChangeHandler } from '../ui-types';
 
 interface QuickGVarProps {
   gvar: GVar;
@@ -12,12 +12,9 @@ interface QuickGVarBarProps {
   onChange: GVarValueChangeHandler;
 }
 
-const QuickGVar: React.SFC<QuickGVarProps> = ({gvar, onChange}) => (
-
+const QuickGVar: React.SFC<QuickGVarProps> = ({ gvar, onChange }) => (
   <div className="quick-gvar">
-    <span>
-      {gvar.name}
-    </span>
+    <span>{gvar.name}</span>
     {gvar.type === 'number' ? (
       <input
         type="range"
@@ -31,9 +28,11 @@ const QuickGVar: React.SFC<QuickGVarProps> = ({gvar, onChange}) => (
   </div>
 );
 
-const QuickGVarBar: React.SFC<QuickGVarBarProps> = ({gvars, onChange}) => (
+const QuickGVarBar: React.SFC<QuickGVarBarProps> = ({ gvars, onChange }) => (
   <div className="quick-gvar-bar">
-    {gvars.map((gvar) => <QuickGVar gvar={gvar} key={gvar.name} onChange={onChange} />)}
+    {gvars.map((gvar) => (
+      <QuickGVar gvar={gvar} key={gvar.name} onChange={onChange} />
+    ))}
   </div>
 );
 

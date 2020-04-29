@@ -1,6 +1,6 @@
-import {ReactElement} from 'react';
+import { ReactElement } from 'react';
 import Context from '../universe/Context';
-import {VariableDefinition} from '../types';
+import { VariableDefinition } from '../types';
 
 // tslint:disable-next-line:interface-name
 export default interface Module {
@@ -19,6 +19,4 @@ export function getVariableDefaults(module: Module): object {
   return defaults;
 }
 
-export const UniversalVariables = [
-  {name: 'seed', default: '', group: 'Randomness'},
-] as VariableDefinition[];
+export const UniversalVariables = [{ name: 'seed', default: '', group: 'Randomness' }] as VariableDefinition[];

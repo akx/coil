@@ -1,4 +1,4 @@
-import {GVar} from './types';
+import { GVar } from './types';
 
 export type GVarModifyHandler = (gvar: GVar, key: keyof GVar, value: any) => void;
 

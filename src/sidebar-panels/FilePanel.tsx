@@ -1,13 +1,13 @@
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-import {TreeManager} from '../managers/TreeManager';
-import {Document} from '../types';
-import {deserialize, serialize} from '../utils/serde';
-import {LoadDocumentHandler} from '../handlers';
+import { TreeManager } from '../managers/TreeManager';
+import { Document } from '../types';
+import { deserialize, serialize } from '../utils/serde';
+import { LoadDocumentHandler } from '../handlers';
 
 interface FilePanelProps {
   treeManager: TreeManager;
-  rendered: any;  // TODO: yigh
+  rendered: any; // TODO: yigh
   document: Document;
   onLoadDocument: LoadDocumentHandler;
 }
@@ -17,7 +17,6 @@ interface FilePanelState {
 }
 
 export default class FilePanel extends React.Component<FilePanelProps, FilePanelState> {
-
   public state: FilePanelState = {
     serializedState: '',
   };
@@ -25,9 +24,9 @@ export default class FilePanel extends React.Component<FilePanelProps, FilePanel
   private dumpState = (event) => {
     const doc = serialize(this.props.document, this.props.treeManager.getTree());
     this.setState({
-      serializedState: JSON.stringify(doc, null, (event.shiftKey ? undefined : 2)),
+      serializedState: JSON.stringify(doc, null, event.shiftKey ? undefined : 2),
     });
-  }
+  };
 
   private loadState = () => {
     let stateJson;
@@ -44,14 +43,14 @@ export default class FilePanel extends React.Component<FilePanelProps, FilePanel
       alert('Could not read document:' + e);
       return;
     }
-  }
+  };
 
   private saveSVG = () => {
-    const svgString = (
-      ReactDOMServer.renderToStaticMarkup(this.props.rendered)
-        .replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" ')
+    const svgString = ReactDOMServer.renderToStaticMarkup(this.props.rendered).replace(
+      '<svg ',
+      '<svg xmlns="http://www.w3.org/2000/svg" ',
     );
-    const blob = new Blob([svgString], {type: 'image/svg+xml'});
+    const blob = new Blob([svgString], { type: 'image/svg+xml' });
     const url = URL.createObjectURL(blob);
     const downloadLink = Object.assign(document.createElement('a'), {
       download: `coil-svg-${+new Date()}.svg`,
@@ -63,22 +62,28 @@ export default class FilePanel extends React.Component<FilePanelProps, FilePanel
       downloadLink.parentNode!.removeChild(downloadLink);
       URL.revokeObjectURL(url);
     }, 100);
-  }
+  };
 
   public render() {
-    const {treeManager, rendered} = this.props;
+    const { treeManager, rendered } = this.props;
     return (
       <div id="file-panel">
         <div>
-          <button className="btn standalone" onClick={this.dumpState}>Save state &darr;</button>
-          <button className="btn standalone" onClick={this.loadState}>Load state &uarr;</button>
+          <button className="btn standalone" onClick={this.dumpState}>
+            Save state &darr;
+          </button>
+          <button className="btn standalone" onClick={this.loadState}>
+            Load state &uarr;
+          </button>
           <textarea
             value={this.state.serializedState}
-            onChange={(e) => this.setState({serializedState: e.target.value})}
+            onChange={(e) => this.setState({ serializedState: e.target.value })}
           />
         </div>
         <div>
-          <button className="btn standalone" onClick={this.saveSVG}>Save rendered SVG...</button>
+          <button className="btn standalone" onClick={this.saveSVG}>
+            Save rendered SVG...
+          </button>
         </div>
       </div>
     );

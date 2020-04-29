@@ -3,7 +3,7 @@ $dark: #262626;
 $semidark: #323232;
 $darkerish: lighten($semidark, 10%);
 $darkish: lighten($semidark, 20%);
-$light: #A9A9A9;
+$light: #a9a9a9;
 $blue: #54a0ff;
 $orange: #ff9f43;
 
@@ -11,7 +11,10 @@ $orange: #ff9f43;
   box-sizing: border-box;
 }
 
-body, input, button, textarea {
+body,
+input,
+button,
+textarea {
   font: 10pt Lato, sans-serif;
 }
 
@@ -49,7 +52,8 @@ body {
   border-left: 0;
 }
 
-#props table, .var-table {
+#props table,
+.var-table {
   width: 100%;
   tr.group-separator th {
     text-align: left;
@@ -67,7 +71,7 @@ body {
     &:focus {
       outline-color: $blue;
     }
-    &[type=color] {
+    &[type='color'] {
       padding: 0;
       border: 0;
       min-width: 2em;
@@ -135,14 +139,14 @@ body {
   &.standalone {
     border: 1px outset $darkerish;
   }
-
 }
 
 .toolbar {
   background: $semidark;
 }
 
-.dropdown--disabled .btn, .btn.disabled {
+.dropdown--disabled .btn,
+.btn.disabled {
   opacity: 0.3;
   cursor: default !important;
 }
@@ -183,9 +187,9 @@ body {
     list-style: none;
     ul {
       margin: 1px;
-      margin-left: .5em;
+      margin-left: 0.5em;
       border-left: 1px dotted #2d3436;
-      padding-left: .5em;
+      padding-left: 0.5em;
     }
     a {
       text-decoration: none;

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import Dropdown, {DropdownContent, DropdownTrigger} from 'react-simple-dropdown';
-import {TreeManager} from '../managers/TreeManager';
+import Dropdown, { DropdownContent, DropdownTrigger } from 'react-simple-dropdown';
+import { TreeManager } from '../managers/TreeManager';
 import registry from '../modules/registry';
-import {NodeConfig} from '../types';
+import { NodeConfig } from '../types';
 
 interface ToolbarProps {
   treeManager: TreeManager;
@@ -10,17 +10,17 @@ interface ToolbarProps {
 }
 
 function nodeAcceptsChildren(node: NodeConfig | null) {
-  return (node && registry[node.module] && registry[node.module].acceptsChildren);
+  return node && registry[node.module] && registry[node.module].acceptsChildren;
 }
 
 export default class TreeToolbar extends React.Component<ToolbarProps, any> {
   private dropdowns: { [key: string]: Dropdown } = {};
 
   private handleAddNode(method: 'wrap' | 'child' | 'sibling', module: string) {
-    const {treeManager, selectedNode} = this.props;
+    const { treeManager, selectedNode } = this.props;
     switch (method) {
       case 'child':
-        treeManager.addChildNode((selectedNode ? selectedNode.id : null), module);
+        treeManager.addChildNode(selectedNode ? selectedNode.id : null, module);
         break;
       case 'sibling':
         treeManager.addSiblingNode(selectedNode!.id, module);
@@ -32,7 +32,7 @@ export default class TreeToolbar extends React.Component<ToolbarProps, any> {
   }
 
   private handleDeleteNode(withHierarchy: boolean) {
-    const {treeManager, selectedNode} = this.props;
+    const { treeManager, selectedNode } = this.props;
     treeManager.deleteNode(selectedNode!.id, withHierarchy);
   }
 
@@ -43,7 +43,7 @@ export default class TreeToolbar extends React.Component<ToolbarProps, any> {
   }
 
   public render() {
-    const {selectedNode} = this.props;
+    const { selectedNode } = this.props;
     let childMode: string | null = null;
     let childText: string = 'Node';
     let allowAddSibling = false;
@@ -71,9 +71,13 @@ export default class TreeToolbar extends React.Component<ToolbarProps, any> {
         >
           <DropdownTrigger className="btn">Wrap...</DropdownTrigger>
           <DropdownContent className="node-select">
-            {Object.keys(registry).filter((module) => registry[module].acceptsChildren).map((module) => (
-              <a href="#" key={module} onClick={() => this.handleAddNode('wrap', module)}>{module}</a>
-            ))}
+            {Object.keys(registry)
+              .filter((module) => registry[module].acceptsChildren)
+              .map((module) => (
+                <a href="#" key={module} onClick={() => this.handleAddNode('wrap', module)}>
+                  {module}
+                </a>
+              ))}
           </DropdownContent>
         </Dropdown>
         <Dropdown
@@ -85,7 +89,9 @@ export default class TreeToolbar extends React.Component<ToolbarProps, any> {
           <DropdownTrigger className="btn">Add {childText}...</DropdownTrigger>
           <DropdownContent className="node-select">
             {Object.keys(registry).map((module) => (
-              <a href="#" key={module} onClick={() => this.handleAddNode('child', module)}>{module}</a>
+              <a href="#" key={module} onClick={() => this.handleAddNode('child', module)}>
+                {module}
+              </a>
             ))}
           </DropdownContent>
         </Dropdown>
@@ -98,7 +104,9 @@ export default class TreeToolbar extends React.Component<ToolbarProps, any> {
           <DropdownTrigger className="btn">Add Sibling...</DropdownTrigger>
           <DropdownContent className="node-select">
             {Object.keys(registry).map((module) => (
-              <a href="#" key={module} onClick={() => this.handleAddNode('sibling', module)}>{module}</a>
+              <a href="#" key={module} onClick={() => this.handleAddNode('sibling', module)}>
+                {module}
+              </a>
             ))}
           </DropdownContent>
         </Dropdown>
@@ -115,5 +123,4 @@ export default class TreeToolbar extends React.Component<ToolbarProps, any> {
       </div>
     );
   }
-
 }
