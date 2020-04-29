@@ -79,8 +79,11 @@ export class TreeManager {
     const childList = (parent === null ? this.tree : parent.children);
     const childIndex = childList.indexOf(nodeToReplace);
     if (childIndex > -1) {
-      const args = ([childIndex, (replace ? 1 : 0)] as any[]).concat(newNodes);
-      childList.splice.apply(childList, args);
+      if (replace) {
+        childList.splice(childIndex, 1, ...newNodes);
+      } else {
+        childList.splice(childIndex, 0, ...newNodes);
+      }
     }
   }
 

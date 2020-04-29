@@ -118,7 +118,8 @@ export default class App extends React.Component<{}, AppState> {
         document[variableName] = parseInt(value, 10);
         break;
       default:
-        document[variableName] = value;
+        // TODO: fix type safety here
+        (document as object)[variableName] = value;
     }
     this.setState({document}, () => {
       this.redrawCurrent();
@@ -157,7 +158,8 @@ export default class App extends React.Component<{}, AppState> {
   private onModifyGvar = (gvar: GVar, key: keyof GVar, value: any) => {
     const document = this.state.document;
     if (document.gvars.includes(gvar)) {
-      gvar[key] = value;
+      // TODO: fix type-safety here
+      (gvar as object)[key] = value;
       this.setState({document}, () => {
         if (key === 'value') {
           this.redrawCurrent();

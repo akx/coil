@@ -26,7 +26,7 @@ export default class Status {
     if (!(nodeId in this.nodeVariables)) {
       return [];
     }
-    const variables = new Set();
+    const variables: Set<string> = new Set();
     this.nodeVariables[nodeId].forEach((map) => {
       Object.keys(map).forEach((key) => {
         return variables.add(key);
