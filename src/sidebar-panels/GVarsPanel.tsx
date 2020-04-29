@@ -65,7 +65,7 @@ function GVarPanel({ gvar, onModifyGvar, onDeleteGvar }: GVarPanelProps) {
   );
 }
 
-const GVarsPanel: React.SFC<GVarsPanelProps> = (props: GVarsPanelProps) => {
+const GVarsPanel: React.FC<GVarsPanelProps> = (props: GVarsPanelProps) => {
   const { document } = props;
   return (
     <div id="gvars-panel">

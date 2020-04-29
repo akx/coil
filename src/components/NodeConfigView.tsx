@@ -26,7 +26,7 @@ const VariableConfigRow = ({ variable, nodeConfig, onChange, status }: VariableC
   return (
     <GenericVariableConfigRow
       name={variable.name}
-      type={variable.type!}
+      type={variable.type || 'string'}
       value={nodeConfig.config[variable.name] || ''}
       onChange={(value) => onChange(nodeConfig, variable.name, value)}
       choices={variable.choices}

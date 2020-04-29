@@ -45,29 +45,34 @@ export class TreeManager {
   }
 
   public getNodeOrNull(nodeId: string): NodeConfig | null {
-    const cacheEntry = this.getNodeCacheEntry(nodeId, false);
+    const cacheEntry = this.getNodeCacheEntryUnsafe(nodeId);
     return cacheEntry ? cacheEntry.node : null;
   }
 
   public getNodeParentOrNull(nodeId: string): NodeConfig | null {
-    const cacheEntry = this.getNodeCacheEntry(nodeId, false);
+    const cacheEntry = this.getNodeCacheEntryUnsafe(nodeId);
     return cacheEntry ? cacheEntry.parent : null;
   }
 
   private getNode(nodeId: string): NodeConfig {
-    return this.getNodeCacheEntry(nodeId)!.node;
+    return this.getNodeCacheEntry(nodeId).node;
   }
 
   private getNodeParent(nodeId: string): NodeConfig | null {
-    return this.getNodeCacheEntry(nodeId)!.parent;
+    return this.getNodeCacheEntry(nodeId).parent;
   }
 
-  private getNodeCacheEntry(nodeId: string, check: boolean = true): NodeCacheEntry | null {
+  private getNodeCacheEntryUnsafe(nodeId: string): NodeCacheEntry | null {
     const cacheEntry = this.nodeCache[nodeId];
-    if (check && !cacheEntry) {
+    return cacheEntry ? cacheEntry : null;
+  }
+
+  private getNodeCacheEntry(nodeId: string): NodeCacheEntry {
+    const cacheEntry = this.getNodeCacheEntryUnsafe(nodeId);
+    if (cacheEntry === null) {
       throw new Error(`invalid node ${nodeId}`);
     }
-    return cacheEntry ? cacheEntry : null;
+    return cacheEntry;
   }
 
   private replaceOrEmsiblingNode(

@@ -12,7 +12,7 @@ interface QuickGVarBarProps {
   onChange: GVarValueChangeHandler;
 }
 
-const QuickGVar: React.SFC<QuickGVarProps> = ({ gvar, onChange }) => (
+const QuickGVar: React.FC<QuickGVarProps> = ({ gvar, onChange }) => (
   <div className="quick-gvar">
     <span>{gvar.name}</span>
     {gvar.type === 'number' ? (
@@ -28,7 +28,7 @@ const QuickGVar: React.SFC<QuickGVarProps> = ({ gvar, onChange }) => (
   </div>
 );
 
-const QuickGVarBar: React.SFC<QuickGVarBarProps> = ({ gvars, onChange }) => (
+const QuickGVarBar: React.FC<QuickGVarBarProps> = ({ gvars, onChange }) => (
   <div className="quick-gvar-bar">
     {gvars.map((gvar) => (
       <QuickGVar gvar={gvar} key={gvar.name} onChange={onChange} />

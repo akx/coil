@@ -33,7 +33,7 @@ function memoizeOnFirstInvocation<T>(creator: () => T): () => T {
 
 export default class Context {
   private rng?: RandomGenerator;
-  private defaultNamespace: NamespaceFn;
+  private readonly defaultNamespace: NamespaceFn = this.prepareNamespace();
 
   constructor(
     readonly status: Status,
@@ -41,11 +41,9 @@ export default class Context {
     readonly parent: Context | null = null,
     readonly variables: VariableMap = {},
     readonly idPrefix: string = '',
-  ) {
-    this.defaultNamespace = this.prepareNamespace();
-  }
+  ) {}
 
-  public subcontext(forNode: NodeConfig, newVariables: VariableMap = {}, idPrefix: string = ''): Context {
+  public subcontext(forNode: NodeConfig, newVariables: VariableMap = {}, idPrefix = ''): Context {
     const mergedVariables = Object.assign({}, this.variables, newVariables);
     return new Context(this.status, forNode, this, mergedVariables, `${this.idPrefix}.${idPrefix}`);
   }
@@ -74,11 +72,11 @@ export default class Context {
   }
 
   public evaluateFromNodeConfig(key: string): any {
-    const expression = this.node.config[key]!;
+    const expression = this.node.config[key];
     if (expression === undefined) {
       return null;
     }
-    return _evaluate(this.status, this.node, key, expression, this.defaultNamespace);
+    return _evaluate(this.status, this.node, key, String(expression), this.defaultNamespace);
   }
 
   public evaluate(tag: string, expression: string, additionalVariables?: VariableMap): any {

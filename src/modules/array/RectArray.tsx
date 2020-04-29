@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Module from '../Module';
 import Context from '../../universe/Context';
 import { renderNodesInto } from '../../universe/render';
@@ -38,8 +37,9 @@ export default {
 
   render(context: Context) {
     const { node } = context;
-    // tslint:disable-next-line:prefer-const
-    let { numberX, numberY, variableX, variableY, hex } = context.evaluateNodeConfig(node);
+    const config = context.evaluateNodeConfig(node);
+    let { numberX, numberY } = config;
+    const { variableX, variableY, hex } = config;
     const nodes = [];
 
     numberX = Math.round(parseFloat(numberX));

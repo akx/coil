@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Module from '../Module';
 import Context from '../../universe/Context';
 export default {

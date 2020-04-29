@@ -59,13 +59,15 @@ export default class FilePanel extends React.Component<FilePanelProps, FilePanel
     document.body.appendChild(downloadLink);
     downloadLink.click();
     setTimeout(() => {
-      downloadLink.parentNode!.removeChild(downloadLink);
+      const parentNode = downloadLink.parentNode;
+      if (parentNode) {
+        parentNode.removeChild(downloadLink);
+      }
       URL.revokeObjectURL(url);
     }, 100);
   };
 
   public render() {
-    const { treeManager, rendered } = this.props;
     return (
       <div id="file-panel">
         <div>

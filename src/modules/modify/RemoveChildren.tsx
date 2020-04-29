@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Module from '../Module';
 import Context from '../../universe/Context';
 import { renderNodesInto } from '../../universe/render';
@@ -16,7 +15,7 @@ export default {
     const nodes = [];
     renderNodesInto(nodes, node.children, context);
     const filterContext = context.subcontext(node);
-    const keepExpression = node.config.keep!;
+    const keepExpression = node.config.keep || '';
     return nodes.filter((child, index) =>
       filterContext.evaluate(`keep ${index}`, keepExpression, {
         [indexVariable]: index,

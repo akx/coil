@@ -20,6 +20,7 @@ const DRAG_AND_DROP_DATA_ID = 'application/x-coil-nodeid';
 
 const TreeNode = ({ nodeConfig, selectedNode, onSelectNode, onRepositionNode }: TreeNodeProps) => (
   <li className={selectedNode === nodeConfig ? 'selected' : ''}>
+    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
     <a
       href="#"
       draggable={true}
@@ -35,7 +36,7 @@ const TreeNode = ({ nodeConfig, selectedNode, onSelectNode, onRepositionNode }: 
       }}
       onDragOver={(event) => {
         event.dataTransfer.dropEffect = 'none';
-        if (event.dataTransfer.types.indexOf(DRAG_AND_DROP_DATA_ID) > -1) {
+        if (event.dataTransfer.types.includes(DRAG_AND_DROP_DATA_ID)) {
           if (registry[nodeConfig.module].acceptsChildren) {
             event.dataTransfer.dropEffect = event.altKey ? 'copy' : 'link';
             event.preventDefault();

@@ -134,7 +134,7 @@ export default class App extends React.Component<{}, AppState> {
     });
   };
 
-  private redrawCurrent(save: boolean = true) {
+  private redrawCurrent(save = true) {
     const tree = this.treeManager.getTree() as NodeConfig[];
     this.renderDrawing(tree);
     if (save) {
@@ -201,10 +201,8 @@ export default class App extends React.Component<{}, AppState> {
   };
 
   public render() {
-    const { selectedNodeId, rendered, status, activeTab, document } = this.state;
-    const { treeManager } = this;
-    const selectedNodeConfig = treeManager.getNodeOrNull(selectedNodeId!);
-    let configContent: React.ReactElement<any> | null = null;
+    const { rendered, activeTab, document } = this.state;
+    let configContent: React.ReactElement | null = null;
     switch (activeTab) {
       case 'tree':
         configContent = (

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import * as React from 'react';
 import Dropdown, { DropdownContent, DropdownTrigger } from 'react-simple-dropdown';
 import { TreeManager } from '../managers/TreeManager';
@@ -23,17 +24,23 @@ export default class TreeToolbar extends React.Component<ToolbarProps, any> {
         treeManager.addChildNode(selectedNode ? selectedNode.id : null, module);
         break;
       case 'sibling':
-        treeManager.addSiblingNode(selectedNode!.id, module);
+        if (selectedNode) {
+          treeManager.addSiblingNode(selectedNode.id, module);
+        }
         break;
       case 'wrap':
-        treeManager.wrapNode(selectedNode!.id, module);
+        if (selectedNode) {
+          treeManager.wrapNode(selectedNode.id, module);
+        }
     }
     this.hideDropdowns();
   }
 
   private handleDeleteNode(withHierarchy: boolean) {
     const { treeManager, selectedNode } = this.props;
-    treeManager.deleteNode(selectedNode!.id, withHierarchy);
+    if (selectedNode) {
+      treeManager.deleteNode(selectedNode.id, withHierarchy);
+    }
   }
 
   public hideDropdowns() {
@@ -44,8 +51,8 @@ export default class TreeToolbar extends React.Component<ToolbarProps, any> {
 
   public render() {
     const { selectedNode } = this.props;
-    let childMode: string | null = null;
-    let childText: string = 'Node';
+    let childMode: 'child' | undefined;
+    let childText = 'Node';
     let allowAddSibling = false;
     if (selectedNode === null) {
       childMode = 'child';

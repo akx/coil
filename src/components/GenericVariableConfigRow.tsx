@@ -10,8 +10,8 @@ interface VariableConfigRowProps {
 }
 
 const GenericVariableConfigRow = ({ name, choices, type, onChange, value }: VariableConfigRowProps) => {
-  let extraControls: React.ReactElement<any> | null = null;
-  let input: React.ReactElement<any> | null = null;
+  let extraControls: React.ReactElement | undefined;
+  let input: React.ReactElement | undefined;
   value = value === undefined ? '' : value;
 
   const handleChange = (event) => onChange(event.target.value.toString());

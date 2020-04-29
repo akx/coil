@@ -41,7 +41,7 @@ export default class TreePanel extends React.Component<TreePanelProps, {}> {
 
   public render() {
     const { treeManager, selectedNodeId, status, document, onChangeGvarValue } = this.props;
-    const selectedNodeConfig = treeManager.getNodeOrNull(selectedNodeId!);
+    const selectedNodeConfig = selectedNodeId ? treeManager.getNodeOrNull(selectedNodeId) : null;
     return (
       <>
         <div id="hierarchy">
@@ -55,7 +55,7 @@ export default class TreePanel extends React.Component<TreePanelProps, {}> {
         </div>
         <div id="props">
           {selectedNodeConfig ? (
-            <NodeConfigView nodeConfig={selectedNodeConfig!} status={status} onChange={this.onChangeNodeVariable} />
+            <NodeConfigView nodeConfig={selectedNodeConfig} status={status} onChange={this.onChangeNodeVariable} />
           ) : (
             <NodeConfigView
               nodeConfig={{

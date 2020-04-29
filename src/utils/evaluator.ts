@@ -1,3 +1,4 @@
+/* eslint-disable no-new-func */
 import { VariableMap } from '../types';
 
 export type NamespaceFn = () => VariableMap;
