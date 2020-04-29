@@ -25,18 +25,18 @@
   },
   "dependencies": {
     "@types/lodash": "^4.14.116",
-    "@types/ramda": "^0.25.36",
+    "@types/ramda": "^0.27.4",
     "@types/random-seed": "^0.3.3",
     "@types/react": "^16.4.6",
     "classnames": "^2.2.5",
     "lodash": "^4.17.5",
-    "material-design-icons-svg": "^2.0.0",
-    "ramda": "^0.25.0",
+    "material-design-icons-svg": "^3.0.0",
+    "ramda": "^0.27.0",
     "random-seed": "^0.3.0",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "react-simple-dropdown": "^3.2.3",
-    "transformation-matrix": "^1.12.0"
+    "transformation-matrix": "^2.3.0"
   },
   "browserslist": {
     "production": [
