@@ -22,7 +22,7 @@ interface AppState {
 
 const STORAGE_KEY = 'coilSave';
 
-export default class App extends React.Component<{}, AppState> {
+export default class App extends React.Component<Record<string, never>, AppState> {
   private treeManager: TreeManager = new TreeManager();
 
   public state: AppState = {
@@ -100,7 +100,7 @@ export default class App extends React.Component<{}, AppState> {
     } catch (e) {
       renderedChildren = (
         <text y={50} x={50}>
-          {e.toString()}
+          {String(e)}
         </text>
       );
       console.error(renderedChildren);

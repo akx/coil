@@ -4,24 +4,26 @@
   "main": "src/index.tsx",
   "homepage": "https://akx.github.io/coil/",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "start": "vite",
     "build": "vite build",
     "prettify": "prettier --write src",
-    "lint": "eslint --ext .ts --ext .tsx src"
+    "lint": "eslint"
   },
   "devDependencies": {
+    "@eslint/js": "^9.0.0",
     "@types/lodash": "^4.14.116",
     "@types/random-seed": "^0.3.3",
     "@types/react": "^16.4.6",
-    "@typescript-eslint/eslint-plugin": "^2.30.0",
-    "@typescript-eslint/parser": "^2.30.0",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-prettier": "^3.1.3",
-    "prettier": "^2.0.5",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "globals": "^15.0.0",
+    "prettier": "^3.2.5",
     "sass": "^1.74.1",
-    "typescript": "^3.0.1",
+    "typescript": "^5.4.4",
+    "typescript-eslint": "^7.6.0",
     "vite": "^5.2.8"
   },
   "dependencies": {

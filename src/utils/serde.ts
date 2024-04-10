@@ -25,9 +25,9 @@ export function deserialize(obj: any): Document {
     throw new Error('Not an object');
   }
   if (obj.version === version) {
-    const doc: SerializedDocument = { ...obj };
-    delete doc.version;
-    return { ...documentDefaults, ...doc } as Document;
+    const doc: Document = { ...documentDefaults, ...obj };
+    delete (doc as any).version;
+    return doc;
   }
   throw new Error(`Object version ${obj.version} not understood`);
 }
