@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import * as React from 'react';
 import Dropdown, { DropdownContent, DropdownTrigger } from 'react-simple-dropdown';
 import { TreeManager } from '../managers/TreeManager';
