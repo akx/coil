@@ -37,11 +37,11 @@ export class TreeManager {
   }
 
   private invokeTreeUpdateListeners() {
-    setImmediate(() => {
+    setTimeout(() => {
       this.treeUpdateListeners.forEach((listener) => {
         listener(this.tree);
       });
-    });
+    }, 0);
   }
 
   public getNodeOrNull(nodeId: string): NodeConfig | null {

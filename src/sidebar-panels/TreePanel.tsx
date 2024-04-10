@@ -20,7 +20,7 @@ interface TreePanelProps {
   onChangeGvarValue: GVarValueChangeHandler;
 }
 
-export default class TreePanel extends React.Component<TreePanelProps, {}> {
+export default class TreePanel extends React.Component<TreePanelProps, Record<string, never>> {
   private onChangeNodeVariable = (nodeConfig: NodeConfig, variableName: string, newValue: string) => {
     this.props.treeManager.changeNodeVariable(nodeConfig.id, variableName, newValue);
     this.forceUpdate(); // Avoid asynchronous input caret position problem :(

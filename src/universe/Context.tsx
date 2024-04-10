@@ -88,7 +88,7 @@ export default class Context {
     const evaluated = {};
     const namespace = this.prepareNamespace(additionalVariables);
     for (const tag in expressionMap) {
-      if (expressionMap.hasOwnProperty(tag)) {
+      if (tag in expressionMap) {
         const expression = expressionMap[tag];
         if (expression !== null) {
           evaluated[tag] = _evaluate(this.status, this.node, tag, expression, namespace);

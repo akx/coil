@@ -1,12 +1,7 @@
-import * as cx from 'classnames';
+import cx from 'classnames';
 import * as React from 'react';
 import Icon from './Icon';
-
-const GlobalToolbarIcons = {
-  fileTree: require('material-design-icons-svg/paths/file-tree'),
-  save: require('material-design-icons-svg/paths/content-save'),
-  tune: require('material-design-icons-svg/paths/tune'),
-};
+import { GlobalToolbarIcons } from './icons';
 
 type GlobalToolbarProps = {
   activeTab: string;

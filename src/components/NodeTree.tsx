@@ -20,7 +20,6 @@ const DRAG_AND_DROP_DATA_ID = 'application/x-coil-nodeid';
 
 const TreeNode = ({ nodeConfig, selectedNode, onSelectNode, onRepositionNode }: TreeNodeProps) => (
   <li className={selectedNode === nodeConfig ? 'selected' : ''}>
-    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
     <a
       href="#"
       draggable={true}
